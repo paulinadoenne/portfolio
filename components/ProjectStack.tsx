@@ -6,9 +6,8 @@ import ImageSlot from "./ImageSlot";
 import { projects } from "@/lib/projects";
 
 const N = projects.length;
-const EASE = "cubic-bezier(0.22, 0.8, 0.24, 1)";
 const FRONT_TOP = 0.58; // matches Karten-Anker `top: 58%`
-const MAX_LIFT_PX = 380; // Cursor-Weg nach oben bis volle Auffächerung
+const PX_PER_CARD = 92; // Cursor-Weg nach oben, um ein Blatt abzulegen
 
 /* Stumme Autoplay-Vorschau für Projekte mit Hero-Video (Deck-Karte ist ein
  * Link, daher keine Controls). Respektiert prefers-reduced-motion — dann
@@ -57,27 +56,48 @@ function StackVideo({
   );
 }
 
-/* Transform pro Stapeltiefe d (0 = vorderste Karte), abhängig vom
- * Auffächer-Grad `spread` (0 = geschlossener Stapel, 1 = Rondell voll
- * offen): Kartenabstand wächst, Tiefenversatz flacht ab, Deckkraft steigt.
- * Enger, vielschichtiger Stapel (Screenshot-Turm-Referenz) statt weniger
- * Karten mit starkem Fade-out. */
-function cardStyle(d: number, spread: number) {
-  const gap = 30 + spread * (150 - 30);
-  const zStep = 110 - spread * (110 - 26);
-  const rot = 10 - spread * 6;
-  const closedOpacity = Math.max(0.55, 1 - d * 0.065);
-  const opacity = closedOpacity + spread * (1 - closedOpacity);
+/* Ruheposition im Stapel für Tiefe d >= 0 (0 = vorderste/aktuelle Karte) —
+ * enger, vielschichtiger Turm (Screenshot-Referenz). */
+function restStyle(d: number) {
+  const gap = 30;
+  const zStep = 110;
+  const rot = 10;
   return {
     transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg)`,
     zIndex: 200 - Math.round(d * 12),
-    opacity,
+    opacity: Math.max(0.55, 1 - d * 0.065),
+  };
+}
+
+/* Ein bereits "abgelegtes" Blatt (d < 0, Cursor ist am Blatt vorbeigewandert):
+ * fliegt nach unten aus dem Bild — wie eine Rondell-Seite, die man
+ * weitergeblättert hat. */
+function flyStyle(d: number) {
+  const e = -d;
+  const ee = Math.min(e, 1);
+  return {
+    transform: `translate(-50%,-50%) translateY(${e * 70}vh) translateZ(${ee * 160}px) rotateX(${10 + ee * 26}deg)`,
+    zIndex: 300,
+    opacity: 1,
+  };
+}
+
+/* Statische, voll aufgefächerte Ansicht für Touch / prefers-reduced-motion
+ * (keine Hover-Geste verfügbar) — alle Karten gleichzeitig sichtbar & klickbar. */
+function openStyle(d: number) {
+  const gap = 150;
+  const zStep = 26;
+  const rot = 4;
+  return {
+    transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg)`,
+    zIndex: 200 - Math.round(d * 12),
+    opacity: 1,
   };
 }
 
 export default function ProjectStack() {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [spread, setSpread] = useState(0);
+  const [p, setP] = useState(0);
   const [hoverIndex, setHoverIndex] = useState(0);
   const [forceOpen, setForceOpen] = useState(false);
   const [hinted, setHinted] = useState(false);
@@ -98,20 +118,21 @@ export default function ProjectStack() {
     raf.current = requestAnimationFrame(() => {
       const rect = wrap.getBoundingClientRect();
       const frontY = rect.top + rect.height * FRONT_TOP;
-      const t = Math.max(0, Math.min(1, (frontY - clientY) / MAX_LIFT_PX));
-      setSpread(t);
-      if (t > 0.06) setHinted(true);
+      const next = Math.max(0, Math.min(N - 1, (frontY - clientY) / PX_PER_CARD));
+      setP(next);
+      if (next > 0.05) setHinted(true);
     });
   };
 
   const onMouseLeave = () => {
     if (forceOpen) return;
     if (raf.current) cancelAnimationFrame(raf.current);
-    setSpread(0);
-    setHoverIndex(0);
+    setP(0);
   };
 
-  const effectiveSpread = forceOpen ? 1 : spread;
+  const displayIndex = forceOpen
+    ? hoverIndex
+    : Math.max(0, Math.min(N - 1, Math.round(p)));
 
   return (
     <section
@@ -150,7 +171,7 @@ export default function ProjectStack() {
           zIndex: 400,
         }}
       >
-        {"0" + (hoverIndex + 1) + " / 0" + N}
+        {"0" + (displayIndex + 1) + " / 0" + N}
       </div>
       <div
         style={{
@@ -166,7 +187,7 @@ export default function ProjectStack() {
           zIndex: 400,
         }}
       >
-        {projects[hoverIndex].title}
+        {projects[displayIndex].title}
       </div>
       {!forceOpen && (
         <div
@@ -198,14 +219,23 @@ export default function ProjectStack() {
           transformStyle: "preserve-3d",
         }}
       >
-        {projects.map((p, i) => {
-          const s = cardStyle(i, effectiveSpread);
-          const clickable = i === 0 || s.opacity > 0.5;
+        {projects.map((proj, i) => {
+          let s: { transform: string; zIndex: number; opacity: number };
+          let clickable: boolean;
+          if (forceOpen) {
+            s = openStyle(i);
+            clickable = true;
+          } else {
+            const d = i - p;
+            s = d >= 0 ? restStyle(d) : flyStyle(d);
+            // exakt die Karte, die auch in der Kopfzeile angezeigt wird
+            clickable = i === displayIndex;
+          }
           return (
             <Link
-              key={p.slug}
-              href={`/projekt/${p.slug}`}
-              onMouseEnter={() => setHoverIndex(i)}
+              key={proj.slug}
+              href={`/projekt/${proj.slug}`}
+              onMouseEnter={forceOpen ? () => setHoverIndex(i) : undefined}
               style={{
                 position: "absolute",
                 left: "50%",
@@ -214,7 +244,9 @@ export default function ProjectStack() {
                 transform: s.transform,
                 zIndex: s.zIndex,
                 opacity: s.opacity,
-                transition: forceOpen ? "none" : "opacity 0.2s ease",
+                transition: forceOpen
+                  ? "none"
+                  : "transform 0.12s ease-out, opacity 0.12s ease-out",
                 willChange: "transform",
                 backfaceVisibility: "hidden",
                 pointerEvents: clickable ? "auto" : "none",
@@ -231,12 +263,12 @@ export default function ProjectStack() {
                   boxShadow: "0 16px 40px rgba(17,17,17,0.12)",
                 }}
               >
-                {p.heroVideo ? (
+                {proj.heroVideo ? (
                   <StackVideo
-                    src={p.heroVideo}
-                    webm={p.heroVideoWebm}
-                    poster={p.heroVideoPoster}
-                    alt={p.heroPlaceholder}
+                    src={proj.heroVideo}
+                    webm={proj.heroVideoWebm}
+                    poster={proj.heroVideoPoster}
+                    alt={proj.heroPlaceholder}
                   />
                 ) : (
                   <ImageSlot placeholder={`Projektbild ${i + 1} hier ablegen`} />
@@ -274,7 +306,7 @@ export default function ProjectStack() {
                         opacity: 0.85,
                       }}
                     >
-                      {p.index}/
+                      {proj.index}/
                     </span>
                     <span
                       style={{
@@ -288,7 +320,7 @@ export default function ProjectStack() {
                         textOverflow: "ellipsis",
                       }}
                     >
-                      {p.title}
+                      {proj.title}
                     </span>
                   </div>
                   <span
@@ -302,7 +334,7 @@ export default function ProjectStack() {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {p.tag}
+                    {proj.tag}
                   </span>
                 </div>
               </div>
