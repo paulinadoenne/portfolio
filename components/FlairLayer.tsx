@@ -72,6 +72,7 @@ export default function FlairLayer() {
       dx: 0,
       dy: 0,
       hoverLink: false,
+      overRondell: false,
     };
     let pmx = state.mx;
     let pmy = state.my;
@@ -82,6 +83,17 @@ export default function FlairLayer() {
       state.my = e.clientY;
       const target = e.target as Element | null;
       state.hoverLink = !!(target && target.closest && target.closest("a, button"));
+      // Über den Rondell-Karten wird die Cursor-Blase ausgeblendet: Die
+      // fokussierte Karte liegt (wegen `transform-style:preserve-3d` auf
+      // ihrem Wrapper, das einen eigenen Stacking-Context aufspannt) sonst
+      // teils UNTER der Cursor-Blase und deren Ring würde Titel/Tag-Text
+      // überlagern. Die Karte selbst gibt beim Fokussieren schon genug
+      // visuelles Feedback (wird groß & frontal).
+      state.overRondell = !!(
+        target &&
+        target.closest &&
+        target.closest("#arbeiten a")
+      );
     };
     window.addEventListener("mousemove", onMove, { passive: true });
 
@@ -94,7 +106,7 @@ export default function FlairLayer() {
         // leicht nachziehend, wie die driftenden Blasen im Feld
         state.dx += (px - state.dx) * 0.22;
         state.dy += (py - state.dy) * 0.22;
-        cursorBubble.style.opacity = "1";
+        cursorBubble.style.opacity = state.overRondell ? "0" : "1";
         cursorBubble.style.left = state.dx + "px";
         cursorBubble.style.top = state.dy + "px";
         const s = state.hoverLink ? 46 : 30;

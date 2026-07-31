@@ -78,8 +78,8 @@ function focusFactor(absD: number) {
  * Zustand der geöffneten Karte (sonst überdeckt deren Vergrößerung die
  * Karten, die eigentlich noch über ihr liegen). */
 function cardTransform(d: number, hovering: boolean) {
-  const gap = 92;
-  const zStep = 150;
+  const gap = 112;
+  const zStep = 182;
   const foc = hovering ? focusFactor(Math.abs(d)) : 0;
   // Vergrößerung bewusst moderat: Die fokussierte Karte muss immer
   // vollständig sichtbar bleiben und darf dafür lieber kleiner ausfallen,
@@ -121,7 +121,7 @@ function cardTransform(d: number, hovering: boolean) {
   const e = -d;
   const rot = REST_ROT * (1 - foc);
   return {
-    transform: `translate(-50%,-50%) translateY(${e * 280}px) translateZ(${-e * 40}px) rotateX(${rot}deg) scale(${scale})`,
+    transform: `translate(-50%,-50%) translateY(${e * 338}px) translateZ(${-e * 48}px) rotateX(${rot}deg) scale(${scale})`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),
     opacity: Math.max(0.15, 1 - e * 0.16),
   };
@@ -239,9 +239,17 @@ export default function ProjectStack() {
       id="arbeiten"
       style={{
         position: "relative",
+        // Eigener Stacking-Context nötig: `transform-style:preserve-3d` auf
+        // dem Karten-Wrapper spannt selbst einen lokalen Stacking-Context
+        // auf, wodurch die inneren Karten-z-Indizes (bis 700) NICHT mehr
+        // global mit Geschwistern wie BubbleField vergleichbar sind — ohne
+        // eigenes z-index hier läge der ganze Kartenstapel effektiv auf
+        // Ebene 0 und die Blasen (z-index 50) würden trotzdem darüber
+        // liegen. Über BubbleField (50), unter Nav/Cursor (200/900).
+        zIndex: 60,
         height: "100vh",
         overflow: "hidden",
-        perspective: "1500px",
+        perspective: "1815px",
         perspectiveOrigin: "50% 16%",
       }}
     >
@@ -344,7 +352,7 @@ export default function ProjectStack() {
                 position: "absolute",
                 left: "50%",
                 top: "58%",
-                width: "min(50vw, 680px)",
+                width: "min(60vw, 820px)",
                 transform: s.transform,
                 zIndex: s.zIndex,
                 opacity: s.opacity,
