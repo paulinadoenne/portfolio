@@ -28,11 +28,11 @@ Static-Host) ohne weitere Konfiguration.
 
 ## Herzstück: Projektstapel
 
-`components/ProjectStack.tsx` – scroll-gesteuertes „Folder-Deck". Der Track ist
-`740vh` hoch, die Szene per `position: sticky; top: 0` gepinnt. Die Blätter-Mathematik
-(`p = scrolled / (0.8 · vh)`, Transform pro Karte, Weg-Blättern nach unten) ist 1:1
-aus dem Handoff übernommen, rAF-gethrottelt. Bei `prefers-reduced-motion` bleibt der
-Stapel statisch im Ausgangszustand sichtbar.
+`components/ProjectStack.tsx` – cursor-gesteuertes „Folder-Deck" in einem normal
+`100vh` hohen Abschnitt (kein Scroll-Jacking mehr). Sobald der Cursor die oberste
+Karte berührt (`mouseenter`), rückt die nächste Karte per CSS-Transition (0.6s)
+nach vorn; React-State (`current`) treibt die Stapel-Transforms. Bei
+`prefers-reduced-motion` läuft der Kartenwechsel ohne Animation (Transition aus).
 
 ## Was noch anzupassen ist (Platzhalter → echt)
 
