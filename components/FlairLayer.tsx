@@ -21,6 +21,9 @@ export default function FlairLayer() {
   useEffect(() => {
     if (!enabled) return;
 
+    // Native Maus ausblenden, solange die Glas-Seifenblase sie ersetzt
+    document.body.style.cursor = "none";
+
     // Custom Cursor: kleine, nachziehende Glas-Seifenblase im Look der [data-bubble]-Blasen
     const cursorBubble = document.createElement("div");
     cursorBubble.style.cssText =
@@ -177,6 +180,7 @@ export default function FlairLayer() {
     return () => {
       running = false;
       window.removeEventListener("mousemove", onMove);
+      document.body.style.removeProperty("cursor");
       cursorBubble.remove();
       bubbles.forEach((bub) => {
         bub.style.removeProperty("translate");
