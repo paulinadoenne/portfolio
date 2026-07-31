@@ -98,15 +98,18 @@ function cardTransform(d: number, hovering: boolean) {
   }
 
   // Bereits berührte, "vordere" Blätter: klappen sanft weiter nach vorne
-  // (statt aus dem Bild zu fliegen) und treten dabei etwas nach unten aus
-  // dem Weg des gerade fokussierten Blatts — bleiben aber unter dem Stapel
-  // der noch unberührten Karten.
-  const e = Math.min(-d, 1.4);
-  const rot = REST_ROT * (1 - foc) - e * 26;
+  // (statt aus dem Bild zu fliegen) und treten dabei aus dem Weg des gerade
+  // fokussierten Blatts — bleiben aber unter dem Stapel der noch
+  // unberührten Karten. `e` bleibt unbegrenzt (nur die Rotation wird
+  // gedeckelt), sonst würden alle weit zurückliegenden Karten an derselben
+  // Stelle übereinander liegen statt sich sichtbar zu trennen.
+  const e = -d;
+  const rotE = Math.min(e, 1.4);
+  const rot = REST_ROT * (1 - foc) - rotE * 26;
   return {
-    transform: `translate(-50%,-50%) translateY(${e * 30}px) translateZ(${e * 80}px) rotateX(${rot}deg) scale(${scale})`,
-    zIndex: 150 + Math.round(foc * 40),
-    opacity: Math.max(0.35, 1 - e * 0.35),
+    transform: `translate(-50%,-50%) translateY(${e * 40}px) translateZ(${e * 55}px) rotateX(${rot}deg) scale(${scale})`,
+    zIndex: 150 + Math.round(foc * 40) - Math.round(e),
+    opacity: Math.max(0.15, 1 - e * 0.16),
   };
 }
 
