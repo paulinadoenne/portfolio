@@ -140,6 +140,14 @@ function openStyle(d: number) {
 
 export default function ProjectStack() {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  // Echte Bildschirm-Position jeder Karte im Ruhezustand (Kopf-oben-Kante).
+  // Wegen der Perspektive rücken die Kartenränder nach hinten immer enger
+  // zusammen — ein fester Pixelwert pro Karte passt daher nur für die
+  // vorderen Karten. Die Cursor-Zuordnung orientiert sich stattdessen an
+  // diesen gemessenen Positionen, damit die Maus beim Fokussieren einer
+  // Karte tatsächlich auf deren sichtbarem Rand steht.
+  const restTopsRef = useRef<number[] | null>(null);
   const [p, setP] = useState(0);
   const [hovering, setHovering] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(0);
@@ -153,17 +161,57 @@ export default function ProjectStack() {
     setForceOpen(reduced || coarse);
   }, []);
 
+  useEffect(() => {
+    // Cache ungültig machen, wenn sich die Größe ändert; die nächste
+    // Hover-Session misst dann automatisch neu.
+    const invalidate = () => {
+      restTopsRef.current = null;
+    };
+    window.addEventListener("resize", invalidate);
+    return () => window.removeEventListener("resize", invalidate);
+  }, []);
+
+  const measureRestTops = () => {
+    const tops = cardRefs.current.map((el) => el?.getBoundingClientRect().top);
+    if (tops.every((t): t is number => t !== undefined)) {
+      restTopsRef.current = tops;
+    }
+  };
+
   const onMouseMove = (e: React.MouseEvent) => {
     if (forceOpen) return;
-    const wrap = wrapRef.current;
-    if (!wrap) return;
     const clientY = e.clientY;
+    // Zu Beginn einer Hover-Session frisch messen (garantiert die aktuelle
+    // Ruheposition statt eines möglicherweise veralteten Mount-Snapshots,
+    // z. B. falls sich das Layout durch später ladende Inhalte verschoben hat).
+    if (!hovering) measureRestTops();
     if (raf.current) cancelAnimationFrame(raf.current);
     raf.current = requestAnimationFrame(() => {
-      const rect = wrap.getBoundingClientRect();
-      const frontY = rect.top + rect.height * FRONT_TOP;
-      const next = Math.max(0, Math.min(N - 1, (frontY - clientY) / PX_PER_CARD));
-      setP(next);
+      const tops = restTopsRef.current;
+      let next: number;
+      if (tops) {
+        if (clientY >= tops[0]) {
+          next = 0;
+        } else if (clientY <= tops[N - 1]) {
+          next = N - 1;
+        } else {
+          next = N - 1;
+          for (let i = 0; i < N - 1; i++) {
+            if (clientY <= tops[i] && clientY >= tops[i + 1]) {
+              const span = tops[i] - tops[i + 1] || 1;
+              next = i + (tops[i] - clientY) / span;
+              break;
+            }
+          }
+        }
+      } else {
+        // Fallback, solange die Messung noch nicht vorliegt
+        const wrap = wrapRef.current;
+        const rect = wrap?.getBoundingClientRect();
+        const frontY = rect ? rect.top + rect.height * FRONT_TOP : 0;
+        next = (frontY - clientY) / PX_PER_CARD;
+      }
+      setP(Math.max(0, Math.min(N - 1, next)));
       setHovering(true);
       setHinted(true);
     });
@@ -281,6 +329,9 @@ export default function ProjectStack() {
           return (
             <Link
               key={proj.slug}
+              ref={(el) => {
+                cardRefs.current[i] = el;
+              }}
               href={`/projekt/${proj.slug}`}
               onMouseEnter={forceOpen ? () => setHoverIndex(i) : undefined}
               style={{
