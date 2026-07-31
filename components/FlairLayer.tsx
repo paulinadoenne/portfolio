@@ -83,17 +83,16 @@ export default function FlairLayer() {
       state.my = e.clientY;
       const target = e.target as Element | null;
       state.hoverLink = !!(target && target.closest && target.closest("a, button"));
-      // Über den Rondell-Karten wird die Cursor-Blase ausgeblendet: Die
-      // fokussierte Karte liegt (wegen `transform-style:preserve-3d` auf
-      // ihrem Wrapper, das einen eigenen Stacking-Context aufspannt) sonst
-      // teils UNTER der Cursor-Blase und deren Ring würde Titel/Tag-Text
-      // überlagern. Die Karte selbst gibt beim Fokussieren schon genug
-      // visuelles Feedback (wird groß & frontal).
-      state.overRondell = !!(
-        target &&
-        target.closest &&
-        target.closest("#arbeiten a")
-      );
+      // Über der ganzen Rondell-Sektion wird die Cursor-Blase ausgeblendet
+      // (nicht nur exakt über den Karten-Links): Die Karten sind gekippte
+      // Trapeze, deren tatsächliche Trefferfläche dem sichtbaren, rotierten
+      // Umriss folgt — nicht ihrer rechteckigen Bounding-Box. In den
+      // schmalen Lücken zwischen zwei Karten-Ecken träfe `#arbeiten a`
+      // daher nicht, obwohl der Cursor optisch mitten im Kartenstapel steht,
+      // und die Blase würde dort kurz sichtbar über Titel/Tag-Text liegen.
+      // Die Karte selbst gibt beim Fokussieren schon genug visuelles
+      // Feedback (wird groß & frontal).
+      state.overRondell = !!(target && target.closest && target.closest("#arbeiten"));
     };
     window.addEventListener("mousemove", onMove, { passive: true });
 
