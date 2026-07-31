@@ -12,16 +12,16 @@ import type { CSSProperties } from "react";
  * wenige Blasen und ein schlanker Filter (1 Oktave, kleine Filter-Region).
  */
 
-const IRIS =
+export const IRIS =
   "conic-gradient(from {ANGLE}, rgba(255,120,180,0.10), rgba(120,220,255,0.13), rgba(255,235,140,0.10), rgba(170,140,255,0.13), rgba(120,255,210,0.10), rgba(255,120,180,0.10))";
-const IRIS_MASK =
+export const IRIS_MASK =
   "radial-gradient(circle at 50% 50%, transparent 50%, #000 76%, rgba(0,0,0,0.4) 92%, transparent 100%)";
 
-const NEUTRAL_BG =
+export const NEUTRAL_BG =
   "radial-gradient(circle at 32% 27%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.08) 22%, rgba(255,255,255,0.02) 55%, rgba(255,255,255,0.10) 80%, rgba(255,255,255,0.30) 94%, rgba(255,255,255,0.06) 100%)";
 const ACCENT_BG =
   "radial-gradient(circle at 32% 27%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.08) 22%, rgba(232,69,44,0.02) 55%, rgba(232,69,44,0.06) 80%, rgba(232,120,90,0.22) 94%, rgba(232,69,44,0.05) 100%)";
-const NEUTRAL_SHADOW =
+export const NEUTRAL_SHADOW =
   "inset 0 0 20px rgba(255,255,255,0.35), inset -14px -18px 34px rgba(17,17,17,0.05), inset 12px 14px 26px rgba(255,255,255,0.55), 0 22px 50px rgba(17,17,17,0.06)";
 const ACCENT_SHADOW =
   "inset 0 0 20px rgba(255,255,255,0.35), inset -14px -18px 34px rgba(180,70,45,0.07), inset 12px 14px 26px rgba(255,255,255,0.55), 0 22px 50px rgba(17,17,17,0.06)";

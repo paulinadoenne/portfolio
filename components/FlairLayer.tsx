@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { IRIS, IRIS_MASK, NEUTRAL_BG, NEUTRAL_SHADOW } from "./BubbleField";
 
 /*
  * Interaktions-Ebene der Startseite (Custom Cursor, Deck-Wobble, Gelee-Effekt
@@ -20,15 +21,26 @@ export default function FlairLayer() {
   useEffect(() => {
     if (!enabled) return;
 
-    // Custom Cursor: kleiner Akzentpunkt + nachziehender Ring
-    const dot = document.createElement("div");
-    dot.style.cssText =
-      "position:absolute; width:10px; height:10px; border-radius:50%; background:var(--accent); z-index:900; pointer-events:none; transform:translate(-50%,-50%); opacity:0; will-change:transform";
-    const ring = document.createElement("div");
-    ring.style.cssText =
-      "position:absolute; width:36px; height:36px; border-radius:50%; border:1.5px solid #111111; z-index:900; pointer-events:none; transform:translate(-50%,-50%); opacity:0; will-change:transform; transition:width 0.25s ease, height 0.25s ease";
-    document.body.appendChild(dot);
-    document.body.appendChild(ring);
+    // Custom Cursor: kleine, nachziehende Glas-Seifenblase im Look der [data-bubble]-Blasen
+    const cursorBubble = document.createElement("div");
+    cursorBubble.style.cssText =
+      "position:absolute; width:30px; height:30px; border-radius:50%; overflow:hidden;" +
+      `background:${NEUTRAL_BG}; border:1px solid rgba(255,255,255,0.95); box-shadow:${NEUTRAL_SHADOW};` +
+      "-webkit-backdrop-filter:url(#pd-glass); backdrop-filter:url(#pd-glass);" +
+      "z-index:900; pointer-events:none; transform:translate(-50%,-50%); opacity:0; will-change:transform;" +
+      "transition:width 0.25s ease, height 0.25s ease";
+    const cursorIris = document.createElement("div");
+    cursorIris.style.cssText =
+      "position:absolute; inset:0; border-radius:inherit;" +
+      `background:${IRIS.replace("{ANGLE}", "205deg")};` +
+      `-webkit-mask-image:${IRIS_MASK}; mask-image:${IRIS_MASK};`;
+    const cursorShine = document.createElement("div");
+    cursorShine.style.cssText =
+      "position:absolute; top:12%; left:16%; width:30%; height:16%; border-radius:50%;" +
+      "background:rgba(255,255,255,0.85); filter:blur(3px); transform:rotate(-24deg);";
+    cursorBubble.appendChild(cursorIris);
+    cursorBubble.appendChild(cursorShine);
+    document.body.appendChild(cursorBubble);
 
     // Gelee-Effekt: additive Maus-Interaktion pro Blase über die unabhängigen
     // CSS-Properties translate/scale/rotate (kollidiert nicht mit den Keyframes).
@@ -56,8 +68,6 @@ export default function FlairLayer() {
       seen: false,
       dx: 0,
       dy: 0,
-      rx2: 0,
-      ry2: 0,
       hoverLink: false,
     };
     let pmx = state.mx;
@@ -78,19 +88,15 @@ export default function FlairLayer() {
       if (state.seen) {
         const px = state.mx + window.scrollX;
         const py = state.my + window.scrollY;
-        state.dx += (px - state.dx) * 0.35;
-        state.dy += (py - state.dy) * 0.35;
-        state.rx2 += (px - state.rx2) * 0.12;
-        state.ry2 += (py - state.ry2) * 0.12;
-        dot.style.opacity = "1";
-        ring.style.opacity = "0.9";
-        dot.style.left = state.dx + "px";
-        dot.style.top = state.dy + "px";
-        ring.style.left = state.rx2 + "px";
-        ring.style.top = state.ry2 + "px";
-        const s = state.hoverLink ? 54 : 36;
-        ring.style.width = s + "px";
-        ring.style.height = s + "px";
+        // leicht nachziehend, wie die driftenden Blasen im Feld
+        state.dx += (px - state.dx) * 0.22;
+        state.dy += (py - state.dy) * 0.22;
+        cursorBubble.style.opacity = "1";
+        cursorBubble.style.left = state.dx + "px";
+        cursorBubble.style.top = state.dy + "px";
+        const s = state.hoverLink ? 46 : 30;
+        cursorBubble.style.width = s + "px";
+        cursorBubble.style.height = s + "px";
       }
 
       // ===== Gelee-Effekt der Blasen =====
@@ -171,8 +177,7 @@ export default function FlairLayer() {
     return () => {
       running = false;
       window.removeEventListener("mousemove", onMove);
-      dot.remove();
-      ring.remove();
+      cursorBubble.remove();
       bubbles.forEach((bub) => {
         bub.style.removeProperty("translate");
         bub.style.removeProperty("scale");
