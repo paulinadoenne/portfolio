@@ -56,7 +56,9 @@ function StackVideo({
   );
 }
 
-const REST_ROT = 44; // starker Kippwinkel: Stapel wirkt wie von schräg oben betrachtet
+// Negativer Winkel: Man blickt von schräg oben in den Stapel hinein (wie in
+// eine Aktensammlung), statt von unten gegen eine gekippte Wand zu schauen.
+const REST_ROT = -46;
 const FOCUS_WINDOW = 0.55; // Indexabstand, über den eine Karte "in den Fokus" kommt
 
 /* 0 (kein Fokus) … 1 (Cursor steht exakt auf dieser Karte), sanft geglättet. */
@@ -65,33 +67,34 @@ function focusFactor(absD: number) {
   return t * t * (3 - 2 * t);
 }
 
-/* Ruheposition im Stapel für Tiefe d >= 0 (0 = vorderste/aktuelle Karte) —
- * enger, vielschichtiger Turm, stark von oben gekippt. Bleibt der Cursor auf
- * einer Karte stehen (d ≈ 0), richtet sie sich frontal auf und vergrößert
- * sich — wie aus dem Stapel herausgehoben. */
-function restStyle(d: number) {
+/* Karte in Stapeltiefe d (0 = aktuell berührtes Blatt, > 0 = noch unberührt/
+ * tiefer im Stapel, < 0 = bereits passiert/"davor" liegend). `foc` (0…1) hebt
+ * das gerade berührte Blatt frontal & groß heraus — nur während der Cursor
+ * aktiv über dem Stapel ist, sonst bleibt alles in Ruheposition klein. */
+function cardTransform(d: number, hovering: boolean) {
   const gap = 30;
   const zStep = 110;
-  const foc = focusFactor(d);
-  const rot = REST_ROT * (1 - foc);
+  const foc = hovering ? focusFactor(Math.abs(d)) : 0;
   const scale = 1 + foc * 0.34;
-  return {
-    transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg) scale(${scale})`,
-    zIndex: 200 - Math.round(d * 12) + Math.round(foc * 60),
-    opacity: Math.max(0.55, 1 - d * 0.065),
-  };
-}
 
-/* Ein bereits "abgelegtes" Blatt (d < 0, Cursor ist am Blatt vorbeigewandert):
- * fliegt nach unten aus dem Bild — wie eine Rondell-Seite, die man
- * weitergeblättert hat. */
-function flyStyle(d: number) {
-  const e = -d;
-  const ee = Math.min(e, 1);
+  if (d >= 0) {
+    const rot = REST_ROT * (1 - foc);
+    return {
+      transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg) scale(${scale})`,
+      zIndex: 200 - Math.round(d * 12) + Math.round(foc * 60),
+      opacity: Math.max(0.55, 1 - d * 0.065),
+    };
+  }
+
+  // Bereits berührte, "vordere" Blätter: klappen sanft weiter nach vorne
+  // (statt aus dem Bild zu fliegen) und treten dabei etwas zur Seite/nach
+  // unten aus dem Weg des gerade fokussierten Blatts.
+  const e = Math.min(-d, 1.4);
+  const rot = REST_ROT * (1 - foc) - e * 26;
   return {
-    transform: `translate(-50%,-50%) translateY(${e * 70}vh) translateZ(${ee * 160}px) rotateX(${REST_ROT + ee * 26}deg)`,
-    zIndex: 300,
-    opacity: 1,
+    transform: `translate(-50%,-50%) translateY(${e * 30}px) translateZ(${e * 80}px) rotateX(${rot}deg) scale(${scale})`,
+    zIndex: 260 + Math.round(foc * 60),
+    opacity: Math.max(0.35, 1 - e * 0.35),
   };
 }
 
@@ -100,7 +103,7 @@ function flyStyle(d: number) {
 function openStyle(d: number) {
   const gap = 150;
   const zStep = 26;
-  const rot = 4;
+  const rot = -4;
   return {
     transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg)`,
     zIndex: 200 - Math.round(d * 12),
@@ -111,6 +114,7 @@ function openStyle(d: number) {
 export default function ProjectStack() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [p, setP] = useState(0);
+  const [hovering, setHovering] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(0);
   const [forceOpen, setForceOpen] = useState(false);
   const [hinted, setHinted] = useState(false);
@@ -133,7 +137,8 @@ export default function ProjectStack() {
       const frontY = rect.top + rect.height * FRONT_TOP;
       const next = Math.max(0, Math.min(N - 1, (frontY - clientY) / PX_PER_CARD));
       setP(next);
-      if (next > 0.05) setHinted(true);
+      setHovering(true);
+      setHinted(true);
     });
   };
 
@@ -141,6 +146,7 @@ export default function ProjectStack() {
     if (forceOpen) return;
     if (raf.current) cancelAnimationFrame(raf.current);
     setP(0);
+    setHovering(false);
   };
 
   const displayIndex = forceOpen
@@ -240,8 +246,9 @@ export default function ProjectStack() {
             clickable = true;
           } else {
             const d = i - p;
-            s = d >= 0 ? restStyle(d) : flyStyle(d);
+            s = cardTransform(d, hovering);
             // exakt die Karte, die auch in der Kopfzeile angezeigt wird
+            // (in Ruhe ohne Hover ist das die erste Karte, sonst die berührte)
             clickable = i === displayIndex;
           }
           return (
