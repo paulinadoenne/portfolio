@@ -142,13 +142,36 @@ export default async function ProjektPage({
           style={{
             position: "relative",
             width: "100%",
-            aspectRatio: "21/9",
+            aspectRatio: p.heroRatio ?? "21/9",
             overflow: "hidden",
             background: "var(--img-bg)",
           }}
         >
           <div style={{ position: "absolute", inset: 0 }}>
-            <ImageSlot placeholder={p.heroPlaceholder} />
+            {p.heroVideo ? (
+              <video
+                controls
+                playsInline
+                preload="metadata"
+                poster={p.heroVideoPoster}
+                aria-label={p.heroPlaceholder}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              >
+                {p.heroVideoWebm && (
+                  <source src={p.heroVideoWebm} type="video/webm" />
+                )}
+                <source src={p.heroVideo} type="video/mp4" />
+              </video>
+            ) : (
+              <ImageSlot placeholder={p.heroPlaceholder} />
+            )}
           </div>
         </Reveal>
       </div>
@@ -203,7 +226,7 @@ export default async function ProjektPage({
               }}
             >
               <div style={{ position: "absolute", inset: 0 }}>
-                <ImageSlot placeholder={g.placeholder} />
+                <ImageSlot placeholder={g.placeholder} src={g.src} />
               </div>
             </Reveal>
             <div style={captionStyle}>{g.caption}</div>
@@ -260,7 +283,7 @@ export default async function ProjektPage({
             }}
           >
             <div style={{ position: "absolute", inset: 0 }}>
-              <ImageSlot placeholder={p.closingPlaceholder} />
+              <ImageSlot placeholder={p.closingPlaceholder} src={p.closingSrc} />
             </div>
           </Reveal>
           <div style={captionStyle}>{p.closingCaption}</div>

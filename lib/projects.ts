@@ -8,6 +8,7 @@ export type GalleryItem = {
   span2?: boolean;
   caption: string;
   placeholder: string;
+  src?: string;
 };
 
 export type Project = {
@@ -23,35 +24,45 @@ export type Project = {
   aufgabe: string;
   umsetzung: string;
   heroPlaceholder: string;
+  heroRatio?: "21/9" | "16/9";
+  heroVideo?: string;
+  heroVideoWebm?: string;
+  heroVideoPoster?: string;
   gallery: GalleryItem[];
   closingSlotId: string;
   closingCaption: string;
   closingPlaceholder: string;
+  closingSrc?: string;
 };
 
 export const projects: Project[] = [
   {
     index: "01",
-    slug: "vela-mobility",
-    title: "VELA Mobility",
-    tag: "Commercial · Imagefilm",
-    kunde: "VELA Mobility GmbH",
-    rolle: "Konzept, Art Direction & Animation",
-    jahr: "2025",
-    leistungen: "Storyboard, 30s-Spot, Social Cutdowns, Key Visuals",
+    slug: "the-double-standard-of-aging",
+    title: "The Double Standard of Aging",
+    tag: "Bachelorarbeit · Kinetic Typography",
+    kunde: "Eigenprojekt (Bachelorarbeit)",
+    rolle: "Konzept, Recherche, Typografie & Animation",
+    jahr: "2026",
+    leistungen: "Recherche, Interviews, Skript, Kinetic Typography, Sounddesign",
     aufgabe:
-      "VELA bringt E-Lastenräder in Innenstädte — bekannt war die Marke aber nur in der Branche. Der 30-Sekunden-Spot erzählt einen Liefertag aus der Perspektive des Rads: schnell geschnitten, mit animierten Typo-Inserts im Takt der Musik. Aus dem Spot entstanden zwölf Cutdowns für Social und eine Key-Visual-Serie für OOH.",
+      "Für die Bachelorarbeit sollte ein Kurzfilm entstehen, der den doppelten Standard beim Altern sichtbar macht: Warum werden Frauen und Männer gesellschaftlich so unterschiedlich bewertet, wenn es um Aussehen, Selbstbild und Lebensplanung geht? Grundlage sind reale Interview-Aussagen, die den Film tragen.",
     umsetzung:
-      "Vom Storyboard bis zum finalen Grade in sechs Wochen: Dreh an zwei Tagen in Köln, danach Schnitt, 2D-Typo-Animation in After Effects und Sounddesign. Die Insert-Typografie greift das Ladeflächen-Raster der Räder auf — dadurch funktionieren Spot, Plakat und Feed als eine Familie.",
-    heroPlaceholder: "Hero-Bild des Projekts hier ablegen",
+      "Aus den Interviews wurden prägnante Zeilen zu einem Skript montiert und als kinetische Typografie inszeniert — jede Aussage bekommt ihren eigenen Rhythmus im Takt der Stimme. Die reduzierte Rot-Weiß-Palette hält den Fokus konsequent auf dem gesprochenen Wort.",
+    heroPlaceholder: "Filmstill — The Double Standard of Aging",
+    heroRatio: "16/9",
+    heroVideo: "/projects/the-double-standard-of-aging/film.mp4",
+    heroVideoWebm: "/projects/the-double-standard-of-aging/film.webm",
+    heroVideoPoster: "/projects/the-double-standard-of-aging/poster.jpg",
     gallery: [
-      { slotId: "detail-1", ratio: "16/9", span2: true, caption: "Filmstill — Eröffnungsszene, 00:04", placeholder: "Filmstill: Eröffnungsszene hier ablegen" },
-      { slotId: "detail-2", ratio: "4/5", caption: "Key Visual — Citylight-Format", placeholder: "Key Visual (Hochformat) hier ablegen" },
-      { slotId: "detail-3", ratio: "4/5", caption: "Social Cutdown — Typo-Insert", placeholder: "Social Cutdown (9:16-Still) hier ablegen" },
+      { slotId: "detail-1", ratio: "16/9", span2: true, src: "/projects/the-double-standard-of-aging/still-unsicherheit.jpg", caption: "Filmstill — „…von einerseits ’ner sehr großen Unsicherheit“", placeholder: "Filmstill hier ablegen" },
+      { slotId: "detail-2", ratio: "4/5", caption: "Set-Detail oder Making-of", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "4/5", caption: "Skript-Auszug oder Storyboard", placeholder: "Skript/Storyboard hier ablegen" },
     ],
     closingSlotId: "detail-4",
-    closingCaption: "OOH-Serie — Großfläche, Kampagnenmotiv 2/3",
-    closingPlaceholder: "OOH-Motiv oder Making-of hier ablegen",
+    closingCaption: "Filmstill — „Der hatte gedacht, ich wär deutlich jünger.“",
+    closingPlaceholder: "Making-of hier ablegen",
+    closingSrc: "/projects/the-double-standard-of-aging/still-juenger.jpg",
   },
   {
     index: "02",
