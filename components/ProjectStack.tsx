@@ -7,6 +7,8 @@ import { projects } from "@/lib/projects";
 
 const N = projects.length;
 const EASE = "cubic-bezier(0.22, 0.8, 0.24, 1)";
+const FRONT_TOP = 0.58; // matches Karten-Anker `top: 58%`
+const MAX_LIFT_PX = 380; // Cursor-Weg nach oben bis volle Auffächerung
 
 /* Stumme Autoplay-Vorschau für Projekte mit Hero-Video (Deck-Karte ist ein
  * Link, daher keine Controls). Respektiert prefers-reduced-motion — dann
@@ -55,25 +57,59 @@ function StackVideo({
   );
 }
 
-/* Transform pro Stapeltiefe d (0 = oberste Karte) — unverändert aus dem
- * Handoff übernommen, nur die Auslösung ist jetzt der Cursor statt Scroll. */
-function cardStyle(d: number) {
+/* Transform pro Stapeltiefe d (0 = vorderste Karte), abhängig vom
+ * Auffächer-Grad `spread` (0 = geschlossener Stapel, 1 = Rondell voll
+ * offen): Kartenabstand wächst, Tiefenversatz flacht ab, Deckkraft steigt. */
+function cardStyle(d: number, spread: number) {
+  const gap = 56 + spread * (150 - 56);
+  const zStep = 120 - spread * (120 - 26);
+  const rot = 12 - spread * 7;
+  const closedOpacity = Math.max(0, Math.min(1, 1 - (d - 4) / 3.8));
+  const opacity = closedOpacity + spread * (1 - closedOpacity);
   return {
-    transform: `translate(-50%,-50%) translateY(${-d * 56}px) translateZ(${-d * 120}px) rotateX(12deg)`,
+    transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg)`,
     zIndex: 200 - Math.round(d * 12),
-    opacity: Math.max(0, Math.min(1, 1 - (d - 4) / 3.8)),
+    opacity,
   };
 }
 
 export default function ProjectStack() {
-  const [current, setCurrent] = useState(0);
-  const [reduced, setReduced] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [spread, setSpread] = useState(0);
+  const [hoverIndex, setHoverIndex] = useState(0);
+  const [forceOpen, setForceOpen] = useState(false);
+  const [hinted, setHinted] = useState(false);
+  const raf = useRef(0);
 
   useEffect(() => {
-    setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    setForceOpen(reduced || coarse);
   }, []);
 
-  const advance = () => setCurrent((c) => (c + 1) % N);
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (forceOpen) return;
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const clientY = e.clientY;
+    if (raf.current) cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(() => {
+      const rect = wrap.getBoundingClientRect();
+      const frontY = rect.top + rect.height * FRONT_TOP;
+      const t = Math.max(0, Math.min(1, (frontY - clientY) / MAX_LIFT_PX));
+      setSpread(t);
+      if (t > 0.06) setHinted(true);
+    });
+  };
+
+  const onMouseLeave = () => {
+    if (forceOpen) return;
+    if (raf.current) cancelAnimationFrame(raf.current);
+    setSpread(0);
+    setHoverIndex(0);
+  };
+
+  const effectiveSpread = forceOpen ? 1 : spread;
 
   return (
     <section
@@ -112,7 +148,7 @@ export default function ProjectStack() {
           zIndex: 400,
         }}
       >
-        {"0" + (current + 1) + " / 0" + N}
+        {"0" + (hoverIndex + 1) + " / 0" + N}
       </div>
       <div
         style={{
@@ -128,27 +164,32 @@ export default function ProjectStack() {
           zIndex: 400,
         }}
       >
-        {projects[current].title}
+        {projects[hoverIndex].title}
       </div>
-      <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          bottom: "28px",
-          transform: "translateX(-50%)",
-          fontSize: "12px",
-          fontWeight: 700,
-          textTransform: "uppercase",
-          letterSpacing: "0.16em",
-          opacity: current > 0 ? 0 : 0.5,
-          zIndex: 250,
-          transition: "opacity 0.4s ease",
-        }}
-      >
-        Mit dem Cursor über die Karten gleiten
-      </div>
+      {!forceOpen && (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            bottom: "28px",
+            transform: "translateX(-50%)",
+            fontSize: "12px",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.16em",
+            opacity: hinted ? 0 : 0.5,
+            zIndex: 250,
+            transition: "opacity 0.4s ease",
+          }}
+        >
+          Cursor nach oben über die Karten bewegen ↑
+        </div>
+      )}
 
       <div
+        ref={wrapRef}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
         style={{
           position: "absolute",
           inset: 0,
@@ -156,14 +197,13 @@ export default function ProjectStack() {
         }}
       >
         {projects.map((p, i) => {
-          const d = ((i - current) % N + N) % N;
-          const s = cardStyle(d);
-          const isTop = d === 0;
+          const s = cardStyle(i, effectiveSpread);
+          const clickable = i === 0 || s.opacity > 0.5;
           return (
             <Link
               key={p.slug}
               href={`/projekt/${p.slug}`}
-              onMouseEnter={isTop ? advance : undefined}
+              onMouseEnter={() => setHoverIndex(i)}
               style={{
                 position: "absolute",
                 left: "50%",
@@ -172,12 +212,10 @@ export default function ProjectStack() {
                 transform: s.transform,
                 zIndex: s.zIndex,
                 opacity: s.opacity,
-                transition: reduced
-                  ? "none"
-                  : `transform 0.6s ${EASE}, opacity 0.6s ${EASE}`,
+                transition: forceOpen ? "none" : "opacity 0.2s ease",
                 willChange: "transform",
                 backfaceVisibility: "hidden",
-                pointerEvents: isTop ? "auto" : "none",
+                pointerEvents: clickable ? "auto" : "none",
               }}
             >
               <div
