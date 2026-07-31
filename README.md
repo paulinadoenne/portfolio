@@ -29,11 +29,13 @@ Static-Host) ohne weitere Konfiguration.
 ## Herzstück: Projektstapel
 
 `components/ProjectStack.tsx` – cursor-gesteuertes „Folder-Deck" in einem normal
-`100vh` hohen Abschnitt (kein Scroll-Jacking mehr). Bewegt sich der Cursor von der
-vordersten Karte aus nach oben über den Stapel, fächern sich alle Karten stufenlos
-wie ein Rondell auf (Cursor-Y-Position → `spread`-Wert 0–1, treibt Kartenabstand,
-Tiefenversatz und Deckkraft) und werden einzeln anklickbar. Auf Touch-Geräten und
-bei `prefers-reduced-motion` ist der Stapel dauerhaft voll aufgefächert.
+`100vh` hohen Abschnitt (kein Scroll-Jacking mehr), als Screenshot-Turm wie im
+Rondell-Vorbild: Cursor-Y-Position treibt kontinuierlich einen Fortschrittswert
+`p` (0…Anzahl−1). Die vorderste, bereits „passierte" Karte fliegt beim Hochfahren
+sichtbar nach unten aus dem Bild und gibt die dahinterliegenden frei — genau eine
+Karte ist jeweils aktiv/anklickbar, synchron zur Kopfzeilen-Anzeige. Auf
+Touch-Geräten und bei `prefers-reduced-motion` (kein Hover verfügbar) ist der
+Stapel stattdessen dauerhaft statisch voll aufgefächert und jede Karte klickbar.
 
 ## Was noch anzupassen ist (Platzhalter → echt)
 
