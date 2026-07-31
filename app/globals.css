@@ -1,0 +1,199 @@
+/* ===== Design Tokens (aus dem Handoff) ===== */
+:root {
+  --paper: #ffffff; /* Hintergrund */
+  --ink: #111111; /* Text / Borders */
+  --accent: #e8452c; /* Akzent — Alternativen: #2547d0, #0f7b4c, #131209 */
+  --img-bg: #f0f0f0; /* Bild-Platzhalterfläche */
+  --footer-bg: #111111;
+  --footer-hair: rgba(255, 255, 255, 0.2);
+  --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+  --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  color: var(--ink);
+  font-family: var(--font);
+}
+
+a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+/* Impressum-Textlinks: unterstrichen */
+.pd-underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Gefüllter Button -> Akzent beim Hover */
+.pd-btn-fill:hover {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+/* "Nächstes Projekt": Pfeil-Nudge + Akzent beim Hover */
+.pd-next:hover {
+  color: var(--accent) !important;
+}
+.pd-next .pd-arrow {
+  transition:
+    transform 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+.pd-next:hover .pd-arrow {
+  transform: translateX(8px);
+  color: var(--accent);
+}
+
+@keyframes pd-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ===== Flair-Ebene: Lavalampen-Bewegung der Seifenblasen ===== */
+@keyframes pd-lava-a {
+  0% {
+    transform: translate(0, 6vh) rotate(0deg) scale(1);
+  }
+  26% {
+    transform: translate(2.4vw, -17vh) rotate(5deg) scale(1.07);
+  }
+  54% {
+    transform: translate(-1.2vw, -42vh) rotate(-4deg) scale(1.13);
+  }
+  78% {
+    transform: translate(1.6vw, -22vh) rotate(3deg) scale(1.03);
+  }
+  100% {
+    transform: translate(0, 6vh) rotate(0deg) scale(1);
+  }
+}
+@keyframes pd-lava-b {
+  0% {
+    transform: translate(0, 4vh) rotate(0deg) scale(0.95);
+  }
+  30% {
+    transform: translate(-2.6vw, -14vh) rotate(-6deg) scale(1.06);
+  }
+  58% {
+    transform: translate(1.4vw, -33vh) rotate(4deg) scale(1.16);
+  }
+  82% {
+    transform: translate(-1.8vw, -16vh) rotate(-2deg) scale(1.02);
+  }
+  100% {
+    transform: translate(0, 4vh) rotate(0deg) scale(0.95);
+  }
+}
+@keyframes pd-lava-c {
+  0% {
+    transform: translate(0, 8vh) rotate(0deg) scale(1.05);
+  }
+  24% {
+    transform: translate(1.8vw, -24vh) rotate(4deg) scale(0.96);
+  }
+  52% {
+    transform: translate(-1.4vw, -54vh) rotate(-5deg) scale(0.9);
+  }
+  80% {
+    transform: translate(1vw, -28vh) rotate(3deg) scale(1);
+  }
+  100% {
+    transform: translate(0, 8vh) rotate(0deg) scale(1.05);
+  }
+}
+/* organisches Morphen der Blasen-Silhouette */
+@keyframes pd-shape {
+  0%,
+  100% {
+    border-radius: 62% 38% 54% 46% / 48% 62% 38% 52%;
+  }
+  25% {
+    border-radius: 40% 60% 44% 56% / 62% 40% 58% 38%;
+  }
+  50% {
+    border-radius: 56% 44% 64% 36% / 38% 56% 42% 62%;
+  }
+  75% {
+    border-radius: 44% 56% 38% 62% / 58% 42% 62% 38%;
+  }
+}
+
+/* ===== Lebenslauf (A4-Dokument, druckbar) ===== */
+.cv-stage {
+  background: #e9e9e6;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+}
+.cv-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: 0 10px 40px rgba(17, 17, 17, 0.15);
+}
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+@media print {
+  .pd-no-print {
+    display: none !important;
+  }
+  .cv-stage {
+    background: #ffffff;
+    padding: 0;
+  }
+  .cv-sheet {
+    box-shadow: none;
+    width: auto;
+    min-height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .pd-marquee {
+    animation: none !important;
+  }
+}
+
+/* Glas-Blasen nur mit Motion & feinem Zeiger (Desktop) — sonst aus */
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .pd-bubble-layer {
+    display: none;
+  }
+}
