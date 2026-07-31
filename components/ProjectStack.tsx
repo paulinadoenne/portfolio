@@ -78,7 +78,7 @@ function focusFactor(absD: number) {
  * Zustand der geöffneten Karte (sonst überdeckt deren Vergrößerung die
  * Karten, die eigentlich noch über ihr liegen). */
 function cardTransform(d: number, hovering: boolean) {
-  const gap = 58;
+  const gap = 92;
   const zStep = 150;
   const foc = hovering ? focusFactor(Math.abs(d)) : 0;
   // Vergrößerung bewusst moderat: Die fokussierte Karte muss immer
