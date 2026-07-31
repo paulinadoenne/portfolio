@@ -56,15 +56,28 @@ function StackVideo({
   );
 }
 
+const REST_ROT = 44; // starker Kippwinkel: Stapel wirkt wie von schräg oben betrachtet
+const FOCUS_WINDOW = 0.55; // Indexabstand, über den eine Karte "in den Fokus" kommt
+
+/* 0 (kein Fokus) … 1 (Cursor steht exakt auf dieser Karte), sanft geglättet. */
+function focusFactor(absD: number) {
+  const t = Math.max(0, 1 - absD / FOCUS_WINDOW);
+  return t * t * (3 - 2 * t);
+}
+
 /* Ruheposition im Stapel für Tiefe d >= 0 (0 = vorderste/aktuelle Karte) —
- * enger, vielschichtiger Turm (Screenshot-Referenz). */
+ * enger, vielschichtiger Turm, stark von oben gekippt. Bleibt der Cursor auf
+ * einer Karte stehen (d ≈ 0), richtet sie sich frontal auf und vergrößert
+ * sich — wie aus dem Stapel herausgehoben. */
 function restStyle(d: number) {
   const gap = 30;
   const zStep = 110;
-  const rot = 10;
+  const foc = focusFactor(d);
+  const rot = REST_ROT * (1 - foc);
+  const scale = 1 + foc * 0.34;
   return {
-    transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg)`,
-    zIndex: 200 - Math.round(d * 12),
+    transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg) scale(${scale})`,
+    zIndex: 200 - Math.round(d * 12) + Math.round(foc * 60),
     opacity: Math.max(0.55, 1 - d * 0.065),
   };
 }
@@ -76,7 +89,7 @@ function flyStyle(d: number) {
   const e = -d;
   const ee = Math.min(e, 1);
   return {
-    transform: `translate(-50%,-50%) translateY(${e * 70}vh) translateZ(${ee * 160}px) rotateX(${10 + ee * 26}deg)`,
+    transform: `translate(-50%,-50%) translateY(${e * 70}vh) translateZ(${ee * 160}px) rotateX(${REST_ROT + ee * 26}deg)`,
     zIndex: 300,
     opacity: 1,
   };
