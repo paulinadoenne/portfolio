@@ -39,7 +39,7 @@ export default function Home() {
           Paulina Dönne
           <br />
           <span style={{ whiteSpace: "nowrap" }}>
-            Designportfolio 2026<span style={{ color: "var(--accent)" }}>.</span>
+            Designportfolio<span style={{ color: "var(--accent)" }}>.</span>
           </span>
         </Reveal>
       </header>
