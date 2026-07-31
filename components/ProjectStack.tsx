@@ -109,17 +109,17 @@ function cardTransform(d: number, hovering: boolean) {
     };
   }
 
-  // Bereits berührte, "vordere" Blätter: klappen sanft weiter nach vorne
-  // (statt aus dem Bild zu fliegen) und treten dabei aus dem Weg des gerade
-  // fokussierten Blatts — bleiben aber unter dem Stapel der noch
-  // unberührten Karten. `e` bleibt unbegrenzt (nur die Rotation wird
-  // gedeckelt), sonst würden alle weit zurückliegenden Karten an derselben
-  // Stelle übereinander liegen statt sich sichtbar zu trennen.
+  // Bereits berührte, "vordere" Blätter: rutschen deutlich nach unten aus
+  // dem Bereich der fokussierten Karte heraus, damit deren Fläche
+  // vollständig frei bleibt (statt nur leicht nach vorne zu klappen und
+  // dabei noch hineinzuragen) — und schrumpfen dabei etwas. `e` bleibt
+  // unbegrenzt (nur die Rotation wird gedeckelt), sonst würden alle weit
+  // zurückliegenden Karten an derselben Stelle übereinander liegen.
   const e = -d;
   const rotE = Math.min(e, 1.4);
   const rot = REST_ROT * (1 - foc) - rotE * 26;
   return {
-    transform: `translate(-50%,-50%) translateY(${e * 54}px) translateZ(${e * 70}px) rotateX(${rot}deg) scale(${scale})`,
+    transform: `translate(-50%,-50%) translateY(${e * 280}px) translateZ(${-e * 40}px) rotateX(${rot}deg) scale(${scale})`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),
     opacity: Math.max(0.15, 1 - e * 0.16),
   };
