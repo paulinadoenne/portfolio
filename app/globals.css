@@ -197,3 +197,13 @@ a:hover {
     display: none;
   }
 }
+
+/* Nav auf schmalen Viewports: Die dekorative Mittelspalte ("Kommunikations-
+   design — Portfolio 2026") beansprucht zu viel Breite, sodass die rechten
+   Links (Arbeiten/Über/Kontakt) über den Viewport-Rand hinausgeschoben und
+   abgeschnitten werden — daher hier ausblenden. */
+@media (max-width: 640px) {
+  .pd-nav-subtitle {
+    display: none;
+  }
+}

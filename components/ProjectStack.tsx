@@ -113,11 +113,13 @@ function cardTransform(d: number, hovering: boolean) {
   // dem Bereich der fokussierten Karte heraus, damit deren Fläche
   // vollständig frei bleibt (statt nur leicht nach vorne zu klappen und
   // dabei noch hineinzuragen) — und schrumpfen dabei etwas. `e` bleibt
-  // unbegrenzt (nur die Rotation wird gedeckelt), sonst würden alle weit
-  // zurückliegenden Karten an derselben Stelle übereinander liegen.
+  // unbegrenzt, sonst würden alle weit zurückliegenden Karten an derselben
+  // Stelle übereinander liegen. Die Rotation folgt derselben Formel wie im
+  // d>=0-Zweig (kein zusätzlicher Steilheits-Term), sonst kippen die
+  // Karten unterhalb spitz nach hinten weg statt ein gleichmäßiges Trapez
+  // zu bilden.
   const e = -d;
-  const rotE = Math.min(e, 1.4);
-  const rot = REST_ROT * (1 - foc) - rotE * 26;
+  const rot = REST_ROT * (1 - foc);
   return {
     transform: `translate(-50%,-50%) translateY(${e * 280}px) translateZ(${-e * 40}px) rotateX(${rot}deg) scale(${scale})`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),

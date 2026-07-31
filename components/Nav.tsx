@@ -5,6 +5,8 @@ const navStyle: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  flexWrap: "wrap",
+  gap: "8px 20px",
   padding: "22px 40px",
   position: "sticky",
   top: 0,
@@ -35,6 +37,7 @@ export function HomeNav() {
         Paulina Dönne
       </a>
       <div
+        className="pd-nav-subtitle"
         style={{
           fontSize: "13px",
           fontWeight: 500,

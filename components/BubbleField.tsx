@@ -2,7 +2,8 @@ import type { CSSProperties } from "react";
 
 /*
  * Glas-Seifenblasen-Feld als viewport-feste Ebene über der GANZEN Seite:
- *   - liegt über Hero, Projekten und Footer (wird nirgends abgeschnitten),
+ *   - liegt über dem Hero-Hintergrund, aber HINTER Nav-Text und den
+ *     Projekt-Karten-Labels (niedriger z-index als Nav/ProjectStack),
  *   - bewegt sich NICHT durchs Scrollen (kein Springen über den Projekten),
  *   - die Blasen driften nur autonom (Lavalampe).
  * Die Maus-Interaktion (Gelee-Effekt) + Custom Cursor + Deck-Wobble liegen in
@@ -154,7 +155,9 @@ export default function BubbleField() {
           width: "100%",
           height: "100vh",
           overflow: "hidden",
-          zIndex: 500,
+          // Unter Nav (200) und den ProjectStack-Karten (~110–700), damit
+          // Bubbles nie über Titel-/Label-Text liegen.
+          zIndex: 50,
           pointerEvents: "none",
         }}
       >
