@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import ImageSlot from "./ImageSlot";
 import { projects } from "@/lib/projects";
 
 const N = projects.length;
 const EASE = "cubic-bezier(0.22, 0.8, 0.24, 1)";
+const FLIP_MS = 650;
 
 /* Stumme Autoplay-Vorschau für Projekte mit Hero-Video (Deck-Karte ist ein
  * Link, daher keine Controls). Respektiert prefers-reduced-motion — dann
@@ -67,13 +69,29 @@ function cardStyle(d: number) {
 
 export default function ProjectStack() {
   const [current, setCurrent] = useState(0);
+  const [flipping, setFlipping] = useState<number | null>(null);
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, []);
 
-  const advance = () => setCurrent((c) => (c + 1) % N);
+  const advance = () => {
+    if (flipping !== null) return;
+    if (reduced) {
+      setCurrent((c) => (c + 1) % N);
+      return;
+    }
+    setFlipping(current);
+    setTimeout(() => {
+      setCurrent((c) => (c + 1) % N);
+      setFlipping(null);
+    }, FLIP_MS);
+  };
+
+  // Ziel-Ruheposition (hinterstes Blatt), in die die flippende Karte
+  // am Ende der Aktenordner-Animation übergeht.
+  const backRest = cardStyle(N - 1);
 
   return (
     <section
@@ -159,12 +177,24 @@ export default function ProjectStack() {
           const d = ((i - current) % N + N) % N;
           const s = cardStyle(d);
           const isTop = d === 0;
-          return (
-            <Link
-              key={p.slug}
-              href={`/projekt/${p.slug}`}
-              onMouseEnter={isTop ? advance : undefined}
-              style={{
+          const isFlippingThis = flipping === i;
+          const style: CSSProperties = isFlippingThis
+            ? {
+                position: "absolute",
+                left: "50%",
+                top: "58%",
+                width: "min(68vw, 900px)",
+                transformOrigin: "50% 0%",
+                animation: `pd-card-flip ${FLIP_MS}ms ${EASE} forwards`,
+                ["--flip-y" as string]: `${-(N - 1) * 56}px`,
+                ["--flip-z" as string]: `${-(N - 1) * 120}px`,
+                ["--flip-op" as string]: String(backRest.opacity),
+                ["--flip-zi" as string]: String(backRest.zIndex),
+                willChange: "transform",
+                backfaceVisibility: "hidden",
+                pointerEvents: "auto",
+              }
+            : {
                 position: "absolute",
                 left: "50%",
                 top: "58%",
@@ -178,7 +208,13 @@ export default function ProjectStack() {
                 willChange: "transform",
                 backfaceVisibility: "hidden",
                 pointerEvents: isTop ? "auto" : "none",
-              }}
+              };
+          return (
+            <Link
+              key={p.slug}
+              href={`/projekt/${p.slug}`}
+              onMouseEnter={isTop ? advance : undefined}
+              style={style}
             >
               <div
                 style={{
