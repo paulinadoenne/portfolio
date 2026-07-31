@@ -78,10 +78,13 @@ function focusFactor(absD: number) {
  * Zustand der geöffneten Karte (sonst überdeckt deren Vergrößerung die
  * Karten, die eigentlich noch über ihr liegen). */
 function cardTransform(d: number, hovering: boolean) {
-  const gap = 42;
-  const zStep = 130;
+  const gap = 58;
+  const zStep = 150;
   const foc = hovering ? focusFactor(Math.abs(d)) : 0;
-  const scale = 1 + foc * 0.34;
+  // Vergrößerung bewusst moderat: Die fokussierte Karte muss immer
+  // vollständig sichtbar bleiben und darf dafür lieber kleiner ausfallen,
+  // statt in Nachbarkarten hineinzuwachsen.
+  const scale = 1 + foc * 0.14;
 
   if (d >= 0) {
     // Rotation/Skalierung bleiben über den ganzen Bereich stetig (foc blendet
@@ -90,9 +93,18 @@ function cardTransform(d: number, hovering: boolean) {
     // liegt sie im Stapel über der gerade fokussierten Karte, nicht darunter.
     const rot = REST_ROT * (1 - foc);
     const untouched = d > 0.02;
+    // Im Ruhezustand (kein Hover) liegt der Turm der unberührten Karten über
+    // der kleinen vordersten Karte. Sobald aktiv fokussiert wird, muss die
+    // vergrößerte Karte dagegen vollständig sichtbar sein — sie darf dann
+    // auch über ihre unmittelbaren, noch unberührten Nachbarn steigen.
+    const zIndex = untouched
+      ? 500 - Math.round(d * 10)
+      : hovering
+        ? 600 + Math.round(foc * 100)
+        : 200;
     return {
       transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg) scale(${scale})`,
-      zIndex: untouched ? 500 - Math.round(d * 10) : 200 + Math.round(foc * 60),
+      zIndex,
       opacity: Math.max(0.55, 1 - d * 0.065),
     };
   }
@@ -107,7 +119,7 @@ function cardTransform(d: number, hovering: boolean) {
   const rotE = Math.min(e, 1.4);
   const rot = REST_ROT * (1 - foc) - rotE * 26;
   return {
-    transform: `translate(-50%,-50%) translateY(${e * 40}px) translateZ(${e * 55}px) rotateX(${rot}deg) scale(${scale})`,
+    transform: `translate(-50%,-50%) translateY(${e * 54}px) translateZ(${e * 70}px) rotateX(${rot}deg) scale(${scale})`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),
     opacity: Math.max(0.15, 1 - e * 0.16),
   };
@@ -275,7 +287,7 @@ export default function ProjectStack() {
                 position: "absolute",
                 left: "50%",
                 top: "58%",
-                width: "min(68vw, 900px)",
+                width: "min(50vw, 680px)",
                 transform: s.transform,
                 zIndex: s.zIndex,
                 opacity: s.opacity,
