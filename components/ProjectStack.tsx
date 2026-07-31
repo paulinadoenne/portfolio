@@ -7,6 +7,53 @@ import { projects } from "@/lib/projects";
 
 const N = projects.length;
 
+/* Stumme Autoplay-Vorschau für Projekte mit Hero-Video (Deck-Karte ist ein
+ * Link, daher keine Controls). Respektiert prefers-reduced-motion — dann
+ * bleibt nur das Poster-Bild stehen. */
+function StackVideo({
+  src,
+  webm,
+  poster,
+  alt,
+}: {
+  src: string;
+  webm?: string;
+  poster?: string;
+  alt: string;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    v.play().catch(() => {});
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      poster={poster}
+      aria-label={alt}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        display: "block",
+      }}
+    >
+      {webm && <source src={webm} type="video/webm" />}
+      <source src={src} type="video/mp4" />
+    </video>
+  );
+}
+
 /* Ausgangs-Transform (p = 0) — auch ohne JS / bei reduced-motion sichtbar. */
 function initialCardStyle(i: number) {
   const d = i;
@@ -268,7 +315,16 @@ export default function ProjectStack() {
                     background: "var(--img-bg)",
                   }}
                 >
-                  <ImageSlot placeholder={`Projektbild ${i + 1} hier ablegen`} />
+                  {p.heroVideo ? (
+                    <StackVideo
+                      src={p.heroVideo}
+                      webm={p.heroVideoWebm}
+                      poster={p.heroVideoPoster}
+                      alt={p.heroPlaceholder}
+                    />
+                  ) : (
+                    <ImageSlot placeholder={`Projektbild ${i + 1} hier ablegen`} />
+                  )}
                 </div>
               </div>
             </Link>
