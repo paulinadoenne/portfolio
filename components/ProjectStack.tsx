@@ -172,7 +172,12 @@ export default function ProjectStack() {
   }, []);
 
   const measureRestTops = () => {
-    const tops = cardRefs.current.map((el) => el?.getBoundingClientRect().top);
+    // Ganzzahlig runden: Mausereignisse liefern immer ganze Pixel, die
+    // gemessene Kante ist aber subpixelgenau — ohne Rundung könnte die exakte
+    // Kante um einen Bruchteil-Pixel knapp verfehlt werden.
+    const tops = cardRefs.current.map((el) =>
+      el ? Math.round(el.getBoundingClientRect().top) : undefined,
+    );
     if (tops.every((t): t is number => t !== undefined)) {
       restTopsRef.current = tops;
     }
@@ -190,18 +195,17 @@ export default function ProjectStack() {
       const tops = restTopsRef.current;
       let next: number;
       if (tops) {
-        if (clientY >= tops[0]) {
-          next = 0;
-        } else if (clientY <= tops[N - 1]) {
-          next = N - 1;
-        } else {
-          next = N - 1;
-          for (let i = 0; i < N - 1; i++) {
-            if (clientY <= tops[i] && clientY >= tops[i + 1]) {
-              const span = tops[i] - tops[i + 1] || 1;
-              next = i + (tops[i] - clientY) / span;
-              break;
-            }
+        // Sobald der Cursor im sichtbaren Band einer Karte steht (zwischen
+        // ihrer eigenen Kante `tops[i]` und der Kante der davor liegenden,
+        // kleineren Karte `tops[i-1]`), wird genau diese Karte ausgewählt —
+        // nicht erst in der Bildmitte zur nächsten Karte. `tops` fällt mit
+        // steigendem Index, daher der kleinste i, dessen Kante bereits
+        // erreicht ist.
+        next = N - 1;
+        for (let i = 0; i < N; i++) {
+          if (clientY >= tops[i]) {
+            next = i;
+            break;
           }
         }
       } else {
