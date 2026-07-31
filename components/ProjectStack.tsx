@@ -59,12 +59,14 @@ function StackVideo({
 
 /* Transform pro Stapeltiefe d (0 = vorderste Karte), abhängig vom
  * Auffächer-Grad `spread` (0 = geschlossener Stapel, 1 = Rondell voll
- * offen): Kartenabstand wächst, Tiefenversatz flacht ab, Deckkraft steigt. */
+ * offen): Kartenabstand wächst, Tiefenversatz flacht ab, Deckkraft steigt.
+ * Enger, vielschichtiger Stapel (Screenshot-Turm-Referenz) statt weniger
+ * Karten mit starkem Fade-out. */
 function cardStyle(d: number, spread: number) {
-  const gap = 56 + spread * (150 - 56);
-  const zStep = 120 - spread * (120 - 26);
-  const rot = 12 - spread * 7;
-  const closedOpacity = Math.max(0, Math.min(1, 1 - (d - 4) / 3.8));
+  const gap = 30 + spread * (150 - 30);
+  const zStep = 110 - spread * (110 - 26);
+  const rot = 10 - spread * 6;
+  const closedOpacity = Math.max(0.55, 1 - d * 0.065);
   const opacity = closedOpacity + spread * (1 - closedOpacity);
   return {
     transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg)`,
@@ -220,35 +222,56 @@ export default function ProjectStack() {
             >
               <div
                 style={{
-                  background: "#ffffff",
-                  border: "1.5px solid var(--ink)",
-                  boxShadow: "0 -14px 36px rgba(17,17,17,0.10)",
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "16/9",
+                  overflow: "hidden",
+                  background: "var(--img-bg)",
+                  border: "1px solid rgba(17,17,17,0.16)",
+                  boxShadow: "0 16px 40px rgba(17,17,17,0.12)",
                 }}
               >
+                {p.heroVideo ? (
+                  <StackVideo
+                    src={p.heroVideo}
+                    webm={p.heroVideoWebm}
+                    poster={p.heroVideoPoster}
+                    alt={p.heroPlaceholder}
+                  />
+                ) : (
+                  <ImageSlot placeholder={`Projektbild ${i + 1} hier ablegen`} />
+                )}
+                {/* Titel-Overlay statt eigener Header-Leiste — Karte ist der
+                    Screenshot selbst, wie im Rondell-Vorbild. */}
                 <div
                   style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     gap: "16px",
-                    padding: "10px 18px",
-                    borderBottom: "1.5px solid var(--ink)",
-                    background: "#ffffff",
+                    padding: "10px 16px",
+                    background:
+                      "linear-gradient(to bottom, rgba(17,17,17,0.55), rgba(17,17,17,0))",
                   }}
                 >
                   <div
                     style={{
                       display: "flex",
                       alignItems: "baseline",
-                      gap: "12px",
+                      gap: "10px",
                       minWidth: 0,
                     }}
                   >
                     <span
                       style={{
-                        fontSize: "13px",
+                        fontSize: "12px",
                         fontWeight: 700,
-                        color: "var(--accent)",
+                        color: "#ffffff",
+                        opacity: 0.85,
                       }}
                     >
                       {p.index}/
@@ -256,7 +279,8 @@ export default function ProjectStack() {
                     <span
                       style={{
                         fontWeight: 700,
-                        fontSize: "19px",
+                        fontSize: "15px",
+                        color: "#ffffff",
                         textTransform: "uppercase",
                         letterSpacing: "0.03em",
                         whiteSpace: "nowrap",
@@ -267,49 +291,19 @@ export default function ProjectStack() {
                       {p.title}
                     </span>
                   </div>
-                  <div
+                  <span
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "18px",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      color: "#ffffff",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.12em",
+                      opacity: 0.75,
                       whiteSpace: "nowrap",
                     }}
                   >
-                    <span
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: 700,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.14em",
-                        opacity: 0.55,
-                      }}
-                    >
-                      {p.tag}
-                    </span>
-                    <span style={{ fontSize: "14px", color: "var(--accent)" }}>
-                      →
-                    </span>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    aspectRatio: "16/9",
-                    overflow: "hidden",
-                    background: "var(--img-bg)",
-                  }}
-                >
-                  {p.heroVideo ? (
-                    <StackVideo
-                      src={p.heroVideo}
-                      webm={p.heroVideoWebm}
-                      poster={p.heroVideoPoster}
-                      alt={p.heroPlaceholder}
-                    />
-                  ) : (
-                    <ImageSlot placeholder={`Projektbild ${i + 1} hier ablegen`} />
-                  )}
+                    {p.tag}
+                  </span>
                 </div>
               </div>
             </Link>
