@@ -29,10 +29,11 @@ Static-Host) ohne weitere Konfiguration.
 ## Herzstück: Projektstapel
 
 `components/ProjectStack.tsx` – cursor-gesteuertes „Folder-Deck" in einem normal
-`100vh` hohen Abschnitt (kein Scroll-Jacking mehr). Sobald der Cursor die oberste
-Karte berührt (`mouseenter`), rückt die nächste Karte per CSS-Transition (0.6s)
-nach vorn; React-State (`current`) treibt die Stapel-Transforms. Bei
-`prefers-reduced-motion` läuft der Kartenwechsel ohne Animation (Transition aus).
+`100vh` hohen Abschnitt (kein Scroll-Jacking mehr). Bewegt sich der Cursor von der
+vordersten Karte aus nach oben über den Stapel, fächern sich alle Karten stufenlos
+wie ein Rondell auf (Cursor-Y-Position → `spread`-Wert 0–1, treibt Kartenabstand,
+Tiefenversatz und Deckkraft) und werden einzeln anklickbar. Auf Touch-Geräten und
+bei `prefers-reduced-motion` ist der Stapel dauerhaft voll aufgefächert.
 
 ## Was noch anzupassen ist (Platzhalter → echt)
 
