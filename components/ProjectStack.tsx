@@ -58,7 +58,7 @@ function StackVideo({
 
 // Negativer Winkel: Man blickt von schräg oben in den Stapel hinein (wie in
 // eine Aktensammlung), statt von unten gegen eine gekippte Wand zu schauen.
-const REST_ROT = -46;
+const REST_ROT = -24;
 const FOCUS_WINDOW = 0.55; // Indexabstand, über den eine Karte "in den Fokus" kommt
 
 /* 0 (kein Fokus) … 1 (Cursor steht exakt auf dieser Karte), sanft geglättet. */
@@ -70,30 +70,42 @@ function focusFactor(absD: number) {
 /* Karte in Stapeltiefe d (0 = aktuell berührtes Blatt, > 0 = noch unberührt/
  * tiefer im Stapel, < 0 = bereits passiert/"davor" liegend). `foc` (0…1) hebt
  * das gerade berührte Blatt frontal & groß heraus — nur während der Cursor
- * aktiv über dem Stapel ist, sonst bleibt alles in Ruheposition klein. */
+ * aktiv über dem Stapel ist, sonst bleibt alles in Ruheposition klein.
+ *
+ * Ebenen-Reihenfolge: Noch unberührte Karten liegen im echten Aktenstapel
+ * immer OBEN auf der gerade herausgezogenen/geöffneten Karte — deshalb eine
+ * eigene, durchgehend höhere z-Index-Bahn für d > 0, unabhängig vom Fokus-
+ * Zustand der geöffneten Karte (sonst überdeckt deren Vergrößerung die
+ * Karten, die eigentlich noch über ihr liegen). */
 function cardTransform(d: number, hovering: boolean) {
-  const gap = 30;
-  const zStep = 110;
+  const gap = 42;
+  const zStep = 130;
   const foc = hovering ? focusFactor(Math.abs(d)) : 0;
   const scale = 1 + foc * 0.34;
 
   if (d >= 0) {
+    // Rotation/Skalierung bleiben über den ganzen Bereich stetig (foc blendet
+    // weich zum frontalen Fokus hin) — nur die z-Ebene bekommt eine harte
+    // Stufe: Sobald eine Karte noch nicht ganz erreicht ist (d spürbar > 0),
+    // liegt sie im Stapel über der gerade fokussierten Karte, nicht darunter.
     const rot = REST_ROT * (1 - foc);
+    const untouched = d > 0.02;
     return {
       transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg) scale(${scale})`,
-      zIndex: 200 - Math.round(d * 12) + Math.round(foc * 60),
+      zIndex: untouched ? 500 - Math.round(d * 10) : 200 + Math.round(foc * 60),
       opacity: Math.max(0.55, 1 - d * 0.065),
     };
   }
 
   // Bereits berührte, "vordere" Blätter: klappen sanft weiter nach vorne
-  // (statt aus dem Bild zu fliegen) und treten dabei etwas zur Seite/nach
-  // unten aus dem Weg des gerade fokussierten Blatts.
+  // (statt aus dem Bild zu fliegen) und treten dabei etwas nach unten aus
+  // dem Weg des gerade fokussierten Blatts — bleiben aber unter dem Stapel
+  // der noch unberührten Karten.
   const e = Math.min(-d, 1.4);
   const rot = REST_ROT * (1 - foc) - e * 26;
   return {
     transform: `translate(-50%,-50%) translateY(${e * 30}px) translateZ(${e * 80}px) rotateX(${rot}deg) scale(${scale})`,
-    zIndex: 260 + Math.round(foc * 60),
+    zIndex: 150 + Math.round(foc * 40),
     opacity: Math.max(0.35, 1 - e * 0.35),
   };
 }
