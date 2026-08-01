@@ -14,36 +14,6 @@ export default function Home() {
       <FlairLayer />
       <HomeNav />
 
-      {/* ===== HERO ===== */}
-      <header
-        style={{
-          padding: "72px 40px 120px 40px",
-          textAlign: "center",
-          position: "relative",
-          zIndex: 2,
-          pointerEvents: "none",
-        }}
-      >
-        <Reveal
-          kind="up"
-          as="h1"
-          style={{
-            margin: "0 auto",
-            fontWeight: 700,
-            fontSize: "clamp(44px, 6vw, 92px)",
-            lineHeight: 1.04,
-            letterSpacing: "-0.02em",
-            textTransform: "uppercase",
-          }}
-        >
-          Paulina Dönne
-          <br />
-          <span style={{ whiteSpace: "nowrap" }}>
-            Designportfolio<span style={{ color: "var(--accent)" }}>.</span>
-          </span>
-        </Reveal>
-      </header>
-
       {/* ===== PROJEKT-STAPEL ===== */}
       <ProjectStack />
 
