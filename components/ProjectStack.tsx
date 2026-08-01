@@ -91,7 +91,7 @@ function centeredTranslate(y: number, z: number) {
 }
 
 function cardTransform(d: number, hovering: boolean) {
-  const gap = 82;
+  const gap = 60;
   const zStep = 182;
   const foc = hovering ? focusFactor(Math.abs(d)) : 0;
   // Vergrößerung bewusst moderat: Die fokussierte Karte muss immer
@@ -133,7 +133,7 @@ function cardTransform(d: number, hovering: boolean) {
     // (aus dem bereits aktuellen, diskreten d) sofort auf den Turm-Wert
     // zurückspringt — ohne diese Marge könnte sie in dem Fenster sichtbar in
     // die dahinterliegenden Turm-Karten hineinschneiden.
-    const neighborPush = hovering && untouched ? 420 : 0;
+    const neighborPush = hovering && untouched ? 220 : 0;
     return {
       translate: centeredTranslate(-d * gap - neighborPush, -d * zStep),
       rotate: `1 0 0 ${rot}deg`,
