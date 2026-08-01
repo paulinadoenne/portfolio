@@ -143,19 +143,21 @@ function cardTransform(d: number, hovering: boolean) {
     };
   }
 
-  // Bereits berührte, "vordere" Blätter: rutschen deutlich nach unten aus
-  // dem Bereich der fokussierten Karte heraus, damit deren Fläche
+  // Bereits berührte, "untere/vordere" Blätter: rutschen deutlich nach unten
+  // aus dem Bereich der fokussierten Karte heraus, damit deren Fläche
   // vollständig frei bleibt (statt nur leicht nach vorne zu klappen und
   // dabei noch hineinzuragen) — und schrumpfen dabei etwas. `e` bleibt
   // unbegrenzt, sonst würden alle weit zurückliegenden Karten an derselben
   // Stelle übereinander liegen. Die Rotation folgt derselben Formel wie im
   // d>=0-Zweig (kein zusätzlicher Steilheits-Term), sonst kippen die
   // Karten unterhalb spitz nach hinten weg statt ein gleichmäßiges Trapez
-  // zu bilden.
+  // zu bilden. Versatz (478/68) größer als beim oberen Turm, da die
+  // fokussierte Karte groß & flach wird und die unmittelbar dahinterliegende
+  // untere Karte sonst noch in ihren unteren Rand hineinragt.
   const e = -d;
   const rot = REST_ROT * (1 - foc);
   return {
-    translate: centeredTranslate(e * 338, -e * 48),
+    translate: centeredTranslate(e * 478, -e * 68),
     rotate: `1 0 0 ${rot}deg`,
     scale: `${scale}`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),
