@@ -398,7 +398,7 @@ export default function ProjectStack() {
                 position: "absolute",
                 left: "50%",
                 top: "85%",
-                width: "min(60vw, 820px)",
+                width: "min(42vw, 600px)",
                 translate: s.translate,
                 rotate: s.rotate,
                 scale: s.scale,
