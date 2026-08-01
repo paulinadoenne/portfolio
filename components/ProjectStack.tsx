@@ -77,6 +77,19 @@ function focusFactor(absD: number) {
  * eigene, durchgehend höhere z-Index-Bahn für d > 0, unabhängig vom Fokus-
  * Zustand der geöffneten Karte (sonst überdeckt deren Vergrößerung die
  * Karten, die eigentlich noch über ihr liegen). */
+// Zentrierung (-50%,-50%) plus Y-Offset in EINER `translate`-Angabe: die
+// einzelnen Transform-Properties (translate/rotate/scale statt eines
+// kombinierten `transform`-Strings) interpolieren beim CSS-Übergang jede
+// Achse unabhängig und linear. Ein kombinierter `transform: translate()
+// translateZ() rotateX() scale()`-String wird von Browsern dagegen als EINE
+// Matrix behandelt und beim Animieren zwischen Start-/Zielwert per
+// Matrix-Dekomposition interpoliert — das kann bei gleichzeitig
+// wechselnder Rotation, Tiefe und Skalierung sichtbar unvorhersehbare
+// Zwischenzustände erzeugen (Karten, die kurz größer/verzerrt aufblitzen).
+function centeredTranslate(y: number, z: number) {
+  return `-50% calc(-50% + ${y}px) ${z}px`;
+}
+
 function cardTransform(d: number, hovering: boolean) {
   const gap = 112;
   const zStep = 182;
@@ -97,6 +110,10 @@ function cardTransform(d: number, hovering: boolean) {
     // der kleinen vordersten Karte. Sobald aktiv fokussiert wird, muss die
     // vergrößerte Karte dagegen vollständig sichtbar sein — sie darf dann
     // auch über ihre unmittelbaren, noch unberührten Nachbarn steigen.
+    // z-index wird bewusst NUR aus dem diskreten, ganzzahligen Karten-Index
+    // (i, über d = i - p) abgeleitet, nie aus einem interpolierten/
+    // animierten Zwischenwert — sonst könnte die Stacking-Reihenfolge
+    // während des 0,12s-Übergangs flackern.
     const zIndex = untouched
       ? 500 - Math.round(d * 10)
       : hovering
@@ -110,10 +127,17 @@ function cardTransform(d: number, hovering: boolean) {
     // Position von d=2 hinausschieben und die natürliche Turm-Reihenfolge
     // invertieren — der flache Betrag hier verschiebt stattdessen den
     // kompletten Turm gleichmäßig, ihre relativen Abstände zueinander
-    // bleiben dabei unverändert.
-    const neighborPush = hovering && untouched ? 340 : 0;
+    // bleiben dabei unverändert. Zusätzliche Marge (ggü. vorher 340px), da
+    // eine Karte, die gerade den Fokus verliert, während des ~120ms-Übergangs
+    // noch kurz ihre volle fokussierte Größe mitführt, obwohl ihr z-index
+    // (aus dem bereits aktuellen, diskreten d) sofort auf den Turm-Wert
+    // zurückspringt — ohne diese Marge könnte sie in dem Fenster sichtbar in
+    // die dahinterliegenden Turm-Karten hineinschneiden.
+    const neighborPush = hovering && untouched ? 420 : 0;
     return {
-      transform: `translate(-50%,-50%) translateY(${-d * gap - neighborPush}px) translateZ(${-d * zStep}px) rotateX(${rot}deg) scale(${scale})`,
+      translate: centeredTranslate(-d * gap - neighborPush, -d * zStep),
+      rotate: `1 0 0 ${rot}deg`,
+      scale: `${scale}`,
       zIndex,
       opacity: Math.max(0.55, 1 - d * 0.065),
     };
@@ -131,7 +155,9 @@ function cardTransform(d: number, hovering: boolean) {
   const e = -d;
   const rot = REST_ROT * (1 - foc);
   return {
-    transform: `translate(-50%,-50%) translateY(${e * 338}px) translateZ(${-e * 48}px) rotateX(${rot}deg) scale(${scale})`,
+    translate: centeredTranslate(e * 338, -e * 48),
+    rotate: `1 0 0 ${rot}deg`,
+    scale: `${scale}`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),
     opacity: Math.max(0.15, 1 - e * 0.16),
   };
@@ -144,7 +170,9 @@ function openStyle(d: number) {
   const zStep = 26;
   const rot = -4;
   return {
-    transform: `translate(-50%,-50%) translateY(${-d * gap}px) translateZ(${-d * zStep}px) rotateX(${rot}deg)`,
+    translate: centeredTranslate(-d * gap, -d * zStep),
+    rotate: `1 0 0 ${rot}deg`,
+    scale: "1",
     zIndex: 200 - Math.round(d * 12),
     opacity: 1,
   };
@@ -338,7 +366,13 @@ export default function ProjectStack() {
         }}
       >
         {projects.map((proj, i) => {
-          let s: { transform: string; zIndex: number; opacity: number };
+          let s: {
+            translate: string;
+            rotate: string;
+            scale: string;
+            zIndex: number;
+            opacity: number;
+          };
           let clickable: boolean;
           if (forceOpen) {
             s = openStyle(i);
@@ -363,13 +397,15 @@ export default function ProjectStack() {
                 left: "50%",
                 top: "58%",
                 width: "min(60vw, 820px)",
-                transform: s.transform,
+                translate: s.translate,
+                rotate: s.rotate,
+                scale: s.scale,
                 zIndex: s.zIndex,
                 opacity: s.opacity,
                 transition: forceOpen
                   ? "none"
-                  : "transform 0.12s ease-out, opacity 0.12s ease-out",
-                willChange: "transform",
+                  : "translate 0.12s ease-out, rotate 0.12s ease-out, scale 0.12s ease-out, opacity 0.12s ease-out",
+                willChange: "translate, rotate, scale",
                 backfaceVisibility: "hidden",
                 pointerEvents: clickable ? "auto" : "none",
               }}
