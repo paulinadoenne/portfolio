@@ -91,7 +91,12 @@ function centeredTranslate(y: number, z: number) {
 }
 
 function cardTransform(d: number, hovering: boolean) {
-  const gap = 112;
+  // gap war für die kleinere Kartenbreite (680px) austariert; bei der
+  // späteren Vergrößerung auf 820px wurde nur der zusätzliche Hover-
+  // Rückschub (neighborPush) mit hochskaliert, nicht aber dieser
+  // Grundabstand — dadurch überlappten sich benachbarte, noch unberührte
+  // Turm-Karten schon im Ruhezustand (ohne jeden Hover) deutlich sichtbar.
+  const gap = 600;
   const zStep = 182;
   const foc = hovering ? focusFactor(Math.abs(d)) : 0;
   // Vergrößerung bewusst moderat: Die fokussierte Karte muss immer
@@ -127,13 +132,13 @@ function cardTransform(d: number, hovering: boolean) {
     // Position von d=2 hinausschieben und die natürliche Turm-Reihenfolge
     // invertieren — der flache Betrag hier verschiebt stattdessen den
     // kompletten Turm gleichmäßig, ihre relativen Abstände zueinander
-    // bleiben dabei unverändert. Zusätzliche Marge (ggü. vorher 340px), da
-    // eine Karte, die gerade den Fokus verliert, während des ~120ms-Übergangs
-    // noch kurz ihre volle fokussierte Größe mitführt, obwohl ihr z-index
+    // bleiben dabei unverändert. Zusätzlich eine kleine Marge fürs
+    // ~120ms-Übergangsfenster: Eine Karte, die gerade den Fokus verliert,
+    // führt kurz noch ihre volle fokussierte Größe mit, obwohl ihr z-index
     // (aus dem bereits aktuellen, diskreten d) sofort auf den Turm-Wert
     // zurückspringt — ohne diese Marge könnte sie in dem Fenster sichtbar in
     // die dahinterliegenden Turm-Karten hineinschneiden.
-    const neighborPush = hovering && untouched ? 420 : 0;
+    const neighborPush = hovering && untouched ? 150 : 0;
     return {
       translate: centeredTranslate(-d * gap - neighborPush, -d * zStep),
       rotate: `1 0 0 ${rot}deg`,
