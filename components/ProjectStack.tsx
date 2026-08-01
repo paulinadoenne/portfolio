@@ -6,7 +6,7 @@ import ImageSlot from "./ImageSlot";
 import { projects } from "@/lib/projects";
 
 const N = projects.length;
-const FRONT_TOP = 0.45; // matches Karten-Anker `top: 45%`
+const FRONT_TOP = 0.85; // matches Karten-Anker `top: 85%`
 const PX_PER_CARD = 92; // Cursor-Weg nach oben, um ein Blatt abzulegen
 
 /* Stumme Autoplay-Vorschau für Projekte mit Hero-Video (Deck-Karte ist ein
@@ -91,7 +91,7 @@ function centeredTranslate(y: number, z: number) {
 }
 
 function cardTransform(d: number, hovering: boolean) {
-  const gap = 95;
+  const gap = 82;
   const zStep = 182;
   const foc = hovering ? focusFactor(Math.abs(d)) : 0;
   // Vergrößerung bewusst moderat: Die fokussierte Karte muss immer
@@ -397,7 +397,7 @@ export default function ProjectStack() {
               style={{
                 position: "absolute",
                 left: "50%",
-                top: "45%",
+                top: "85%",
                 width: "min(60vw, 820px)",
                 translate: s.translate,
                 rotate: s.rotate,
