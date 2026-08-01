@@ -6,7 +6,7 @@ import ImageSlot from "./ImageSlot";
 import { projects } from "@/lib/projects";
 
 const N = projects.length;
-const FRONT_TOP = 0.85; // matches Karten-Anker `top: 85%`
+const FRONT_TOP = 0.5; // matches Karten-Anker `top: 50%`
 const PX_PER_CARD = 92; // Cursor-Weg nach oben, um ein Blatt abzulegen
 
 /* Stumme Autoplay-Vorschau für Projekte mit Hero-Video (Deck-Karte ist ein
@@ -397,7 +397,7 @@ export default function ProjectStack() {
               style={{
                 position: "absolute",
                 left: "50%",
-                top: "85%",
+                top: "50%",
                 width: "min(42vw, 600px)",
                 translate: s.translate,
                 rotate: s.rotate,
