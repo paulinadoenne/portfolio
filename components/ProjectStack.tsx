@@ -102,14 +102,16 @@ function cardTransform(d: number, hovering: boolean) {
       : hovering
         ? 600 + Math.round(foc * 100)
         : 200;
-    // Der unmittelbare Nachbar der fokussierten Karte (d=1) bekommt beim
-    // Hovern zusätzlichen Rückschub: Die fokussierte Karte wird groß & flach
-    // (volle Höhe, keine Kippung), während der Nachbar weiterhin klein &
-    // gekippt bleibt — ohne diesen Zusatzabstand würde sein unterer Rand
-    // optisch in die geöffnete Karte hineinragen. Wirkt nur nahe d=1 und
-    // klingt bis d=2 vollständig ab.
-    const neighborPush =
-      hovering && untouched ? Math.max(0, 340 - (d - 1) * 340) : 0;
+    // Beim Hovern bekommt der GESAMTE unberührte Turm denselben zusätzlichen
+    // Rückschub (nicht nur der unmittelbare Nachbar d=1): Die fokussierte
+    // Karte wird groß & flach (volle Höhe, keine Kippung) und braucht mehr
+    // Abstand zum nächsten Turm-Blatt, als der normale Ruhe-Abstand (gap)
+    // hergibt. Ein Zusatzabstand nur für d=1 würde diese Karte über die
+    // Position von d=2 hinausschieben und die natürliche Turm-Reihenfolge
+    // invertieren — der flache Betrag hier verschiebt stattdessen den
+    // kompletten Turm gleichmäßig, ihre relativen Abstände zueinander
+    // bleiben dabei unverändert.
+    const neighborPush = hovering && untouched ? 340 : 0;
     return {
       transform: `translate(-50%,-50%) translateY(${-d * gap - neighborPush}px) translateZ(${-d * zStep}px) rotateX(${rot}deg) scale(${scale})`,
       zIndex,
