@@ -156,10 +156,11 @@ function cardTransform(d: number, hovering: boolean) {
   // untere Karte sonst noch in ihren unteren Rand hineinragt.
   const e = -d;
   const rot = REST_ROT * (1 - foc);
+  const shrink = Math.max(0.7, 1 - e * 0.08);
   return {
     translate: centeredTranslate(e * 478, -e * 68),
     rotate: `1 0 0 ${rot}deg`,
-    scale: `${scale}`,
+    scale: `${scale * shrink}`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),
     opacity: Math.max(0.15, 1 - e * 0.16),
   };
