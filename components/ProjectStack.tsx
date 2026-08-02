@@ -229,12 +229,37 @@ export default function ProjectStack() {
   const onMouseMove = (e: React.MouseEvent) => {
     if (forceOpen) return;
     const clientY = e.clientY;
+    const clientX = e.clientX;
     // Zu Beginn einer Hover-Session frisch messen (garantiert die aktuelle
     // Ruheposition statt eines möglicherweise veralteten Mount-Snapshots,
     // z. B. falls sich das Layout durch später ladende Inhalte verschoben hat).
     if (!hovering) measureRestTops();
     if (raf.current) cancelAnimationFrame(raf.current);
     raf.current = requestAnimationFrame(() => {
+      // Solange der Cursor noch irgendwo innerhalb der TATSÄCHLICH
+      // gerenderten Fläche der aktuell fokussierten Karte steht, bleibt sie
+      // ausgewählt — unabhängig von der Band-Logik unten, die auf den
+      // Ruhepositionen (`tops`) basiert. Die fokussierte Karte wird groß,
+      // flach & zentriert; ihre reale Fläche deckt sich dann nicht mehr mit
+      // ihrer kleinen, gekippten Ruheposition, wodurch die Band-Logik sonst
+      // fälschlich eine andere Karte auswählen oder ganz zurücksetzen würde,
+      // obwohl der Cursor optisch noch auf dem geöffneten Blatt liegt.
+      if (hovering) {
+        const currentIndex = Math.max(0, Math.min(N - 1, Math.round(p)));
+        const el = cardRefs.current[currentIndex];
+        if (el) {
+          const r = el.getBoundingClientRect();
+          if (
+            clientX >= r.left &&
+            clientX <= r.right &&
+            clientY >= r.top &&
+            clientY <= r.bottom
+          ) {
+            setHinted(true);
+            return;
+          }
+        }
+      }
       const tops = restTopsRef.current;
       let next: number;
       if (tops) {
