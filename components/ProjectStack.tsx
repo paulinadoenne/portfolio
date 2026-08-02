@@ -151,14 +151,14 @@ function cardTransform(d: number, hovering: boolean) {
   // Stelle übereinander liegen. Die Rotation folgt derselben Formel wie im
   // d>=0-Zweig (kein zusätzlicher Steilheits-Term), sonst kippen die
   // Karten unterhalb spitz nach hinten weg statt ein gleichmäßiges Trapez
-  // zu bilden. Versatz (239/34) größer als beim oberen Turm, da die
+  // zu bilden. Versatz (360/51) größer als beim oberen Turm, da die
   // fokussierte Karte groß & flach wird und die unmittelbar dahinterliegende
   // untere Karte sonst noch in ihren unteren Rand hineinragt.
   const e = -d;
   const rot = REST_ROT * (1 - foc);
   const shrink = Math.max(0.7, 1 - e * 0.08);
   return {
-    translate: centeredTranslate(e * 239, -e * 34),
+    translate: centeredTranslate(e * 360, -e * 51),
     rotate: `1 0 0 ${rot}deg`,
     scale: `${scale * shrink}`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),
