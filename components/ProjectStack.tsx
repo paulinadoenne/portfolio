@@ -6,8 +6,6 @@ import ImageSlot from "./ImageSlot";
 import { projects } from "@/lib/projects";
 
 const N = projects.length;
-const FRONT_TOP = 0.5; // matches Karten-Anker `top: 50%`
-const PX_PER_CARD = 92; // Cursor-Weg nach oben, um ein Blatt abzulegen
 
 /* Stumme Autoplay-Vorschau für Projekte mit Hero-Video (Deck-Karte ist ein
  * Link, daher keine Controls). Respektiert prefers-reduced-motion — dann
@@ -184,13 +182,6 @@ function openStyle(d: number) {
 export default function ProjectStack() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  // Echte Bildschirm-Position jeder Karte im Ruhezustand (Kopf-oben-Kante).
-  // Wegen der Perspektive rücken die Kartenränder nach hinten immer enger
-  // zusammen — ein fester Pixelwert pro Karte passt daher nur für die
-  // vorderen Karten. Die Cursor-Zuordnung orientiert sich stattdessen an
-  // diesen gemessenen Positionen, damit die Maus beim Fokussieren einer
-  // Karte tatsächlich auf deren sichtbarem Rand steht.
-  const restTopsRef = useRef<number[] | null>(null);
   const [p, setP] = useState(0);
   const [hovering, setHovering] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(0);
@@ -204,86 +195,40 @@ export default function ProjectStack() {
     setForceOpen(reduced || coarse);
   }, []);
 
-  useEffect(() => {
-    // Cache ungültig machen, wenn sich die Größe ändert; die nächste
-    // Hover-Session misst dann automatisch neu.
-    const invalidate = () => {
-      restTopsRef.current = null;
-    };
-    window.addEventListener("resize", invalidate);
-    return () => window.removeEventListener("resize", invalidate);
-  }, []);
-
-  const measureRestTops = () => {
-    // Ganzzahlig runden: Mausereignisse liefern immer ganze Pixel, die
-    // gemessene Kante ist aber subpixelgenau — ohne Rundung könnte die exakte
-    // Kante um einen Bruchteil-Pixel knapp verfehlt werden.
-    const tops = cardRefs.current.map((el) =>
-      el ? Math.round(el.getBoundingClientRect().top) : undefined,
-    );
-    if (tops.every((t): t is number => t !== undefined)) {
-      restTopsRef.current = tops;
-    }
-  };
-
   const onMouseMove = (e: React.MouseEvent) => {
     if (forceOpen) return;
     const clientY = e.clientY;
     const clientX = e.clientX;
-    // Zu Beginn einer Hover-Session frisch messen (garantiert die aktuelle
-    // Ruheposition statt eines möglicherweise veralteten Mount-Snapshots,
-    // z. B. falls sich das Layout durch später ladende Inhalte verschoben hat).
-    if (!hovering) measureRestTops();
     if (raf.current) cancelAnimationFrame(raf.current);
     raf.current = requestAnimationFrame(() => {
-      // Solange der Cursor noch irgendwo innerhalb der TATSÄCHLICH
-      // gerenderten Fläche der aktuell fokussierten Karte steht, bleibt sie
-      // ausgewählt — unabhängig von der Band-Logik unten, die auf den
-      // Ruhepositionen (`tops`) basiert. Die fokussierte Karte wird groß,
-      // flach & zentriert; ihre reale Fläche deckt sich dann nicht mehr mit
-      // ihrer kleinen, gekippten Ruheposition, wodurch die Band-Logik sonst
-      // fälschlich eine andere Karte auswählen oder ganz zurücksetzen würde,
-      // obwohl der Cursor optisch noch auf dem geöffneten Blatt liegt.
-      if (hovering) {
-        const currentIndex = Math.max(0, Math.min(N - 1, Math.round(p)));
-        const el = cardRefs.current[currentIndex];
-        if (el) {
-          const r = el.getBoundingClientRect();
-          if (
-            clientX >= r.left &&
-            clientX <= r.right &&
-            clientY >= r.top &&
-            clientY <= r.bottom
-          ) {
-            setHinted(true);
-            return;
-          }
+      // Direkt gegen die TATSÄCHLICH gerenderten Kartenflächen prüfen (nicht
+      // gegen gemessene Ruhepositionen) — funktioniert dadurch unverändert
+      // sowohl im Ruhezustand (kleine, gekippte Karten) als auch für die
+      // gerade fokussierte, große & zentrierte Karte. Bei Überlappungen
+      // gewinnt die Karte mit dem höchsten z-index, also die, die dort
+      // tatsächlich sichtbar/oben liegt. Liegt der Cursor auf keiner Karte,
+      // fällt das Rondell in die Ruheposition zurück.
+      let hitIndex = -1;
+      let hitZ = -Infinity;
+      for (let i = 0; i < N; i++) {
+        const el = cardRefs.current[i];
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        if (clientX < r.left || clientX > r.right || clientY < r.top || clientY > r.bottom) {
+          continue;
+        }
+        const z = parseInt(el.style.zIndex || "0", 10);
+        if (z > hitZ) {
+          hitZ = z;
+          hitIndex = i;
         }
       }
-      const tops = restTopsRef.current;
-      let next: number;
-      if (tops) {
-        // Sobald der Cursor im sichtbaren Band einer Karte steht (zwischen
-        // ihrer eigenen Kante `tops[i]` und der Kante der davor liegenden,
-        // kleineren Karte `tops[i-1]`), wird genau diese Karte ausgewählt —
-        // nicht erst in der Bildmitte zur nächsten Karte. `tops` fällt mit
-        // steigendem Index, daher der kleinste i, dessen Kante bereits
-        // erreicht ist.
-        next = N - 1;
-        for (let i = 0; i < N; i++) {
-          if (clientY >= tops[i]) {
-            next = i;
-            break;
-          }
-        }
-      } else {
-        // Fallback, solange die Messung noch nicht vorliegt
-        const wrap = wrapRef.current;
-        const rect = wrap?.getBoundingClientRect();
-        const frontY = rect ? rect.top + rect.height * FRONT_TOP : 0;
-        next = (frontY - clientY) / PX_PER_CARD;
+      if (hitIndex === -1) {
+        setP(0);
+        setHovering(false);
+        return;
       }
-      setP(Math.max(0, Math.min(N - 1, next)));
+      setP(hitIndex);
       setHovering(true);
       setHinted(true);
     });
