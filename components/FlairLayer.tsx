@@ -72,7 +72,6 @@ export default function FlairLayer() {
       dx: 0,
       dy: 0,
       hoverLink: false,
-      overRondell: false,
     };
     let pmx = state.mx;
     let pmy = state.my;
@@ -83,16 +82,6 @@ export default function FlairLayer() {
       state.my = e.clientY;
       const target = e.target as Element | null;
       state.hoverLink = !!(target && target.closest && target.closest("a, button"));
-      // Über der ganzen Rondell-Sektion wird die Cursor-Blase ausgeblendet
-      // (nicht nur exakt über den Karten-Links): Die Karten sind gekippte
-      // Trapeze, deren tatsächliche Trefferfläche dem sichtbaren, rotierten
-      // Umriss folgt — nicht ihrer rechteckigen Bounding-Box. In den
-      // schmalen Lücken zwischen zwei Karten-Ecken träfe `#arbeiten a`
-      // daher nicht, obwohl der Cursor optisch mitten im Kartenstapel steht,
-      // und die Blase würde dort kurz sichtbar über Titel/Tag-Text liegen.
-      // Die Karte selbst gibt beim Fokussieren schon genug visuelles
-      // Feedback (wird groß & frontal).
-      state.overRondell = !!(target && target.closest && target.closest("#arbeiten"));
     };
     window.addEventListener("mousemove", onMove, { passive: true });
 
@@ -105,7 +94,7 @@ export default function FlairLayer() {
         // leicht nachziehend, wie die driftenden Blasen im Feld
         state.dx += (px - state.dx) * 0.22;
         state.dy += (py - state.dy) * 0.22;
-        cursorBubble.style.opacity = state.overRondell ? "0" : "1";
+        cursorBubble.style.opacity = "1";
         cursorBubble.style.left = state.dx + "px";
         cursorBubble.style.top = state.dy + "px";
         const s = state.hoverLink ? 46 : 30;
