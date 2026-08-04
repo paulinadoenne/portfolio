@@ -31,6 +31,12 @@ export type Project = {
   heroVideo?: string;
   heroVideoWebm?: string;
   heroVideoPoster?: string;
+  // Video nur für die Rondell-Kartenvorschau, unabhängig von heroVideo
+  // (das die Detailseite steuert) — z.B. wenn die Detailseite bewusst ohne
+  // Video auskommen soll, das Rondell aber trotzdem eine Bewegtbild-
+  // Vorschau zeigen soll.
+  cardVideo?: string;
+  cardVideoWebm?: string;
   // Optionaler Anschluss-Clip: spielt automatisch weiter, sobald heroVideo endet.
   heroVideoNext?: string;
   heroVideoNextWebm?: string;
@@ -137,6 +143,7 @@ export const projects: Project[] = [
     umsetzung: "Beschreibung der Umsetzung eintragen.",
     heroPlaceholder: "Hero-Bild des Projekts hier ablegen",
     heroVideoPoster: "/projects/plakatgestaltung/poster-museum.jpg",
+    cardVideo: "/projects/plakatgestaltung/museum-plakat-lang.mp4",
     gallery: [
       { slotId: "detail-1", ratio: "4/5", src: "/projects/plakatgestaltung/poster-museum.jpg", caption: "Plakat 1 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "4/5", src: "/projects/plakatgestaltung/poster-hohenzollernring.jpg", caption: "Plakat 3 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },

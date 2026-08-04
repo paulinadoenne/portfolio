@@ -485,10 +485,10 @@ export default function ProjectStack() {
                   background: "var(--img-bg)",
                 }}
               >
-                {proj.heroVideo ? (
+                {proj.cardVideo || proj.heroVideo ? (
                   <StackVideo
-                    src={proj.heroVideo}
-                    webm={proj.heroVideoWebm}
+                    src={proj.cardVideo ?? proj.heroVideo!}
+                    webm={proj.cardVideo ? proj.cardVideoWebm : proj.heroVideoWebm}
                     poster={proj.heroVideoPoster}
                     alt={proj.heroPlaceholder}
                   />
