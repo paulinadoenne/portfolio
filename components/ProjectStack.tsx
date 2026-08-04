@@ -377,7 +377,7 @@ export default function ProjectStack() {
                 opacity: s.opacity,
                 transition: forceOpen
                   ? "none"
-                  : "translate 0.32s ease-out, rotate 0.32s ease-out, scale 0.32s ease-out, opacity 0.32s ease-out",
+                  : "translate 0.6s ease-out, rotate 0.6s ease-out, scale 0.6s ease-out, opacity 0.6s ease-out",
                 willChange: "translate, rotate, scale",
                 backfaceVisibility: "hidden",
                 pointerEvents: clickable ? "auto" : "none",
