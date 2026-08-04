@@ -136,6 +136,7 @@ export const projects: Project[] = [
       "In vier Wochen sollte je ein eigenständiges Plakat entstehen — vier sehr unterschiedliche Themen, ein durchgängiger gestalterischer Anspruch.",
     umsetzung: "Beschreibung der Umsetzung eintragen.",
     heroPlaceholder: "Hero-Bild des Projekts hier ablegen",
+    heroVideoPoster: "/projects/plakatgestaltung/poster-museum.jpg",
     gallery: [
       { slotId: "detail-1", ratio: "4/5", src: "/projects/plakatgestaltung/poster-museum.jpg", caption: "Plakat 1 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "4/5", src: "/projects/plakatgestaltung/poster-hohenzollernring.jpg", caption: "Plakat 3 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },

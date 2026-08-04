@@ -493,7 +493,10 @@ export default function ProjectStack() {
                     alt={proj.heroPlaceholder}
                   />
                 ) : (
-                  <ImageSlot placeholder={`Projektbild ${i + 1} hier ablegen`} />
+                  <ImageSlot
+                    placeholder={`Projektbild ${i + 1} hier ablegen`}
+                    src={proj.heroVideoPoster}
+                  />
                 )}
                 {/* Titel-Overlay statt eigener Header-Leiste — Karte ist der
                     Screenshot selbst, wie im Rondell-Vorbild. */}
