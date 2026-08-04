@@ -42,7 +42,10 @@ export default function Home() {
           }}
         >
           <div style={{ position: "absolute", inset: 0 }}>
-            <ImageSlot placeholder="Portrait von Paulina" />
+            <ImageSlot
+              src="/portrait-paulina.jpg"
+              alt="Portrait von Paulina Dönne"
+            />
           </div>
         </Reveal>
 
