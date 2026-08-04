@@ -21,6 +21,8 @@ export default function Home() {
       <section
         id="ueber"
         style={{
+          position: "relative",
+          zIndex: 60,
           borderTop: "1px solid var(--ink)",
           padding: "120px 40px",
           display: "grid",

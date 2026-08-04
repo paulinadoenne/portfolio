@@ -36,7 +36,12 @@ export default function SiteFooter() {
   return (
     <footer
       id="kontakt"
-      style={{ background: "var(--footer-bg)", color: "#ffffff" }}
+      style={{
+        position: "relative",
+        zIndex: 60,
+        background: "var(--footer-bg)",
+        color: "#ffffff",
+      }}
     >
       <div
         style={{
