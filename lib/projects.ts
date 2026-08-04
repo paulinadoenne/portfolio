@@ -254,9 +254,9 @@ export const projects: Project[] = [
       { slotId: "detail-3", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-red-portrait.jpg", caption: "Filmstill — Typo-Detail", placeholder: "Filmstill (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
-    closingCaption: "Filmstill — Text-Strudel",
-    closingPlaceholder: "Filmstill hier ablegen",
-    closingSrc: "/projects/fake-it-til-you-make-it/closing-yellow-wide.jpg",
+    closingCaption: "Mockup — Media Wall auf dem Campus",
+    closingPlaceholder: "Situationsfoto hier ablegen",
+    closingSrc: "/projects/fake-it-til-you-make-it/mediawall-installation.jpg",
   },
 ];
 
