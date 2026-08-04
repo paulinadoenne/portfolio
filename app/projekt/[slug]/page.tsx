@@ -142,6 +142,7 @@ export default async function ProjektPage({
       </header>
 
       {/* ===== HERO ===== */}
+      {p.heroVideo && (
       <div style={{ padding: "0 clamp(20px, 5vw, 40px)" }}>
         <Reveal
           kind="img"
@@ -218,6 +219,7 @@ export default async function ProjektPage({
           </Reveal>
         )}
       </div>
+      )}
 
       {/* ===== AUFGABE ===== */}
       <section
