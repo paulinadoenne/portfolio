@@ -141,8 +141,9 @@ export const projects: Project[] = [
       { slotId: "detail-2", ratio: "4/5", src: "/projects/plakatgestaltung/poster-hohenzollernring.jpg", caption: "Plakat 3 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
-    closingCaption: "Plakat 4 — hier ablegen",
+    closingCaption: "Plakat 4 — Bildunterschrift eintragen",
     closingPlaceholder: "Situationsfoto hier ablegen",
+    closingSrc: "/projects/plakatgestaltung/poster-luisa.jpg",
   },
 ];
 
