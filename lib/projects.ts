@@ -138,7 +138,7 @@ export const projects: Project[] = [
     heroVideoPoster: "/projects/plakatgestaltung/poster-museum.jpg",
     gallery: [
       { slotId: "detail-1", ratio: "4/5", src: "/projects/plakatgestaltung/poster-regina.jpg", caption: "Plakat 2 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
-      { slotId: "detail-2", ratio: "4/5", caption: "Plakat 3 — hier ablegen", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-2", ratio: "4/5", src: "/projects/plakatgestaltung/poster-hohenzollernring.jpg", caption: "Plakat 3 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
     closingCaption: "Plakat 4 — hier ablegen",
