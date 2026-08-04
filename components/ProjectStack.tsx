@@ -454,8 +454,6 @@ export default function ProjectStack() {
                   aspectRatio: "16/9",
                   overflow: "hidden",
                   background: "var(--img-bg)",
-                  border: "1px solid rgba(17,17,17,0.16)",
-                  boxShadow: "0 16px 40px rgba(17,17,17,0.12)",
                 }}
               >
                 {proj.heroVideo ? (
