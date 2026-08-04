@@ -140,7 +140,7 @@ export const projects: Project[] = [
       { slotId: "detail-1", ratio: "4/5", src: "/projects/plakatgestaltung/poster-museum.jpg", caption: "Plakat 1 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "1600/2253", src: "/projects/plakatgestaltung/poster-regina.jpg", caption: "Plakat 2 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "4/5", src: "/projects/plakatgestaltung/poster-hohenzollernring.jpg", caption: "Plakat 3 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
-      { slotId: "detail-4", ratio: "4/5", src: "/projects/plakatgestaltung/poster-luisa.jpg", caption: "Plakat 4 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-4", ratio: "1600/2231", src: "/projects/plakatgestaltung/poster-luisa.jpg", caption: "Plakat 4 — Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-5",
     closingCaption: "Bildunterschrift eintragen",
