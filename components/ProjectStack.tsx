@@ -156,7 +156,7 @@ function cardTransform(d: number, hovering: boolean) {
   const rot = REST_ROT * (1 - foc);
   const shrink = Math.max(0.7, 1 - e * 0.08);
   return {
-    translate: centeredTranslate(e * 360, -e * 51),
+    translate: centeredTranslate(e * 385, -e * 51),
     rotate: `1 0 0 ${rot}deg`,
     scale: `${scale * shrink}`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),
