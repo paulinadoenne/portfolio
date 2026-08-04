@@ -28,7 +28,8 @@ export default function FlairLayer() {
     const cursorBubble = document.createElement("div");
     cursorBubble.style.cssText =
       "position:absolute; width:30px; height:30px; border-radius:50%; overflow:hidden;" +
-      `background:${NEUTRAL_BG}; border:1px solid rgba(255,255,255,0.95); box-shadow:${NEUTRAL_SHADOW};` +
+      `background:${NEUTRAL_BG}; border:0.5px solid rgba(255,255,255,0.75); box-shadow:${NEUTRAL_SHADOW};` +
+      "-webkit-backdrop-filter:url(#pd-glass); backdrop-filter:url(#pd-glass);" +
       "z-index:900; pointer-events:none; transform:translate(-50%,-50%); opacity:0; will-change:transform;" +
       "transition:width 0.25s ease, height 0.25s ease";
     const cursorIris = document.createElement("div");

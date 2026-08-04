@@ -8,6 +8,9 @@ import type { CSSProperties } from "react";
  *   - die Blasen driften nur autonom (Lavalampe).
  * Die Maus-Interaktion (Gelee-Effekt) + Custom Cursor + Deck-Wobble liegen in
  * FlairLayer und greifen per [data-bubble] auf diese Elemente zu.
+ *
+ * Performance: backdrop-filter mit SVG-Verzerrung ist teuer — daher bewusst
+ * wenige Blasen und ein schlanker Filter (1 Oktave, kleine Filter-Region).
  */
 
 export const IRIS =
@@ -52,13 +55,13 @@ const BUBBLES: Bubble[] = [
 function BubbleView({ b }: { b: Bubble }) {
   const shine: CSSProperties = {
     position: "absolute",
-    top: "11%",
-    left: "15%",
-    width: "26%",
-    height: "13%",
+    top: "9%",
+    left: "14%",
+    width: "24%",
+    height: "11%",
     borderRadius: "50%",
-    background: "rgba(255,255,255,0.85)",
-    filter: "blur(5px)",
+    background: "rgba(255,255,255,0.98)",
+    filter: "blur(2px)",
     transform: "rotate(-24deg)",
   };
   const counter: CSSProperties = {
@@ -84,7 +87,9 @@ function BubbleView({ b }: { b: Bubble }) {
         borderRadius: "50%",
         overflow: "hidden",
         background: b.accent ? ACCENT_BG : NEUTRAL_BG,
-        border: "1px solid rgba(255,255,255,0.95)",
+        backdropFilter: "url(#pd-glass)",
+        WebkitBackdropFilter: "url(#pd-glass)",
+        border: "0.5px solid rgba(255,255,255,0.75)",
         boxShadow: b.accent ? ACCENT_SHADOW : NEUTRAL_SHADOW,
         animation: b.anim,
         animationDelay: b.delay,
@@ -109,6 +114,35 @@ function BubbleView({ b }: { b: Bubble }) {
 export default function BubbleField() {
   return (
     <>
+      {/* SVG-Glasfilter (Chromium) — schlank gehalten (1 Oktave, kleine Region) */}
+      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+        <defs>
+          <filter
+            id="pd-glass"
+            x="-20%"
+            y="-20%"
+            width="140%"
+            height="140%"
+            colorInterpolationFilters="sRGB"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.003 0.004"
+              numOctaves={1}
+              seed={7}
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale={34}
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+      </svg>
+
       {/* Viewport-feste Ebene über der ganzen Seite */}
       <div
         className="pd-bubble-layer"
