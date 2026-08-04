@@ -24,7 +24,7 @@ export type Project = {
   aufgabe: string;
   umsetzung: string;
   heroPlaceholder: string;
-  heroRatio?: "21/9" | "16/9";
+  heroRatio?: "21/9" | "16/9" | "8/1";
   heroVideo?: string;
   heroVideoWebm?: string;
   heroVideoPoster?: string;
@@ -224,6 +224,33 @@ export const projects: Project[] = [
     closingSlotId: "detail-4",
     closingCaption: "Ausgabe — im Kontext",
     closingPlaceholder: "Situationsfoto hier ablegen",
+  },
+  {
+    index: "09",
+    slug: "fake-it-til-you-make-it",
+    title: "Fake It Til You Make It",
+    tag: "Motion · Kinetic Typography",
+    kunde: "Eigenprojekt (Campus-Intervention)",
+    rolle: "Konzept, Typografie & Animation",
+    jahr: "2024",
+    leistungen: "Konzept, Kinetic Typography, Animation",
+    aufgabe:
+      "Auf dem Campus sollte eine spielerische Intervention Menschen im Vorbeigehen zum Lächeln bringen — nicht mit einer Botschaft von außen, sondern mit einer direkten, überraschenden Ansprache, die kurz innehalten lässt. Lächeln schüttet Endorphine aus und macht nachweislich glücklicher.",
+    umsetzung:
+      "Zwei kinetische Typografie-Clips ziehen den Blick in einen Text-Strudel: eine direkte, augenzwinkernde Frage dreht sich spiralförmig auf den Betrachter zu. Die reduzierte Zweifarbigkeit — Rot/Blau im einen, Gelb/Schwarz im anderen Clip — hält den Fokus konsequent auf Bewegung und Text.",
+    heroPlaceholder: "Filmstill — Fake It Til You Make It",
+    heroRatio: "8/1",
+    heroVideo: "/projects/fake-it-til-you-make-it/yellow-jacket.mp4",
+    heroVideoPoster: "/projects/fake-it-til-you-make-it/poster.jpg",
+    gallery: [
+      { slotId: "detail-1", ratio: "21/9", span2: true, src: "/projects/fake-it-til-you-make-it/detail-red-wide.jpg", caption: "Filmstill — Rot-Variante", placeholder: "Filmstill hier ablegen" },
+      { slotId: "detail-2", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-yellow-portrait.jpg", caption: "Filmstill — „Are you wearing a yellow jacket?“", placeholder: "Filmstill (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-red-portrait.jpg", caption: "Filmstill — Typo-Detail", placeholder: "Filmstill (Hochformat) hier ablegen" },
+    ],
+    closingSlotId: "detail-4",
+    closingCaption: "Filmstill — Text-Strudel",
+    closingPlaceholder: "Filmstill hier ablegen",
+    closingSrc: "/projects/fake-it-til-you-make-it/closing-yellow-wide.jpg",
   },
 ];
 

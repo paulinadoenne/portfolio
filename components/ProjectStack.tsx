@@ -89,7 +89,7 @@ function centeredTranslate(y: number, z: number) {
 }
 
 function cardTransform(d: number, hovering: boolean) {
-  const gap = 42;
+  const gap = 33;
   const zStep = 182;
   const foc = hovering ? focusFactor(Math.abs(d)) : 0;
   // Vergrößerung bewusst moderat: Die fokussierte Karte muss immer
