@@ -479,8 +479,6 @@ export default function ProjectStack() {
                     alignItems: "center",
                     gap: "16px",
                     padding: "10px 16px",
-                    background:
-                      "linear-gradient(to bottom, rgba(17,17,17,0.55), rgba(17,17,17,0))",
                   }}
                 >
                   <div
