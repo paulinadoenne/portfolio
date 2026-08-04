@@ -216,7 +216,7 @@ export default function ProjectStack() {
         const target = pTargetRef.current;
         const diff = target - prev;
         if (Math.abs(diff) < 0.01) return target;
-        const maxStep = 0.28;
+        const maxStep = 0.09;
         return prev + Math.sign(diff) * Math.min(maxStep, Math.abs(diff));
       });
       chaseRaf.current = requestAnimationFrame(step);
