@@ -4,7 +4,6 @@ import type { CSSProperties } from "react";
 import { SubNav } from "@/components/Nav";
 import Reveal from "@/components/Reveal";
 import ImageSlot from "@/components/ImageSlot";
-import SequencedHeroVideo from "@/components/SequencedHeroVideo";
 import { projects, getProject, nextProject } from "@/lib/projects";
 
 export function generateStaticParams() {
@@ -156,26 +155,68 @@ export default async function ProjektPage({
         >
           <div style={{ position: "absolute", inset: 0 }}>
             {p.heroVideo ? (
-              <SequencedHeroVideo
-                ariaLabel={p.heroPlaceholder}
-                clips={[
-                  { src: p.heroVideo, webm: p.heroVideoWebm, poster: p.heroVideoPoster },
-                  ...(p.heroVideoNext
-                    ? [
-                        {
-                          src: p.heroVideoNext,
-                          webm: p.heroVideoNextWebm,
-                          poster: p.heroVideoNextPoster,
-                        },
-                      ]
-                    : []),
-                ]}
-              />
+              <video
+                controls
+                playsInline
+                preload="metadata"
+                poster={p.heroVideoPoster}
+                aria-label={p.heroPlaceholder}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              >
+                {p.heroVideoWebm && (
+                  <source src={p.heroVideoWebm} type="video/webm" />
+                )}
+                <source src={p.heroVideo} type="video/mp4" />
+              </video>
             ) : (
               <ImageSlot placeholder={p.heroPlaceholder} />
             )}
           </div>
         </Reveal>
+
+        {p.heroVideoNext && (
+          <Reveal
+            kind="img"
+            style={{
+              position: "relative",
+              width: "100%",
+              marginTop: "clamp(16px, 3vw, 24px)",
+              aspectRatio: p.heroRatio ?? "21/9",
+              overflow: "hidden",
+              background: "var(--img-bg)",
+            }}
+          >
+            <div style={{ position: "absolute", inset: 0 }}>
+              <video
+                controls
+                playsInline
+                preload="metadata"
+                poster={p.heroVideoNextPoster}
+                aria-label={p.heroPlaceholder}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              >
+                {p.heroVideoNextWebm && (
+                  <source src={p.heroVideoNextWebm} type="video/webm" />
+                )}
+                <source src={p.heroVideoNext} type="video/mp4" />
+              </video>
+            </div>
+          </Reveal>
+        )}
       </div>
 
       {/* ===== AUFGABE ===== */}
