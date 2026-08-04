@@ -92,8 +92,8 @@ export default function FlairLayer() {
         const px = state.mx + window.scrollX;
         const py = state.my + window.scrollY;
         // leicht nachziehend, wie die driftenden Blasen im Feld
-        state.dx += (px - state.dx) * 0.22;
-        state.dy += (py - state.dy) * 0.22;
+        state.dx += (px - state.dx) * 0.35;
+        state.dy += (py - state.dy) * 0.35;
         cursorBubble.style.opacity = "1";
         cursorBubble.style.left = state.dx + "px";
         cursorBubble.style.top = state.dy + "px";
