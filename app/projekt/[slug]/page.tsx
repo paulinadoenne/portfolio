@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { SubNav } from "@/components/Nav";
 import Reveal from "@/components/Reveal";
 import ImageSlot from "@/components/ImageSlot";
+import SequencedHeroVideo from "@/components/SequencedHeroVideo";
 import { projects, getProject, nextProject } from "@/lib/projects";
 
 export function generateStaticParams() {
@@ -155,26 +156,21 @@ export default async function ProjektPage({
         >
           <div style={{ position: "absolute", inset: 0 }}>
             {p.heroVideo ? (
-              <video
-                controls
-                playsInline
-                preload="metadata"
-                poster={p.heroVideoPoster}
-                aria-label={p.heroPlaceholder}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
-                }}
-              >
-                {p.heroVideoWebm && (
-                  <source src={p.heroVideoWebm} type="video/webm" />
-                )}
-                <source src={p.heroVideo} type="video/mp4" />
-              </video>
+              <SequencedHeroVideo
+                ariaLabel={p.heroPlaceholder}
+                clips={[
+                  { src: p.heroVideo, webm: p.heroVideoWebm, poster: p.heroVideoPoster },
+                  ...(p.heroVideoNext
+                    ? [
+                        {
+                          src: p.heroVideoNext,
+                          webm: p.heroVideoNextWebm,
+                          poster: p.heroVideoNextPoster,
+                        },
+                      ]
+                    : []),
+                ]}
+              />
             ) : (
               <ImageSlot placeholder={p.heroPlaceholder} />
             )}

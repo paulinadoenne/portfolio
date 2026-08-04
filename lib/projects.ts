@@ -28,6 +28,10 @@ export type Project = {
   heroVideo?: string;
   heroVideoWebm?: string;
   heroVideoPoster?: string;
+  // Optionaler Anschluss-Clip: spielt automatisch weiter, sobald heroVideo endet.
+  heroVideoNext?: string;
+  heroVideoNextWebm?: string;
+  heroVideoNextPoster?: string;
   gallery: GalleryItem[];
   closingSlotId: string;
   closingCaption: string;
@@ -242,6 +246,8 @@ export const projects: Project[] = [
     heroRatio: "8/1",
     heroVideo: "/projects/fake-it-til-you-make-it/yellow-jacket.mp4",
     heroVideoPoster: "/projects/fake-it-til-you-make-it/poster.jpg",
+    heroVideoNext: "/projects/fake-it-til-you-make-it/red.mp4",
+    heroVideoNextPoster: "/projects/fake-it-til-you-make-it/poster-red.jpg",
     gallery: [
       { slotId: "detail-1", ratio: "21/9", span2: true, src: "/projects/fake-it-til-you-make-it/detail-red-wide.jpg", caption: "Filmstill — Rot-Variante", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-yellow-portrait.jpg", caption: "Filmstill — „Are you wearing a yellow jacket?“", placeholder: "Filmstill (Hochformat) hier ablegen" },
