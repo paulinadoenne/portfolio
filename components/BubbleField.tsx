@@ -14,7 +14,7 @@ import type { CSSProperties } from "react";
  */
 
 export const IRIS =
-  "conic-gradient(from {ANGLE}, rgba(255,80,170,0.34), rgba(60,190,255,0.40), rgba(255,220,60,0.32), rgba(140,90,255,0.40), rgba(50,255,180,0.34), rgba(255,80,170,0.34))";
+  "conic-gradient(from {ANGLE}, rgba(255,110,190,0.30), rgba(100,205,255,0.35), rgba(255,230,110,0.28), rgba(165,130,255,0.35), rgba(95,255,195,0.30), rgba(255,110,190,0.30))";
 export const IRIS_MASK =
   "radial-gradient(circle at 50% 50%, transparent 50%, #000 76%, rgba(0,0,0,0.4) 92%, transparent 100%)";
 
