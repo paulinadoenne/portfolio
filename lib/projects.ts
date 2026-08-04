@@ -258,6 +258,29 @@ export const projects: Project[] = [
     closingPlaceholder: "Situationsfoto hier ablegen",
     closingSrc: "/projects/fake-it-til-you-make-it/mediawall-installation.jpg",
   },
+  {
+    index: "10",
+    slug: "abgabe",
+    title: "Projekttitel eintragen",
+    tag: "Kategorie eintragen",
+    kunde: "Kunde eintragen",
+    rolle: "Rolle eintragen",
+    jahr: "Jahr eintragen",
+    leistungen: "Leistungen eintragen",
+    aufgabe: "Aufgabenbeschreibung eintragen.",
+    umsetzung: "Beschreibung der Umsetzung eintragen.",
+    heroPlaceholder: "Filmstill hier ablegen",
+    heroVideo: "/projects/abgabe/film.mp4",
+    heroVideoPoster: "/projects/abgabe/poster.jpg",
+    gallery: [
+      { slotId: "detail-1", ratio: "16/9", span2: true, caption: "Bildunterschrift eintragen", placeholder: "Filmstill hier ablegen" },
+      { slotId: "detail-2", ratio: "4/5", caption: "Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "4/5", caption: "Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
+    ],
+    closingSlotId: "detail-4",
+    closingCaption: "Bildunterschrift eintragen",
+    closingPlaceholder: "Situationsfoto hier ablegen",
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {
