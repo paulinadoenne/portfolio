@@ -111,7 +111,7 @@ function cardTransform(d: number, hovering: boolean) {
     // z-index wird bewusst NUR aus dem diskreten, ganzzahligen Karten-Index
     // (i, über d = i - p) abgeleitet, nie aus einem interpolierten/
     // animierten Zwischenwert — sonst könnte die Stacking-Reihenfolge
-    // während des 0,12s-Übergangs flackern.
+    // während des Übergangs flackern.
     const zIndex = untouched
       ? 500 - Math.round(d * 10)
       : hovering
@@ -377,7 +377,7 @@ export default function ProjectStack() {
                 opacity: s.opacity,
                 transition: forceOpen
                   ? "none"
-                  : "translate 0.12s ease-out, rotate 0.12s ease-out, scale 0.12s ease-out, opacity 0.12s ease-out",
+                  : "translate 0.32s ease-out, rotate 0.32s ease-out, scale 0.32s ease-out, opacity 0.32s ease-out",
                 willChange: "translate, rotate, scale",
                 backfaceVisibility: "hidden",
                 pointerEvents: clickable ? "auto" : "none",
