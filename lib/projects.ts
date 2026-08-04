@@ -24,7 +24,7 @@ export type Project = {
   aufgabe: string;
   umsetzung: string;
   heroPlaceholder: string;
-  heroRatio?: "21/9" | "16/9" | "8/1";
+  heroRatio?: "21/9" | "16/9" | "8/1" | "4/5";
   heroVideo?: string;
   heroVideoWebm?: string;
   heroVideoPoster?: string;
@@ -115,6 +115,29 @@ export const projects: Project[] = [
       { slotId: "detail-1", ratio: "16/9", span2: true, caption: "Bildunterschrift eintragen", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "4/5", caption: "Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "4/5", caption: "Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
+    ],
+    closingSlotId: "detail-4",
+    closingCaption: "Bildunterschrift eintragen",
+    closingPlaceholder: "Situationsfoto hier ablegen",
+  },
+  {
+    index: "04",
+    slug: "plakatgestaltung-museum",
+    title: "Museum für Ostasiatische Kunst Köln",
+    tag: "Plakatgestaltung · Eigenprojekt",
+    kunde: "Eigenprojekt",
+    rolle: "Gestaltung eintragen",
+    jahr: "Jahr eintragen",
+    leistungen: "Plakatgestaltung eintragen",
+    aufgabe: "Aufgabenbeschreibung eintragen.",
+    umsetzung: "Beschreibung der Umsetzung eintragen.",
+    heroPlaceholder: "Plakat-Animation hier ablegen",
+    heroRatio: "4/5",
+    heroVideo: "/projects/plakatgestaltung/museum-plakat-lang.mp4",
+    heroVideoPoster: "/projects/plakatgestaltung/poster-museum.jpg",
+    gallery: [
+      { slotId: "detail-1", ratio: "4/5", caption: "Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-2", ratio: "4/5", caption: "Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
     closingCaption: "Bildunterschrift eintragen",
