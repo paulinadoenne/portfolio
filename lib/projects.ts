@@ -249,9 +249,9 @@ export const projects: Project[] = [
     heroVideoNext: "/projects/fake-it-til-you-make-it/red.mp4",
     heroVideoNextPoster: "/projects/fake-it-til-you-make-it/poster-red.jpg",
     gallery: [
-      { slotId: "detail-1", ratio: "21/9", span2: true, src: "/projects/fake-it-til-you-make-it/detail-red-wide.jpg", caption: "Filmstill — Rot-Variante", placeholder: "Filmstill hier ablegen" },
+      { slotId: "detail-1", ratio: "21/9", span2: true, src: "/projects/fake-it-til-you-make-it/detail-red-wide.jpg", caption: "Filmstill — „Are you wearing a red cap?“", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-yellow-portrait.jpg", caption: "Filmstill — „Are you wearing a yellow jacket?“", placeholder: "Filmstill (Hochformat) hier ablegen" },
-      { slotId: "detail-3", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-red-portrait.jpg", caption: "Filmstill — Typo-Detail", placeholder: "Filmstill (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-red-portrait.jpg", caption: "Filmstill — „Are you wearing a red cap?“", placeholder: "Filmstill (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
     closingCaption: "Mockup — Media Wall auf dem Campus",
