@@ -154,9 +154,9 @@ export default function BubbleField() {
           width: "100%",
           height: "100vh",
           overflow: "hidden",
-          // Unter Nav (200) und den ProjectStack-Karten (~110–700), damit
-          // Bubbles nie über Titel-/Label-Text liegen.
-          zIndex: 50,
+          // Über allen Inhalten (Nav, Rondell-Karten, Über-mich, Footer),
+          // nur unter dem Custom Cursor (900).
+          zIndex: 850,
           pointerEvents: "none",
         }}
       >

@@ -319,8 +319,7 @@ export default function ProjectStack() {
         // auf, wodurch die inneren Karten-z-Indizes (bis 700) NICHT mehr
         // global mit Geschwistern wie BubbleField vergleichbar sind — ohne
         // eigenes z-index hier läge der ganze Kartenstapel effektiv auf
-        // Ebene 0 und die Blasen (z-index 50) würden trotzdem darüber
-        // liegen. Über BubbleField (50), unter Nav/Cursor (200/900).
+        // Ebene 0. BubbleField liegt bewusst über allen Inhalten (850).
         zIndex: 60,
         height: "100vh",
         overflow: "hidden",
