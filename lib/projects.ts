@@ -93,29 +93,6 @@ export const projects: Project[] = [
   },
   {
     index: "03",
-    slug: "kornwerk",
-    title: "Kornwerk",
-    tag: "Motion · Erklärfilm",
-    kunde: "Kornwerk Mühlen GmbH",
-    rolle: "Konzept, Illustration & Animation",
-    jahr: "2024",
-    leistungen: "Drehbuch, Illustration, 2D-Animation, Sounddesign",
-    aufgabe:
-      "Ein Erklärfilm sollte den Weg vom Korn zum fertigen Mehl verständlich und warm erzählen — für Website und Messe, ohne Fachjargon.",
-    umsetzung:
-      "Handgezeichnete Illustrationen wurden in After Effects zum Leben erweckt. Ein durchgehender Kamerafahrt-Look verbindet die Stationen zu einer Reise. Farbklima und Musik halten den Ton bodenständig.",
-    heroPlaceholder: "Hero-Bild des Projekts hier ablegen",
-    gallery: [
-      { slotId: "detail-1", ratio: "16/9", span2: true, caption: "Filmstill — Kamerafahrt durch die Mühle", placeholder: "Filmstill hier ablegen" },
-      { slotId: "detail-2", ratio: "4/5", caption: "Character-Design — Studien", placeholder: "Illustration (Hochformat) hier ablegen" },
-      { slotId: "detail-3", ratio: "4/5", caption: "Storyboard — Ausschnitt", placeholder: "Storyboard-Panel hier ablegen" },
-    ],
-    closingSlotId: "detail-4",
-    closingCaption: "Styleframe — Farbklima",
-    closingPlaceholder: "Styleframe oder Making-of hier ablegen",
-  },
-  {
-    index: "04",
     slug: "stadtbad-sommer",
     title: "Stadtbad Sommer",
     tag: "Kampagne · OOH",
@@ -138,7 +115,7 @@ export const projects: Project[] = [
     closingPlaceholder: "Situationsfoto oder Motivfamilie hier ablegen",
   },
   {
-    index: "05",
+    index: "04",
     slug: "cafe-botan",
     title: "Café Botan",
     tag: "Werbemittel · Packaging",
@@ -161,7 +138,7 @@ export const projects: Project[] = [
     closingPlaceholder: "Situationsfoto hier ablegen",
   },
   {
-    index: "06",
+    index: "05",
     slug: "papierwelt",
     title: "Papierwelt",
     tag: "Animation · Kurzfilm",
@@ -184,7 +161,7 @@ export const projects: Project[] = [
     closingPlaceholder: "Set-Totale hier ablegen",
   },
   {
-    index: "07",
+    index: "06",
     slug: "nordlicht",
     title: "Nordlicht",
     tag: "Branding · Identity",
@@ -207,7 +184,7 @@ export const projects: Project[] = [
     closingPlaceholder: "Anwendungsfoto hier ablegen",
   },
   {
-    index: "08",
+    index: "07",
     slug: "form-magazin",
     title: "FORM Magazin",
     tag: "Editorial · Ausgabe 04",
@@ -230,7 +207,7 @@ export const projects: Project[] = [
     closingPlaceholder: "Situationsfoto hier ablegen",
   },
   {
-    index: "09",
+    index: "08",
     slug: "fake-it-til-you-make-it",
     title: "Fake It Til You Make It",
     tag: "Motion · Kinetic Typography",
@@ -259,7 +236,7 @@ export const projects: Project[] = [
     closingSrc: "/projects/fake-it-til-you-make-it/mediawall-installation.jpg",
   },
   {
-    index: "10",
+    index: "09",
     slug: "abgabe",
     title: "Projekttitel eintragen",
     tag: "Kategorie eintragen",
