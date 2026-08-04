@@ -182,6 +182,15 @@ function openStyle(d: number) {
 export default function ProjectStack() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  // Ruheposition jeder Karte (ungefähre Rechtecke), einmal pro Hover-Session
+  // gemessen — bewusst NICHT die live-animierende Fläche. Eine Karte, die
+  // gerade fokussiert, braucht bis zu 0,6s, um an ihre zentrierte Position zu
+  // wandern; würde die Fokus-Wahl gegen die währenddessen wandernde Fläche
+  // prüfen, verlässt der (unbewegte) Cursor die Fläche mitten in der
+  // Animation, das Rondell springt zurück in die Ruhe, die Karte wandert
+  // zurück Richtung Cursor, trifft ihn dort wieder — ein Auf-und-zu-„Buckeln“,
+  // besonders sichtbar bei weit hinten liegenden Karten mit langem Weg.
+  const restRectsRef = useRef<DOMRect[] | null>(null);
   const [p, setP] = useState(0);
   const [hovering, setHovering] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(0);
@@ -195,34 +204,68 @@ export default function ProjectStack() {
     setForceOpen(reduced || coarse);
   }, []);
 
+  useEffect(() => {
+    const invalidate = () => {
+      restRectsRef.current = null;
+    };
+    window.addEventListener("resize", invalidate);
+    return () => window.removeEventListener("resize", invalidate);
+  }, []);
+
+  const measureRestRects = () => {
+    const rects = cardRefs.current.map((el) => el?.getBoundingClientRect());
+    if (rects.every((r): r is DOMRect => r !== undefined)) {
+      restRectsRef.current = rects;
+    }
+  };
+
+  const hitTest = (clientX: number, clientY: number, rects: (DOMRect | undefined)[]) => {
+    let hitIndex = -1;
+    let hitZ = -Infinity;
+    for (let i = 0; i < N; i++) {
+      const el = cardRefs.current[i];
+      const r = rects[i];
+      if (!el || !r) continue;
+      if (clientX < r.left || clientX > r.right || clientY < r.top || clientY > r.bottom) {
+        continue;
+      }
+      const z = parseInt(el.style.zIndex || "0", 10);
+      if (z > hitZ) {
+        hitZ = z;
+        hitIndex = i;
+      }
+    }
+    return hitIndex;
+  };
+
   const onMouseMove = (e: React.MouseEvent) => {
     if (forceOpen) return;
     const clientY = e.clientY;
     const clientX = e.clientX;
+    // Zu Beginn einer Hover-Session frisch messen (garantiert die aktuelle
+    // Ruheposition statt eines möglicherweise veralteten Mount-Snapshots).
+    if (!hovering) measureRestRects();
     if (raf.current) cancelAnimationFrame(raf.current);
     raf.current = requestAnimationFrame(() => {
-      // Direkt gegen die TATSÄCHLICH gerenderten Kartenflächen prüfen (nicht
-      // gegen gemessene Ruhepositionen) — funktioniert dadurch unverändert
-      // sowohl im Ruhezustand (kleine, gekippte Karten) als auch für die
-      // gerade fokussierte, große & zentrierte Karte. Bei Überlappungen
-      // gewinnt die Karte mit dem höchsten z-index, also die, die dort
-      // tatsächlich sichtbar/oben liegt. Liegt der Cursor auf keiner Karte,
-      // fällt das Rondell in die Ruheposition zurück.
-      let hitIndex = -1;
-      let hitZ = -Infinity;
-      for (let i = 0; i < N; i++) {
-        const el = cardRefs.current[i];
-        if (!el) continue;
-        const r = el.getBoundingClientRect();
-        if (clientX < r.left || clientX > r.right || clientY < r.top || clientY > r.bottom) {
-          continue;
-        }
-        const z = parseInt(el.style.zIndex || "0", 10);
-        if (z > hitZ) {
-          hitZ = z;
-          hitIndex = i;
+      // 1) Solange der Cursor noch irgendwo innerhalb der TATSÄCHLICH
+      // gerenderten (ggf. groß & zentriert animierten) Fläche der aktuell
+      // offenen Karte liegt, bleibt sie ausgewählt.
+      if (hovering) {
+        const currentIndex = Math.max(0, Math.min(N - 1, Math.round(p)));
+        const el = cardRefs.current[currentIndex];
+        if (el) {
+          const r = el.getBoundingClientRect();
+          if (clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom) {
+            setHinted(true);
+            return;
+          }
         }
       }
+      // 2) Sonst gegen die stabilen Ruhepositionen prüfen (siehe Kommentar
+      // oben) — legt fest, ob eine andere Karte übernimmt oder (kein Treffer)
+      // das Rondell in die Ruheposition zurückfällt.
+      const rects = restRectsRef.current;
+      const hitIndex = rects ? hitTest(clientX, clientY, rects) : -1;
       if (hitIndex === -1) {
         setP(0);
         setHovering(false);
