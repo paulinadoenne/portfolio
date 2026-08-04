@@ -197,11 +197,32 @@ export default function ProjectStack() {
   const [forceOpen, setForceOpen] = useState(false);
   const [hinted, setHinted] = useState(false);
   const raf = useRef(0);
+  // Ziel-Index, dem `p` pro Frame nur um einen begrenzten Schritt entgegen-
+  // läuft (statt direkt zu springen) — bei schnellen Mausbewegungen über
+  // mehrere Karten hinweg werden dadurch alle dazwischenliegenden Karten
+  // sichtbar durchlaufen, statt übersprungen zu werden.
+  const pTargetRef = useRef(0);
+  const chaseRaf = useRef(0);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     setForceOpen(reduced || coarse);
+  }, []);
+
+  useEffect(() => {
+    const step = () => {
+      setP((prev) => {
+        const target = pTargetRef.current;
+        const diff = target - prev;
+        if (Math.abs(diff) < 0.01) return target;
+        const maxStep = 0.28;
+        return prev + Math.sign(diff) * Math.min(maxStep, Math.abs(diff));
+      });
+      chaseRaf.current = requestAnimationFrame(step);
+    };
+    chaseRaf.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(chaseRaf.current);
   }, []);
 
   useEffect(() => {
@@ -267,11 +288,11 @@ export default function ProjectStack() {
       const rects = restRectsRef.current;
       const hitIndex = rects ? hitTest(clientX, clientY, rects) : -1;
       if (hitIndex === -1) {
-        setP(0);
+        pTargetRef.current = 0;
         setHovering(false);
         return;
       }
-      setP(hitIndex);
+      pTargetRef.current = hitIndex;
       setHovering(true);
       setHinted(true);
     });
@@ -280,7 +301,7 @@ export default function ProjectStack() {
   const onMouseLeave = () => {
     if (forceOpen) return;
     if (raf.current) cancelAnimationFrame(raf.current);
-    setP(0);
+    pTargetRef.current = 0;
     setHovering(false);
   };
 
