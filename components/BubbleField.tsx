@@ -14,7 +14,7 @@ import type { CSSProperties } from "react";
  */
 
 export const IRIS =
-  "conic-gradient(from {ANGLE}, rgba(255,50,180,0.36), rgba(35,165,255,0.38), rgba(255,175,50,0.34), rgba(150,65,255,0.38), rgba(45,215,150,0.34), rgba(255,50,180,0.36))";
+  "conic-gradient(from {ANGLE}, rgba(255,110,190,0.30), rgba(100,205,255,0.35), rgba(255,230,110,0.28), rgba(165,130,255,0.35), rgba(95,255,195,0.30), rgba(255,110,190,0.30))";
 export const IRIS_MASK =
   "radial-gradient(circle at 50% 50%, transparent 50%, #000 76%, rgba(0,0,0,0.4) 92%, transparent 100%)";
 
@@ -43,18 +43,18 @@ type Bubble = {
 // Über den ganzen Screen verteilt (top in % des Viewports). hue/sat/aspect/op
 // variieren pro Blase bewusst unregelmäßig, damit keine zwei gleich aussehen.
 const BUBBLES: Bubble[] = [
-  { pos: { top: "4%", left: "6%" }, size: "8vw", anim: "pd-lava-a 19s ease-in-out infinite, pd-shape 12s ease-in-out infinite", angle: "210deg", hue: -22, sat: 1.15, aspect: 1.06, op: 1 },
-  { pos: { top: "10%", right: "12%" }, size: "5.5vw", accent: true, anim: "pd-lava-c 26s ease-in-out infinite, pd-shape 15s ease-in-out infinite", delay: "-9s", angle: "30deg", hue: 18, sat: 0.85, aspect: 0.93, op: 0.88 },
-  { pos: { top: "18%", left: "26%" }, size: "6.5vw", anim: "pd-lava-b 23s ease-in-out infinite, pd-shape 13.5s ease-in-out infinite", delay: "-5s", angle: "120deg", hue: 42, sat: 1.3, aspect: 1.11, op: 0.95 },
-  { pos: { top: "24%", right: "30%" }, size: "5vw", anim: "pd-lava-c 30s ease-in-out infinite, pd-shape 17s ease-in-out infinite", delay: "-16s", angle: "300deg", hue: -48, sat: 0.75, aspect: 0.9, op: 1 },
-  { pos: { top: "33%", left: "10%" }, size: "7vw", anim: "pd-lava-b 25s ease-in-out infinite, pd-shape 14s ease-in-out infinite", delay: "-11s", angle: "80deg", hue: 8, sat: 1.05, aspect: 1.02, op: 0.82 },
-  { pos: { top: "40%", right: "8%" }, size: "6vw", accent: true, anim: "pd-lava-a 29s ease-in-out infinite, pd-shape 16s ease-in-out infinite", delay: "-7s", angle: "260deg", hue: 33, sat: 0.9, aspect: 1.08, op: 1 },
-  { pos: { top: "48%", left: "40%" }, size: "5.5vw", anim: "pd-lava-c 22s ease-in-out infinite, pd-shape 13s ease-in-out infinite", delay: "-3s", angle: "150deg", hue: -12, sat: 1.2, aspect: 0.95, op: 0.9 },
-  { pos: { top: "55%", right: "22%" }, size: "7.5vw", accent: true, anim: "pd-lava-b 24s ease-in-out infinite, pd-shape 14.5s ease-in-out infinite", delay: "-6s", angle: "330deg", hue: -35, sat: 1.0, aspect: 1.14, op: 0.85 },
-  { pos: { top: "63%", left: "16%" }, size: "6vw", anim: "pd-lava-c 28s ease-in-out infinite, pd-shape 16.5s ease-in-out infinite", delay: "-18s", angle: "200deg", hue: 25, sat: 0.8, aspect: 0.88, op: 1 },
-  { pos: { top: "72%", right: "14%" }, size: "7vw", accent: true, anim: "pd-lava-a 21s ease-in-out infinite, pd-shape 13.5s ease-in-out infinite", delay: "-10s", angle: "100deg", hue: 5, sat: 1.25, aspect: 1.04, op: 0.92 },
-  { pos: { top: "80%", left: "32%" }, size: "5.5vw", anim: "pd-lava-b 26s ease-in-out infinite, pd-shape 15s ease-in-out infinite", delay: "-4s", angle: "50deg", hue: -40, sat: 0.95, aspect: 0.97, op: 1 },
-  { pos: { top: "90%", right: "26%" }, size: "6.5vw", anim: "pd-lava-c 29s ease-in-out infinite, pd-shape 15.5s ease-in-out infinite", delay: "-12s", angle: "60deg", hue: 15, sat: 1.1, aspect: 1.09, op: 0.88 },
+  { pos: { top: "4%", left: "6%" }, size: "8vw", anim: "pd-lava-a 19s ease-in-out infinite, pd-shape 12s ease-in-out infinite", angle: "210deg", hue: -22, sat: 1.15, aspect: 1.024, op: 1 },
+  { pos: { top: "10%", right: "12%" }, size: "5.5vw", accent: true, anim: "pd-lava-c 26s ease-in-out infinite, pd-shape 15s ease-in-out infinite", delay: "-9s", angle: "30deg", hue: 18, sat: 0.85, aspect: 0.972, op: 0.88 },
+  { pos: { top: "18%", left: "26%" }, size: "6.5vw", anim: "pd-lava-b 23s ease-in-out infinite, pd-shape 13.5s ease-in-out infinite", delay: "-5s", angle: "120deg", hue: 42, sat: 1.3, aspect: 1.044, op: 0.95 },
+  { pos: { top: "24%", right: "30%" }, size: "5vw", anim: "pd-lava-c 30s ease-in-out infinite, pd-shape 17s ease-in-out infinite", delay: "-16s", angle: "300deg", hue: -48, sat: 0.75, aspect: 0.96, op: 1 },
+  { pos: { top: "33%", left: "10%" }, size: "7vw", anim: "pd-lava-b 25s ease-in-out infinite, pd-shape 14s ease-in-out infinite", delay: "-11s", angle: "80deg", hue: 8, sat: 1.05, aspect: 1.008, op: 0.82 },
+  { pos: { top: "40%", right: "8%" }, size: "6vw", accent: true, anim: "pd-lava-a 29s ease-in-out infinite, pd-shape 16s ease-in-out infinite", delay: "-7s", angle: "260deg", hue: 33, sat: 0.9, aspect: 1.032, op: 1 },
+  { pos: { top: "48%", left: "40%" }, size: "5.5vw", anim: "pd-lava-c 22s ease-in-out infinite, pd-shape 13s ease-in-out infinite", delay: "-3s", angle: "150deg", hue: -12, sat: 1.2, aspect: 0.98, op: 0.9 },
+  { pos: { top: "55%", right: "22%" }, size: "7.5vw", accent: true, anim: "pd-lava-b 24s ease-in-out infinite, pd-shape 14.5s ease-in-out infinite", delay: "-6s", angle: "330deg", hue: -35, sat: 1.0, aspect: 1.056, op: 0.85 },
+  { pos: { top: "63%", left: "16%" }, size: "6vw", anim: "pd-lava-c 28s ease-in-out infinite, pd-shape 16.5s ease-in-out infinite", delay: "-18s", angle: "200deg", hue: 25, sat: 0.8, aspect: 0.952, op: 1 },
+  { pos: { top: "72%", right: "14%" }, size: "7vw", accent: true, anim: "pd-lava-a 21s ease-in-out infinite, pd-shape 13.5s ease-in-out infinite", delay: "-10s", angle: "100deg", hue: 5, sat: 1.25, aspect: 1.016, op: 0.92 },
+  { pos: { top: "80%", left: "32%" }, size: "5.5vw", anim: "pd-lava-b 26s ease-in-out infinite, pd-shape 15s ease-in-out infinite", delay: "-4s", angle: "50deg", hue: -40, sat: 0.95, aspect: 0.988, op: 1 },
+  { pos: { top: "90%", right: "26%" }, size: "6.5vw", anim: "pd-lava-c 29s ease-in-out infinite, pd-shape 15.5s ease-in-out infinite", delay: "-12s", angle: "60deg", hue: 15, sat: 1.1, aspect: 1.036, op: 0.88 },
 ];
 
 function BubbleView({ b }: { b: Bubble }) {
