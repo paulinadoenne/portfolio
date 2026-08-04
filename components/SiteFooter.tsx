@@ -63,7 +63,7 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      <div style={{ padding: "96px 40px 0 40px" }}>
+      <div style={{ padding: "clamp(56px, 10vw, 96px) clamp(20px, 5vw, 40px) 0 clamp(20px, 5vw, 40px)" }}>
         <Reveal
           kind="up"
           as="a"
@@ -72,7 +72,7 @@ export default function SiteFooter() {
             display: "block",
             fontWeight: 700,
             textTransform: "uppercase",
-            fontSize: "clamp(56px, 12.5vw, 200px)",
+            fontSize: "clamp(40px, 12.5vw, 200px)",
             lineHeight: 0.95,
             color: "#ffffff",
           }}
@@ -85,7 +85,7 @@ export default function SiteFooter() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          padding: "80px 40px 32px 40px",
+          padding: "clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px) clamp(20px, 4vw, 32px) clamp(20px, 5vw, 40px)",
           fontSize: "12px",
           fontWeight: 500,
           letterSpacing: "0.1em",

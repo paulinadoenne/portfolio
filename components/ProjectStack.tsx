@@ -165,10 +165,13 @@ function cardTransform(d: number, hovering: boolean) {
 }
 
 /* Statische, voll aufgefächerte Ansicht für Touch / prefers-reduced-motion
- * (keine Hover-Geste verfügbar) — alle Karten gleichzeitig sichtbar & klickbar. */
-function openStyle(d: number) {
-  const gap = 150;
-  const zStep = 26;
+ * (keine Hover-Geste verfügbar) — alle Karten gleichzeitig sichtbar & klickbar.
+ * `gap` kommt von außen (viewporthöhen-abhängig berechnet): bei fixem 150px
+ * bräuchten 8 Karten ~1050px Höhe — auf kurzen Mobil-Viewports (z.B. 667px)
+ * lägen die hinteren Karten außerhalb der `overflow:hidden`-Sektion und
+ * wären weder sichtbar noch erreichbar. */
+function openStyle(d: number, gap: number) {
+  const zStep = gap * 0.173;
   const rot = -4;
   return {
     translate: centeredTranslate(-d * gap, -d * zStep),
@@ -203,11 +206,34 @@ export default function ProjectStack() {
   // sichtbar durchlaufen, statt übersprungen zu werden.
   const pTargetRef = useRef(0);
   const chaseRaf = useRef(0);
+  // Kartenabstand der aufgefächerten Touch-Ansicht: passt sich der Viewport-
+  // höhe an, damit alle N Karten innerhalb der Sektion sichtbar & antippbar
+  // bleiben (siehe Kommentar bei openStyle).
+  const [fanGap, setFanGap] = useState(150);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     setForceOpen(reduced || coarse);
+  }, []);
+
+  useEffect(() => {
+    const updateFanGap = () => {
+      // Fan ist symmetrisch um die Vertikalmitte verteilt (siehe Aufruf
+      // unten: `openStyle(i - (N-1)/2, fanGap)`), nutzt also die volle
+      // Viewporthöhe statt nur die obere Hälfte. `gap` muss so klein sein,
+      // dass auch die äußerste Karte (samt halber Kartenhöhe) noch inner-
+      // halb der Kopf-/Fußraum-Reserven liegt.
+      const cardWidth = Math.min(window.innerWidth * 0.8, 420);
+      const cardHeight = cardWidth * (9 / 16);
+      const reserved = 190; // Kopfzeile oben + Rand unten
+      const available = window.innerHeight - cardHeight - reserved;
+      const gap = Math.max(34, Math.min(150, available / (N - 1)));
+      setFanGap(gap);
+    };
+    updateFanGap();
+    window.addEventListener("resize", updateFanGap);
+    return () => window.removeEventListener("resize", updateFanGap);
   }, []);
 
   useEffect(() => {
@@ -344,9 +370,9 @@ export default function ProjectStack() {
       <div
         style={{
           position: "absolute",
-          left: "40px",
-          top: "50%",
-          transform: "translateY(-50%)",
+          left: forceOpen ? "20px" : "40px",
+          top: forceOpen ? "76px" : "50%",
+          transform: forceOpen ? "none" : "translateY(-50%)",
           fontSize: "13px",
           fontWeight: 700,
           letterSpacing: "0.14em",
@@ -358,9 +384,13 @@ export default function ProjectStack() {
       <div
         style={{
           position: "absolute",
-          right: "40px",
-          top: "50%",
-          transform: "translateY(-50%)",
+          right: forceOpen ? "20px" : "40px",
+          top: forceOpen ? "76px" : "50%",
+          transform: forceOpen ? "none" : "translateY(-50%)",
+          maxWidth: forceOpen ? "50vw" : undefined,
+          overflow: forceOpen ? "hidden" : undefined,
+          textOverflow: forceOpen ? "ellipsis" : undefined,
+          whiteSpace: forceOpen ? "nowrap" : undefined,
           fontSize: "13px",
           fontWeight: 700,
           textTransform: "uppercase",
@@ -411,7 +441,7 @@ export default function ProjectStack() {
           };
           let clickable: boolean;
           if (forceOpen) {
-            s = openStyle(i);
+            s = openStyle(i - (N - 1) / 2, fanGap);
             clickable = true;
           } else {
             const d = i - p;
@@ -432,7 +462,7 @@ export default function ProjectStack() {
                 position: "absolute",
                 left: "50%",
                 top: "50%",
-                width: "min(42vw, 600px)",
+                width: forceOpen ? "min(80vw, 420px)" : "min(42vw, 600px)",
                 translate: s.translate,
                 rotate: s.rotate,
                 scale: s.scale,

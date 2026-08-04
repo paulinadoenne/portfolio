@@ -20,14 +20,15 @@ export default function Home() {
       {/* ===== ÜBER MICH ===== */}
       <section
         id="ueber"
+        className="pd-about-grid"
         style={{
           position: "relative",
           zIndex: 60,
           borderTop: "1px solid var(--ink)",
-          padding: "120px 40px",
+          padding: "clamp(64px, 10vw, 120px) clamp(20px, 5vw, 40px)",
           display: "grid",
           gridTemplateColumns: "minmax(240px, 340px) 1fr",
-          gap: "64px",
+          gap: "clamp(32px, 6vw, 64px)",
           alignItems: "start",
         }}
       >

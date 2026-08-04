@@ -61,7 +61,12 @@ export default async function ProjektPage({
       <SubNav />
 
       {/* ===== HEADER ===== */}
-      <header style={{ padding: "88px 40px 56px 40px" }}>
+      <header
+        style={{
+          padding:
+            "clamp(64px, 12vw, 88px) clamp(20px, 5vw, 40px) clamp(40px, 8vw, 56px) clamp(20px, 5vw, 40px)",
+        }}
+      >
         <Reveal
           kind="up"
           style={{
@@ -107,6 +112,7 @@ export default async function ProjektPage({
         <Reveal
           kind="up"
           delay={160}
+          className="pd-meta-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
@@ -136,7 +142,7 @@ export default async function ProjektPage({
       </header>
 
       {/* ===== HERO ===== */}
-      <div style={{ padding: "0 40px" }}>
+      <div style={{ padding: "0 clamp(20px, 5vw, 40px)" }}>
         <Reveal
           kind="img"
           style={{
@@ -178,11 +184,12 @@ export default async function ProjektPage({
 
       {/* ===== AUFGABE ===== */}
       <section
+        className="pd-split-grid"
         style={{
-          padding: "120px 40px",
+          padding: "clamp(64px, 10vw, 120px) clamp(20px, 5vw, 40px)",
           display: "grid",
           gridTemplateColumns: "280px 1fr",
-          gap: "48px",
+          gap: "clamp(24px, 4vw, 48px)",
           maxWidth: "1240px",
         }}
       >
@@ -206,11 +213,12 @@ export default async function ProjektPage({
 
       {/* ===== GALERIE ===== */}
       <section
+        className="pd-gallery-grid"
         style={{
-          padding: "0 40px",
+          padding: "0 clamp(20px, 5vw, 40px)",
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "40px",
+          gap: "clamp(20px, 4vw, 40px)",
         }}
       >
         {p.gallery.map((g) => (
@@ -236,11 +244,12 @@ export default async function ProjektPage({
 
       {/* ===== UMSETZUNG ===== */}
       <section
+        className="pd-split-grid"
         style={{
-          padding: "120px 40px",
+          padding: "clamp(64px, 10vw, 120px) clamp(20px, 5vw, 40px)",
           display: "grid",
           gridTemplateColumns: "280px 1fr",
-          gap: "48px",
+          gap: "clamp(24px, 4vw, 48px)",
           maxWidth: "1240px",
         }}
       >
@@ -264,11 +273,12 @@ export default async function ProjektPage({
 
       {/* ===== ABSCHLUSS-BILD ===== */}
       <section
+        className="pd-gallery-grid"
         style={{
-          padding: "0 40px",
+          padding: "0 clamp(20px, 5vw, 40px)",
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "40px",
+          gap: "clamp(20px, 4vw, 40px)",
         }}
       >
         <div style={{ gridColumn: "span 2" }}>
@@ -293,10 +303,10 @@ export default async function ProjektPage({
       {/* ===== NÄCHSTES PROJEKT ===== */}
       <footer
         style={{
-          marginTop: "140px",
+          marginTop: "clamp(72px, 12vw, 140px)",
           background: "var(--footer-bg)",
           color: "#ffffff",
-          padding: "88px 40px 36px 40px",
+          padding: "clamp(48px, 10vw, 88px) clamp(20px, 5vw, 40px) clamp(24px, 4vw, 36px) clamp(20px, 5vw, 40px)",
         }}
       >
         <div
@@ -317,7 +327,8 @@ export default async function ProjektPage({
           style={{
             display: "flex",
             alignItems: "baseline",
-            gap: "28px",
+            flexWrap: "wrap",
+            gap: "clamp(14px, 3vw, 28px)",
             color: "#ffffff",
           }}
         >
@@ -339,7 +350,9 @@ export default async function ProjektPage({
           style={{
             display: "flex",
             justifyContent: "space-between",
-            marginTop: "88px",
+            flexWrap: "wrap",
+            gap: "12px",
+            marginTop: "clamp(48px, 10vw, 88px)",
             paddingTop: "22px",
             borderTop: "1px solid var(--footer-hair)",
             fontSize: "12px",

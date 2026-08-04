@@ -7,7 +7,7 @@ const navStyle: CSSProperties = {
   alignItems: "center",
   flexWrap: "wrap",
   gap: "8px 20px",
-  padding: "22px 40px",
+  padding: "clamp(14px, 3.5vw, 22px) clamp(16px, 5vw, 40px)",
   position: "sticky",
   top: 0,
   background: "rgba(255,255,255,0.9)",

@@ -10,7 +10,7 @@ const navStyle: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "22px 40px",
+  padding: "clamp(14px, 3.5vw, 22px) clamp(16px, 5vw, 40px)",
   position: "sticky",
   top: 0,
   background: "rgba(255,255,255,0.9)",
@@ -23,7 +23,8 @@ const h2: CSSProperties = {
   fontWeight: 700,
   textTransform: "uppercase",
   letterSpacing: "-0.01em",
-  fontSize: "28px",
+  fontSize: "clamp(22px, 5vw, 28px)",
+  overflowWrap: "break-word",
 };
 const body: CSSProperties = { fontSize: "16px", lineHeight: 1.8 };
 
@@ -55,15 +56,23 @@ export default function ImpressumPage() {
         </Link>
       </nav>
 
-      <div style={{ padding: "88px 40px 120px 40px", maxWidth: "840px" }}>
+      <div
+        style={{
+          padding:
+            "clamp(64px, 12vw, 88px) clamp(20px, 5vw, 40px) clamp(64px, 10vw, 120px) clamp(20px, 5vw, 40px)",
+          maxWidth: "840px",
+        }}
+      >
         <h1
           style={{
             margin: "0 0 72px 0",
+            maxWidth: "100%",
             fontWeight: 700,
             textTransform: "uppercase",
             letterSpacing: "-0.01em",
-            fontSize: "clamp(48px, 8vw, 110px)",
+            fontSize: "clamp(38px, 8vw, 110px)",
             lineHeight: 0.95,
+            overflowWrap: "break-word",
           }}
         >
           Impressum &amp;<br />Datenschutz
@@ -131,7 +140,9 @@ export default function ImpressumPage() {
           color: "#ffffff",
           display: "flex",
           justifyContent: "space-between",
-          padding: "28px 40px",
+          flexWrap: "wrap",
+          gap: "12px",
+          padding: "28px clamp(20px, 5vw, 40px)",
           fontSize: "12px",
           fontWeight: 500,
           letterSpacing: "0.1em",
