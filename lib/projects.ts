@@ -135,9 +135,9 @@ export const projects: Project[] = [
     title: "4 Wochen 4 Poster",
     tag: "Plakatgestaltung · Eigenprojekt",
     kunde: "Eigenprojekt",
-    rolle: "Gestaltung eintragen",
+    rolle: "Konzept & Gestaltung",
     jahr: "2026",
-    leistungen: "Plakatgestaltung eintragen",
+    leistungen: "Konzept, Layout, Typografie, Bildbearbeitung",
     aufgabe:
       "Das Ziel: jede Woche ein eigenständiges Plakat, um die Umgebung zu gestalten. Vier Wochen, vier sehr unterschiedliche Themen, ein durchgängiger gestalterischer Anspruch.",
     umsetzung: "Beschreibung der Umsetzung eintragen.",
