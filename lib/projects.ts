@@ -171,7 +171,6 @@ export const projects: Project[] = [
     heroVideo: "/projects/fraktale-welt/film.mov",
     heroVideoPoster: "/projects/fraktale-welt/poster.jpg",
     gallery: [
-      { slotId: "detail-1", ratio: "16/9", span2: true, src: "/projects/fraktale-welt/still-unterfuehrung.jpg", caption: "Filmstill: fraktale Struktur", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "4/5", src: "/projects/fraktale-welt/still-neon-figur.jpg", caption: "Filmstill: Neonschild-Überlagerung", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "4/5", src: "/projects/fraktale-welt/still-glitch-lauf.jpg", caption: "Filmstill: fraktale Überlagerung", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
