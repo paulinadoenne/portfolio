@@ -289,7 +289,28 @@ export default async function ProjektPage({
               }}
             >
               <div style={{ position: "absolute", inset: 0 }}>
-                <ImageSlot placeholder={g.placeholder} src={g.src} />
+                {g.video ? (
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster={g.src}
+                    aria-label={g.placeholder}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  >
+                    {g.videoWebm && <source src={g.videoWebm} type="video/webm" />}
+                    <source src={g.video} type="video/mp4" />
+                  </video>
+                ) : (
+                  <ImageSlot placeholder={g.placeholder} src={g.src} />
+                )}
               </div>
             </Reveal>
             <div style={captionStyle}>{g.caption}</div>

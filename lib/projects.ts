@@ -12,6 +12,9 @@ export type GalleryItem = {
   caption: string;
   placeholder: string;
   src?: string;
+  // Optional: Galerie-Kachel als Video statt Bild (src dient dann als Poster).
+  video?: string;
+  videoWebm?: string;
 };
 
 export type Project = {
@@ -201,7 +204,7 @@ export const projects: Project[] = [
       { slotId: "detail-4", ratio: "600/1223", src: "/projects/rewe-art-direction/sesameis.jpg", caption: "Xmas-POS für REWE Feine Welt: Sesamreis mit Kokos auf Mango-Spiegel", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-4b", ratio: "600/1223", src: "/projects/rewe-art-direction/sesameis-rezept.jpg", caption: "Rückseite mit Zutaten und Zubereitung", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-1b", ratio: "1200/1682", span2: true, src: "/projects/rewe-art-direction/gehwegaufsteller-kassenzone.jpg", caption: "Zweites Ausgabeformat des Key Visuals für die Kassenzone", placeholder: "Foto (Hochformat) hier ablegen" },
-      { slotId: "detail-4c", ratio: "1/1", src: "/projects/rewe-art-direction/neukundenrabatt.jpg", caption: "Social-Ad (Video): 20 € Neukundengutschein für den REWE Lieferservice", placeholder: "Foto hier ablegen" },
+      { slotId: "detail-4c", ratio: "1/1", src: "/projects/rewe-art-direction/neukundenrabatt.jpg", video: "/projects/rewe-art-direction/neukundenrabatt.mp4", caption: "Social-Ad (Video): 20 € Neukundengutschein für den REWE Lieferservice", placeholder: "Video hier ablegen" },
       { slotId: "detail-5", ratio: "4/5", caption: "Recruiting-Sujet: Mitarbeitendenrabatt", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-6", ratio: "16/9", span2: true, caption: "Rezeptkommunikation: Weißer Bohnensalat", placeholder: "Foto hier ablegen" },
       { slotId: "detail-7", ratio: "4/5", caption: "Icon: Thekenfrische", placeholder: "Icon hier ablegen" },
