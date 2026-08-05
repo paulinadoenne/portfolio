@@ -81,15 +81,7 @@ export default function ImpressumPage() {
         <h2 style={h2}>Impressum</h2>
         <div style={{ ...body, marginBottom: "64px" }}>
           <p style={{ margin: "0 0 20px 0" }}>Angaben gemäß § 5 TMG:</p>
-          <p style={{ margin: "0 0 20px 0" }}>
-            Paulina Dönne
-            <br />
-            Straße und Hausnummer eintragen
-            <br />
-            PLZ und Stadt eintragen
-            <br />
-            Deutschland
-          </p>
+          <p style={{ margin: "0 0 20px 0" }}>Paulina Dönne</p>
           <p style={{ margin: "0 0 20px 0" }}>
             E-Mail:{" "}
             <a href="mailto:hallo@paulinadoenne.de" className="pd-underline">
@@ -99,8 +91,7 @@ export default function ImpressumPage() {
             Telefon: Telefonnummer eintragen
           </p>
           <p style={{ margin: 0 }}>
-            Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: Paulina Dönne,
-            Anschrift wie oben.
+            Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: Paulina Dönne.
           </p>
         </div>
 
