@@ -154,6 +154,29 @@ export const projects: Project[] = [
     closingCaption: "Bildunterschrift eintragen",
     closingPlaceholder: "Situationsfoto hier ablegen",
   },
+  {
+    index: "05",
+    slug: "fraktale-welt",
+    title: "Fraktale Welt",
+    tag: "Kategorie eintragen",
+    kunde: "Kunde eintragen",
+    rolle: "Rolle eintragen",
+    jahr: "Jahr eintragen",
+    leistungen: "Leistungen eintragen",
+    aufgabe: "Aufgabenbeschreibung eintragen.",
+    umsetzung: "Beschreibung der Umsetzung eintragen.",
+    heroPlaceholder: "Filmstill hier ablegen",
+    heroVideo: "/projects/fraktale-welt/film.mov",
+    heroVideoPoster: "/projects/fraktale-welt/poster.jpg",
+    gallery: [
+      { slotId: "detail-1", ratio: "16/9", span2: true, caption: "Bildunterschrift eintragen", placeholder: "Filmstill hier ablegen" },
+      { slotId: "detail-2", ratio: "4/5", caption: "Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "4/5", caption: "Bildunterschrift eintragen", placeholder: "Foto (Hochformat) hier ablegen" },
+    ],
+    closingSlotId: "detail-4",
+    closingCaption: "Bildunterschrift eintragen",
+    closingPlaceholder: "Situationsfoto hier ablegen",
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {
