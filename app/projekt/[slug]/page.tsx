@@ -386,11 +386,22 @@ export default async function ProjektPage({
             style={{
               fontWeight: 700,
               textTransform: "uppercase",
-              fontSize: "clamp(48px, 9vw, 140px)",
+              fontSize:
+                next.slug === "the-double-standard-of-aging"
+                  ? "clamp(36px, 6.5vw, 96px)"
+                  : "clamp(48px, 9vw, 140px)",
               lineHeight: 0.95,
             }}
           >
-            {next.title}
+            {next.slug === "the-double-standard-of-aging" ? (
+              <>
+                The Double Standard
+                <br />
+                of Aging
+              </>
+            ) : (
+              next.title
+            )}
           </span>
           <span className="pd-arrow" style={{ fontSize: "clamp(28px, 4vw, 56px)" }}>
             →
