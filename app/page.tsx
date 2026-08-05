@@ -70,12 +70,12 @@ export default function Home() {
               lineHeight: 1.55,
             }}
           >
-            Ich bin Paulina Dönne, Kommunikationsdesignerin. Mich interessiert,
-            wie Gestaltung wirkt — ob eine Campus-Kampagne Menschen zum Lächeln
-            bringt oder ein Plakat auf den ersten Blick eine Haltung zeigt.
-            Ich denke Projekte vom Konzept bis zum letzten Frame durch:
-            Commercials, Editorial Design, Animation und Werbemittel. Dieses
-            Portfolio zeigt eine Auswahl meiner Arbeiten und dient zugleich als
+            Ich bin Paulina Dönne, Kommunikationsdesignerin aus Köln. An der
+            Peter Behrens School of Arts habe ich gelernt, Gestaltung von der
+            ersten Idee bis zum letzten Frame zu denken — von Advertising
+            Design über Editorial bis Bewegtbild. Hier zeige ich eine Auswahl
+            meiner Projekte: Commercials, Editorial Design, Animation
+            und Werbemittel. Dieses Portfolio dient zugleich als
             Bewerbungsunterlage.
           </p>
           <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>

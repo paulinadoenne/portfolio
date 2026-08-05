@@ -140,7 +140,7 @@ export default function LebenslaufPage() {
                   }}
                 >
                   <div>paulinadoenne@outlook.com</div>
-                  <div>Stadt eintragen, Deutschland</div>
+                  <div>Köln, Deutschland</div>
                   <div>paulinadoenne.de</div>
                 </div>
                 <div
@@ -212,7 +212,7 @@ export default function LebenslaufPage() {
               <div style={sectionLabel}>Ausbildung</div>
               <div style={{ breakInside: "avoid" }}>
                 <div style={jobTitleRow}>
-                  <span>B.A. Kommunikationsdesign — Hochschule eintragen</span>
+                  <span>B.A. Kommunikationsdesign — Peter Behrens School of Arts</span>
                   <span style={period}>20XX – 20XX</span>
                 </div>
                 <p style={jobDesc}>
