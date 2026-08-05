@@ -199,6 +199,8 @@ export const projects: Project[] = [
       { slotId: "detail-2", ratio: "1200/1687", src: "/projects/rewe-art-direction/dankeskommunikation.jpg", caption: "Dankesplakat: „Gemeinsam Teller füllen“ für die Tafel-Kooperation", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "1200/1673", src: "/projects/rewe-art-direction/selfcheckout.jpg", caption: "Infotafel am Self-Checkout: Ablauf der Spendenaktion", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-4", ratio: "600/1223", src: "/projects/rewe-art-direction/sesameis.jpg", caption: "Xmas-POS für REWE Feine Welt: Sesamreis mit Kokos auf Mango-Spiegel", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-4b", ratio: "600/1223", src: "/projects/rewe-art-direction/sesameis-rezept.jpg", caption: "Rückseite mit Zutaten und Zubereitung", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-1b", ratio: "1200/1682", span2: true, src: "/projects/rewe-art-direction/gehwegaufsteller-kassenzone.jpg", caption: "Zweites Ausgabeformat des Key Visuals für die Kassenzone", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-5", ratio: "4/5", caption: "Recruiting-Sujet: Mitarbeitendenrabatt", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-6", ratio: "16/9", span2: true, caption: "Rezeptkommunikation: Weißer Bohnensalat", placeholder: "Foto hier ablegen" },
       { slotId: "detail-7", ratio: "4/5", caption: "Icon: Thekenfrische", placeholder: "Icon hier ablegen" },
