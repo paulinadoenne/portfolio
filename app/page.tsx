@@ -71,11 +71,11 @@ export default function Home() {
             }}
           >
             Ich bin Paulina Dönne, Kommunikationsdesignerin aus Köln. An der
-            Peter Behrens School of Arts habe ich gelernt, Gestaltung von der
-            ersten Idee bis zum letzten Frame zu denken: von Advertising
-            Design über Editorial bis Bewegtbild. Hier zeige ich eine Auswahl
-            meiner Projekte: Commercials, Editorial Design, Animation
-            und Werbemittel.
+            Peter Behrens School of Arts habe ich gelernt, Projekte von der
+            ersten Idee bis zum letzten Frame zu denken, von Advertising
+            Design über Editorial bis Bewegtbild. Diese Bandbreite zeigt sich
+            auch hier: in Commercials, Editorial Design, Animation und
+            Werbemitteln.
           </p>
           <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
             <Link
