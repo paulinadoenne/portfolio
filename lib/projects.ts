@@ -179,6 +179,35 @@ export const projects: Project[] = [
     closingPlaceholder: "Situationsfoto hier ablegen",
     closingSrc: "/projects/fraktale-welt/still-closing.jpg",
   },
+  {
+    index: "06",
+    slug: "rewe-art-direction",
+    title: "REWE Art Direction",
+    tag: "Art Direction · Werkstudentin",
+    kunde: "REWE Dein Markt",
+    rolle: "Art Direction (Werkstudentin)",
+    jahr: "2025/2026",
+    leistungen: "Layout, Bildregie, Reinzeichnung, Retusche",
+    aufgabe:
+      "Als Werkstudentin in der Art Direction bei REWE entstand eine breite Auswahl an Werbemitteln: von Rezeptkommunikation über Store-Kommunikation bis zu einer Spendenaktion für die Tafeln, immer innerhalb des bestehenden REWE-Markenauftritts.",
+    umsetzung:
+      "Vom Gehwegaufsteller über die Kassenzonen-Kommunikation bis zur Rezeptkarte fürs Weihnachtsgeschäft: Jedes Format verlangt ein eigenes Zusammenspiel aus Bild, Text und Markenelementen, von großformatigem Print bis zum kleinteiligen Point-of-Sale-Aufsteller.",
+    heroPlaceholder: "Sujet hier ablegen",
+    heroVideoPoster: "/projects/rewe-art-direction/gehwegaufsteller.jpg",
+    gallery: [
+      { slotId: "detail-1", ratio: "1200/1684", span2: true, src: "/projects/rewe-art-direction/gehwegaufsteller.jpg", caption: "Gehwegaufsteller: Spendenaktion für die Tafeln vor Ort", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-2", ratio: "1200/1687", src: "/projects/rewe-art-direction/dankeskommunikation.jpg", caption: "Dankesplakat: „Gemeinsam Teller füllen“ für die Tafel-Kooperation", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "1200/1673", src: "/projects/rewe-art-direction/selfcheckout.jpg", caption: "Infotafel am Self-Checkout: Ablauf der Spendenaktion", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-4", ratio: "600/1223", src: "/projects/rewe-art-direction/sesameis.jpg", caption: "Xmas-POS für REWE Feine Welt: Sesamreis mit Kokos auf Mango-Spiegel", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-5", ratio: "4/5", caption: "Recruiting-Sujet: Mitarbeitendenrabatt", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-6", ratio: "16/9", span2: true, caption: "Rezeptkommunikation: Weißer Bohnensalat", placeholder: "Foto hier ablegen" },
+      { slotId: "detail-7", ratio: "4/5", caption: "Icon: Thekenfrische", placeholder: "Icon hier ablegen" },
+      { slotId: "detail-8", ratio: "4/5", caption: "Rezeptkommunikation: Bratlinge mit Pastinaken-Möhren-Gemüse", placeholder: "Foto (Hochformat) hier ablegen" },
+    ],
+    closingSlotId: "detail-9",
+    closingCaption: "Bildunterschrift eintragen",
+    closingPlaceholder: "Situationsfoto hier ablegen",
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {
