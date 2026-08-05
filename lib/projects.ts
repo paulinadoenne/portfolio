@@ -159,12 +159,12 @@ export const projects: Project[] = [
     slug: "fraktale-welt",
     title: "Fraktale Welt",
     tag: "Musikvideo · Uni-Projekt",
-    kunde: "DJane Nava (Uni-Projekt)",
+    kunde: "Eigenprojekt (Uni-Projekt)",
     rolle: "Konzept, Kamera & Motion Design",
     jahr: "2024",
     leistungen: "Konzept, Dreh, Motion Design, Schnitt",
     aufgabe:
-      "Für den Track „Night Sun“ der DJane Nava sollte im Rahmen eines Uni-Projekts ein Musikvideo entstehen: ein anonymer Mann zieht durch die Nacht und wird dabei zunehmend überfordert von den Reizen, die die Night Sun über ihn bringt.",
+      "Im Rahmen eines Uni-Projekts sollte zu einem frei gewählten Track ein Musikvideo entstehen. Die Wahl fiel auf „Night Sun“ von DJane Nava: ein anonymer Mann zieht durch die Nacht und wird dabei zunehmend überfordert von den Reizen, die die Night Sun über ihn bringt.",
     umsetzung:
       "Gedreht wurde mit zwei Kameras. Der Camcorder liefert die POV-Aufnahmen, die den Mann aus seiner eigenen Perspektive durch die Nacht begleiten, während das Smartphone einfängt, was ihm dabei begegnet: Neonschilder, Lichtreflexe, flüchtige Eindrücke der Stadt. Im Schnitt verdichten sich beide Perspektiven zu einem zunehmend fragmentierten, fraktalen Bildrhythmus, der die wachsende Reizüberflutung des Protagonisten spürbar macht.",
     heroPlaceholder: "Filmstill · Night Sun (DJane Nava)",
