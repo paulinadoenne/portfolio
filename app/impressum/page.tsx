@@ -75,7 +75,7 @@ export default function ImpressumPage() {
             overflowWrap: "break-word",
           }}
         >
-          Impressum &amp;<br />Datenschutz
+          Impressum &amp; Datenschutz
         </h1>
 
         <h2 style={h2}>Impressum</h2>
