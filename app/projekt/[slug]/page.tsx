@@ -298,6 +298,7 @@ export default async function ProjektPage({
       </section>
 
       {/* ===== UMSETZUNG ===== */}
+      {p.slug !== "4-wochen-4-poster" && (
       <section
         className="pd-split-grid"
         style={{
@@ -325,8 +326,10 @@ export default async function ProjektPage({
           {p.umsetzung}
         </Reveal>
       </section>
+      )}
 
       {/* ===== ABSCHLUSS-BILD ===== */}
+      {p.slug !== "4-wochen-4-poster" && (
       <section
         className="pd-gallery-grid"
         style={{
@@ -354,6 +357,7 @@ export default async function ProjektPage({
           <div style={captionStyle}>{p.closingCaption}</div>
         </div>
       </section>
+      )}
 
       {/* ===== NÄCHSTES PROJEKT ===== */}
       <footer
