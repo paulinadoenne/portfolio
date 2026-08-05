@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Impressum & Datenschutz — Paulina Dönne",
+  title: "Impressum & Datenschutz · Paulina Dönne",
 };
 
 const navStyle: CSSProperties = {
@@ -112,7 +112,7 @@ export default function ImpressumPage() {
           </p>
           <p style={{ margin: "0 0 20px 0" }}>
             <strong>4. Externe Dienste.</strong> Eingebundene Schriften,
-            eingebettete Videos oder Analyse-Tools hier aufführen — inklusive
+            eingebettete Videos oder Analyse-Tools hier aufführen, inklusive
             Anbieter und Zweck.
           </p>
           <p style={{ margin: 0 }}>

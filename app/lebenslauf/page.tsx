@@ -5,7 +5,7 @@ import ImageSlot from "@/components/ImageSlot";
 import PrintButton from "@/components/PrintButton";
 
 export const metadata: Metadata = {
-  title: "Lebenslauf — Paulina Dönne",
+  title: "Lebenslauf · Paulina Dönne",
 };
 
 const sectionGrid: CSSProperties = {
@@ -177,7 +177,7 @@ export default function LebenslaufPage() {
               >
                 <div style={{ breakInside: "avoid" }}>
                   <div style={jobTitleRow}>
-                    <span>Position eintragen — Agentur / Unternehmen</span>
+                    <span>Position eintragen · Agentur / Unternehmen</span>
                     <span style={period}>20XX – heute</span>
                   </div>
                   <p style={jobDesc}>
@@ -187,7 +187,7 @@ export default function LebenslaufPage() {
                 </div>
                 <div style={{ breakInside: "avoid" }}>
                   <div style={jobTitleRow}>
-                    <span>Praktikum / Werkstudium — Unternehmen</span>
+                    <span>Praktikum / Werkstudium · Unternehmen</span>
                     <span style={period}>20XX – 20XX</span>
                   </div>
                   <p style={jobDesc}>
@@ -200,7 +200,7 @@ export default function LebenslaufPage() {
                     <span style={period}>20XX – heute</span>
                   </div>
                   <p style={jobDesc}>
-                    Freie Arbeiten für Kund:innen aus Kultur und Wirtschaft —
+                    Freie Arbeiten für Kund:innen aus Kultur und Wirtschaft,
                     Auswahl im Portfolio.
                   </p>
                 </div>
@@ -212,7 +212,7 @@ export default function LebenslaufPage() {
               <div style={sectionLabel}>Ausbildung</div>
               <div style={{ breakInside: "avoid" }}>
                 <div style={jobTitleRow}>
-                  <span>B.A. Kommunikationsdesign — Peter Behrens School of Arts</span>
+                  <span>B.A. Kommunikationsdesign · Peter Behrens School of Arts</span>
                   <span style={period}>20XX – 20XX</span>
                 </div>
                 <p style={jobDesc}>
@@ -264,7 +264,7 @@ export default function LebenslaufPage() {
                 opacity: 0.5,
               }}
             >
-              <span>Paulina Dönne — Lebenslauf</span>
+              <span>Paulina Dönne · Lebenslauf</span>
               <span>Portfolio: paulinadoenne.de</span>
             </div>
           </div>

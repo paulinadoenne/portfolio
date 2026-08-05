@@ -17,7 +17,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const p = getProject(slug);
-  return { title: p ? `${p.title} — Paulina Dönne` : "Projekt — Paulina Dönne" };
+  return { title: p ? `${p.title} · Paulina Dönne` : "Projekt · Paulina Dönne" };
 }
 
 const metaLabel: CSSProperties = {
