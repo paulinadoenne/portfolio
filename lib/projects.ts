@@ -197,6 +197,7 @@ export const projects: Project[] = [
       "Vom Gehwegaufsteller über die Kassenzonen-Kommunikation bis zur Rezeptkarte fürs Weihnachtsgeschäft: Jedes Format verlangt ein eigenes Zusammenspiel aus Bild, Text und Markenelementen, von großformatigem Print bis zum kleinteiligen Point-of-Sale-Aufsteller.",
     heroPlaceholder: "Sujet hier ablegen",
     heroVideoPoster: "/projects/rewe-art-direction/gehwegaufsteller.jpg",
+    cardVideo: "/projects/rewe-art-direction/neukundenrabatt.mp4",
     gallery: [
       { slotId: "detail-1", ratio: "1200/1684", span2: true, src: "/projects/rewe-art-direction/gehwegaufsteller.jpg", caption: "Gehwegaufsteller: Spendenaktion für die Tafeln vor Ort", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "1200/1687", src: "/projects/rewe-art-direction/dankeskommunikation.jpg", caption: "Dankesplakat: „Gemeinsam Teller füllen“ für die Tafel-Kooperation", placeholder: "Foto (Hochformat) hier ablegen" },
