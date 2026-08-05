@@ -61,7 +61,7 @@ export const projects: Project[] = [
     aufgabe:
       "Für die Bachelorarbeit sollte ein Kurzfilm entstehen, der den doppelten Standard beim Altern sichtbar macht: Warum werden Frauen und Männer gesellschaftlich so unterschiedlich bewertet, wenn es um Aussehen, Selbstbild und Lebensplanung geht? Grundlage sind reale Interview-Aussagen, die den Film tragen.",
     umsetzung:
-      "Aus den Interviews wurden prägnante Zeilen zu einem Skript montiert und als kinetische Typografie inszeniert: jede Aussage bekommt ihren eigenen Rhythmus im Takt der Stimme. Die reduzierte Rot-Weiß-Palette hält den Fokus konsequent auf dem gesprochenen Wort.",
+      "Gestalterisch orientiert sich der Film an Barbara Kruger und Jenny Holzer: Krugers bildhafte Sprache aus roten Flächen und knapper, unmissverständlicher Typografie trifft auf Holzers reduzierte, fast plakative Textaussagen. Aus den Interviews wurden prägnante Zeilen zu einem Skript montiert und als kinetische Typografie inszeniert: jede Aussage bekommt ihren eigenen Rhythmus im Takt der Stimme. Die reduzierte Rot-Weiß-Palette hält den Fokus konsequent auf dem gesprochenen Wort.",
     heroPlaceholder: "Filmstill · The Double Standard of Aging",
     heroRatio: "16/9",
     heroVideo: "/projects/the-double-standard-of-aging/film.mp4",
