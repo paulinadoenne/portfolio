@@ -164,9 +164,9 @@ export const projects: Project[] = [
     jahr: "2024",
     leistungen: "Konzept, Dreh, Motion Design, Schnitt",
     aufgabe:
-      "Für den Track „Night Sun“ der DJane Nava sollte im Rahmen eines Uni-Projekts ein Musikvideo entstehen, das die hypnotische, nächtliche Energie des Tracks visuell einfängt.",
+      "Für den Track „Night Sun“ der DJane Nava sollte im Rahmen eines Uni-Projekts ein Musikvideo entstehen: ein anonymer Mann zieht durch die Nacht und wird dabei zunehmend überfordert von den Reizen, die die Night Sun über ihn bringt.",
     umsetzung:
-      "Reale Nachtaufnahmen aus der Stadt wurden mit fraktalen, generativen Formen überlagert: Architektur und Struktur lösen sich ineinander auf und verdichten sich zu einem pulsierenden Bildrhythmus im Takt des Tracks.",
+      "Gedreht wurde mit zwei Kameras. Der Camcorder liefert die POV-Aufnahmen, die den Mann aus seiner eigenen Perspektive durch die Nacht begleiten, während das Smartphone einfängt, was ihm dabei begegnet: Neonschilder, Lichtreflexe, flüchtige Eindrücke der Stadt. Im Schnitt verdichten sich beide Perspektiven zu einem zunehmend fragmentierten, fraktalen Bildrhythmus, der die wachsende Reizüberflutung des Protagonisten spürbar macht.",
     heroPlaceholder: "Filmstill · Night Sun (DJane Nava)",
     heroVideo: "/projects/fraktale-welt/film.mov",
     heroVideoPoster: "/projects/fraktale-welt/poster.jpg",
