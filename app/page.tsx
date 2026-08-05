@@ -75,8 +75,7 @@ export default function Home() {
             ersten Idee bis zum letzten Frame zu denken: von Advertising
             Design über Editorial bis Bewegtbild. Hier zeige ich eine Auswahl
             meiner Projekte: Commercials, Editorial Design, Animation
-            und Werbemittel. Dieses Portfolio dient zugleich als
-            Bewerbungsunterlage.
+            und Werbemittel.
           </p>
           <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
             <Link
