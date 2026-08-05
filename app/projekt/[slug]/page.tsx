@@ -115,6 +115,11 @@ export default async function ProjektPage({
               <br />
               of Aging
             </>
+          ) : p.slug === "4-wochen-4-poster" ? (
+            <>
+              4 Wochen
+              <br />4 Poster
+            </>
           ) : (
             p.title
           )}
@@ -398,6 +403,11 @@ export default async function ProjektPage({
                 The Double Standard
                 <br />
                 of Aging
+              </>
+            ) : next.slug === "4-wochen-4-poster" ? (
+              <>
+                4 Wochen
+                <br />4 Poster
               </>
             ) : (
               next.title

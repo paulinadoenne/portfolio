@@ -136,10 +136,10 @@ export const projects: Project[] = [
     tag: "Plakatgestaltung · Eigenprojekt",
     kunde: "Eigenprojekt",
     rolle: "Gestaltung eintragen",
-    jahr: "Jahr eintragen",
+    jahr: "2026",
     leistungen: "Plakatgestaltung eintragen",
     aufgabe:
-      "In vier Wochen sollte je ein eigenständiges Plakat entstehen, vier sehr unterschiedliche Themen, ein durchgängiger gestalterischer Anspruch.",
+      "Das Ziel: jede Woche ein eigenständiges Plakat, um die Umgebung zu gestalten. Vier Wochen, vier sehr unterschiedliche Themen, ein durchgängiger gestalterischer Anspruch.",
     umsetzung: "Beschreibung der Umsetzung eintragen.",
     heroPlaceholder: "Hero-Bild des Projekts hier ablegen",
     heroVideoPoster: "/projects/plakatgestaltung/poster-museum.jpg",
