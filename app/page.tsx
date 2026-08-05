@@ -95,7 +95,7 @@ export default function Home() {
               Lebenslauf (PDF) ↓
             </Link>
             <a
-              href="mailto:hallo@paulinadoenne.de"
+              href="mailto:paulinadoenne@outlook.com"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

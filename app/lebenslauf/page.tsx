@@ -139,8 +139,7 @@ export default function LebenslaufPage() {
                     textAlign: "right",
                   }}
                 >
-                  <div>hallo@paulinadoenne.de</div>
-                  <div>+49 · Telefonnummer eintragen</div>
+                  <div>paulinadoenne@outlook.com</div>
                   <div>Stadt eintragen, Deutschland</div>
                   <div>paulinadoenne.de</div>
                 </div>

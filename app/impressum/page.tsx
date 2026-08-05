@@ -84,11 +84,9 @@ export default function ImpressumPage() {
           <p style={{ margin: "0 0 20px 0" }}>Paulina Dönne</p>
           <p style={{ margin: "0 0 20px 0" }}>
             E-Mail:{" "}
-            <a href="mailto:hallo@paulinadoenne.de" className="pd-underline">
-              hallo@paulinadoenne.de
+            <a href="mailto:paulinadoenne@outlook.com" className="pd-underline">
+              paulinadoenne@outlook.com
             </a>
-            <br />
-            Telefon: Telefonnummer eintragen
           </p>
           <p style={{ margin: 0 }}>
             Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: Paulina Dönne.

@@ -67,7 +67,7 @@ export default function SiteFooter() {
         <Reveal
           kind="up"
           as="a"
-          href="mailto:hallo@paulinadoenne.de"
+          href="mailto:paulinadoenne@outlook.com"
           style={{
             display: "block",
             fontWeight: 700,
@@ -96,7 +96,7 @@ export default function SiteFooter() {
         }}
       >
         <div style={{ display: "flex", gap: "28px" }}>
-          <a href="mailto:hallo@paulinadoenne.de" style={{ color: "#ffffff" }}>
+          <a href="mailto:paulinadoenne@outlook.com" style={{ color: "#ffffff" }}>
             E-Mail
           </a>
           <a href="#" style={{ color: "#ffffff" }}>
