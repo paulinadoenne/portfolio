@@ -89,8 +89,8 @@ function centeredTranslate(y: number, z: number) {
 }
 
 function cardTransform(d: number, hovering: boolean) {
-  const gap = 33;
-  const zStep = 182;
+  const gap = 36;
+  const zStep = 200;
   const foc = hovering ? focusFactor(Math.abs(d)) : 0;
   // Vergrößerung bewusst moderat: Die fokussierte Karte muss immer
   // vollständig sichtbar bleiben und darf dafür lieber kleiner ausfallen,
@@ -131,7 +131,7 @@ function cardTransform(d: number, hovering: boolean) {
     // (aus dem bereits aktuellen, diskreten d) sofort auf den Turm-Wert
     // zurückspringt — ohne diese Marge könnte sie in dem Fenster sichtbar in
     // die dahinterliegenden Turm-Karten hineinschneiden.
-    const neighborPush = hovering && untouched ? 220 : 0;
+    const neighborPush = hovering && untouched ? 242 : 0;
     return {
       translate: centeredTranslate(-d * gap - neighborPush, -d * zStep),
       rotate: `1 0 0 ${rot}deg`,
@@ -156,7 +156,7 @@ function cardTransform(d: number, hovering: boolean) {
   const rot = REST_ROT * (1 - foc);
   const shrink = Math.max(0.7, 1 - e * 0.08);
   return {
-    translate: centeredTranslate(e * 385, -e * 51),
+    translate: centeredTranslate(e * 424, -e * 56),
     rotate: `1 0 0 ${rot}deg`,
     scale: `${scale * shrink}`,
     zIndex: 150 + Math.round(foc * 40) - Math.round(e),
@@ -462,7 +462,7 @@ export default function ProjectStack() {
                 position: "absolute",
                 left: "50%",
                 top: "50%",
-                width: forceOpen ? "min(80vw, 420px)" : "min(46vw, 660px)",
+                width: forceOpen ? "min(80vw, 420px)" : "min(50vw, 726px)",
                 translate: s.translate,
                 rotate: s.rotate,
                 scale: s.scale,
