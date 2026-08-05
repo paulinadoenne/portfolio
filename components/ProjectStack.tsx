@@ -399,7 +399,15 @@ export default function ProjectStack() {
           zIndex: 400,
         }}
       >
-        {projects[displayIndex].title}
+        {projects[displayIndex].slug === "the-double-standard-of-aging" ? (
+          <>
+            The Double Standard
+            <br />
+            of Aging
+          </>
+        ) : (
+          projects[displayIndex].title
+        )}
       </div>
       {!forceOpen && (
         <div
