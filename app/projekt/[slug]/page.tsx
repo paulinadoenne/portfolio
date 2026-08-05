@@ -102,11 +102,22 @@ export default async function ProjektPage({
             fontWeight: 700,
             textTransform: "uppercase",
             letterSpacing: "-0.01em",
-            fontSize: "clamp(52px, 10vw, 160px)",
+            fontSize:
+              p.slug === "the-double-standard-of-aging"
+                ? "clamp(40px, 7vw, 110px)"
+                : "clamp(52px, 10vw, 160px)",
             lineHeight: 0.95,
           }}
         >
-          {p.title}
+          {p.slug === "the-double-standard-of-aging" ? (
+            <>
+              The Double Standard
+              <br />
+              of Aging
+            </>
+          ) : (
+            p.title
+          )}
         </Reveal>
 
         <Reveal
