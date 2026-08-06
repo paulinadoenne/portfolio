@@ -322,24 +322,19 @@ export default function ProjectStack() {
   const [swipeIndex, setSwipeIndex] = useState(0);
 
   useEffect(() => {
-    const reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    // Nicht nur `pointer: coarse` (echtes Touch-Gerät) — auch ein schmales
-    // Browserfenster am Desktop (klassisches "Mobile-Ansicht testen" per
-    // Fenster verkleinern, ohne echten Touch-Pointer) soll den Swipe-Modus
-    // bekommen. Reagiert per `change`-Listener live auf Fenstergröße/
-    // Gerätewechsel, nicht nur beim ersten Rendern.
-    const mobileMq = window.matchMedia("(pointer: coarse), (max-width: 820px)");
+    // Bewusst denkbar einfach gehalten (reines `innerWidth`, kein
+    // zusammengesetztes `matchMedia`-Query, kein `pointer: coarse`): jede
+    // Zusatzbedingung ist ein weiterer Punkt, an dem die Umschaltung auf
+    // einem realen Gerät/Browser stillschweigend anders ausfallen kann als
+    // in der Emulation, in der sie getestet wurde. Eine simple Breite ist
+    // eindeutig und leicht nachvollziehbar.
     const update = () => {
-      setReducedMotion(reducedMq.matches);
-      setTouchMode(mobileMq.matches && !reducedMq.matches);
+      setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+      setTouchMode(window.innerWidth <= 820);
     };
     update();
-    reducedMq.addEventListener("change", update);
-    mobileMq.addEventListener("change", update);
-    return () => {
-      reducedMq.removeEventListener("change", update);
-      mobileMq.removeEventListener("change", update);
-    };
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   useEffect(() => {
@@ -498,7 +493,7 @@ export default function ProjectStack() {
     ? hoverIndex
     : Math.max(0, Math.min(N - 1, Math.round(p)));
 
-  if (touchMode) {
+  if (touchMode && !reducedMotion) {
     return (
       <section
         id="arbeiten"
