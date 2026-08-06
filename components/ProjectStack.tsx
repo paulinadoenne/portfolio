@@ -314,6 +314,78 @@ export default function ProjectStack() {
   // & antippbar bleiben (siehe Kommentar bei openStyle).
   const [fanGap, setFanGap] = useState(150);
 
+  // Mobiler Swipe-Stapel: `stackOrder[0]` ist die vorderste (sichtbare,
+  // wegwischbare) Karte, der Rest liegt dahinter aufgefächert. Wegwischen
+  // (in egal welche Richtung) schiebt die vorderste Karte ans Ende des
+  // Stapels und legt die nächste frei — bewusst per direktem Pointer-Event-
+  // Tracking (kein IntersectionObserver, kein scroll-snap): reines
+  // `transform: translateX`, 1:1 dem Finger folgend, ist die technisch
+  // simpelste denkbare Umsetzung und hat die wenigsten Browser-Eigenheiten,
+  // an denen sie auf einem echten Gerät anders laufen könnte als getestet.
+  const [stackOrder, setStackOrder] = useState<number[]>(() => projects.map((_, i) => i));
+  const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
+  const dragStartRef = useRef<{ x: number; y: number } | null>(null);
+  const dragXRef = useRef(0);
+  const movedRef = useRef(false);
+  const [swiped, setSwiped] = useState(false);
+  const SWIPE_THRESHOLD = 90;
+
+  const onCardPointerDown = (e: React.PointerEvent) => {
+    if (exitDir) return; // Karte fliegt gerade weg, keine neue Geste starten
+    dragStartRef.current = { x: e.clientX, y: e.clientY };
+    movedRef.current = false;
+    setDragging(true);
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const onCardPointerMove = (e: React.PointerEvent) => {
+    if (!dragStartRef.current) return;
+    const dx = e.clientX - dragStartRef.current.x;
+    const dy = e.clientY - dragStartRef.current.y;
+    if (Math.abs(dx) > 6 || Math.abs(dy) > 6) movedRef.current = true;
+    dragXRef.current = dx;
+    setDragX(dx);
+  };
+
+  const finishDrag = () => {
+    dragStartRef.current = null;
+    setDragging(false);
+    const current = dragXRef.current;
+    if (Math.abs(current) > SWIPE_THRESHOLD) {
+      const dir = current > 0 ? "right" : "left";
+      setExitDir(dir);
+      setDragX(current > 0 ? 700 : -700);
+      setSwiped(true);
+      window.setTimeout(() => {
+        setStackOrder((prev) => [...prev.slice(1), prev[0]]);
+        dragXRef.current = 0;
+        setDragX(0);
+        setExitDir(null);
+      }, 320);
+    } else {
+      dragXRef.current = 0;
+      setDragX(0);
+    }
+  };
+
+  const onCardPointerUp = () => {
+    if (!dragStartRef.current) return;
+    finishDrag();
+  };
+
+  const onCardPointerCancel = () => {
+    dragStartRef.current = null;
+    setDragging(false);
+    dragXRef.current = 0;
+    setDragX(0);
+  };
+
+  const onFrontClick = (e: React.MouseEvent) => {
+    if (movedRef.current) e.preventDefault();
+  };
+
   useEffect(() => {
     // Bewusst denkbar einfach gehalten (reines `innerWidth`, kein
     // zusammengesetztes `matchMedia`-Query, kein `pointer: coarse`): jede
@@ -454,30 +526,108 @@ export default function ProjectStack() {
     : Math.max(0, Math.min(N - 1, Math.round(p)));
 
   if (touchMode && !reducedMotion) {
+    const frontIndex = stackOrder[0];
     return (
       <section
         id="arbeiten"
         style={{
           position: "relative",
           zIndex: 60,
-          padding: "clamp(72px, 16vw, 104px) 20px clamp(40px, 8vw, 64px) 20px",
+          padding: "clamp(72px, 16vw, 104px) 20px clamp(64px, 12vw, 88px) 20px",
         }}
       >
-        {/* Bewusst die denkbar einfachste Lösung: eine normale, vertikal
-            gestapelte Liste in ganz gewöhnlichem Dokumentfluss. Kein
-            horizontales Scroll-Snap, kein Scroll-Listener, keine eigene
-            Positionierung — jede Karte ist ein stinknormaler Block-Link, den
-            man wie jeden anderen Seiteninhalt herunterscrollt und antippt.
-            Nach mehreren Anläufen mit ausgefeilteren (Scroll-Kaskade,
-            Swipe-Karussell) Lösungen, die sich auf echten iOS-Geräten trotz
-            sauberer Tests nicht reproduzierbar als funktionierend bestätigen
-            ließen, hat Zuverlässigkeit hier Vorrang vor Optik. */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          {projects.map((proj, i) => (
-            <Link key={proj.slug} href={`/projekt/${proj.slug}`} style={{ display: "block" }}>
-              <CardContent proj={proj} index={i} />
-            </Link>
-          ))}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+            gap: "16px",
+            marginBottom: "20px",
+          }}
+        >
+          <span style={{ fontSize: "13px", fontWeight: 700, letterSpacing: "0.14em" }}>
+            {"0" + (frontIndex + 1) + " / 0" + N}
+          </span>
+          <span
+            style={{
+              fontSize: "13px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.14em",
+              textAlign: "right",
+              maxWidth: "55vw",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {projects[frontIndex].title}
+          </span>
+        </div>
+
+        <div
+          style={{
+            position: "relative",
+            width: "min(84vw, 380px)",
+            aspectRatio: "16/9",
+            margin: "0 auto",
+          }}
+        >
+          {stackOrder.map((projIndex, pos) => {
+            const proj = projects[projIndex];
+            const isFront = pos === 0;
+            const depth = Math.min(pos, 3);
+            const style: React.CSSProperties = isFront
+              ? {
+                  transform: `translateX(${dragX}px) rotate(${dragX / 24}deg)`,
+                  transition: dragging ? "none" : "transform 0.32s ease",
+                  zIndex: 100,
+                  touchAction: "pan-y",
+                }
+              : {
+                  transform: `translateY(${depth * 12}px) scale(${1 - depth * 0.05})`,
+                  transition: "transform 0.32s ease",
+                  zIndex: 100 - pos,
+                  opacity: pos <= 3 ? 1 : 0,
+                  pointerEvents: "none",
+                };
+            return (
+              <Link
+                key={proj.slug}
+                href={`/projekt/${proj.slug}`}
+                style={{ position: "absolute", inset: 0, display: "block", ...style }}
+                // Links sind per Default nativ per Maus draggable (z.B. zum
+                // Lesezeichen-Ablegen) — dieser Browser-eigene Drag kapert
+                // sonst die Mausbewegung, bevor sie die Pointer-Handler
+                // unten erreicht (Touch ist davon nicht betroffen, daher
+                // fiel das bei reinen Touch-Tests nicht auf).
+                draggable={false}
+                onDragStart={isFront ? (e) => e.preventDefault() : undefined}
+                onPointerDown={isFront ? onCardPointerDown : undefined}
+                onPointerMove={isFront ? onCardPointerMove : undefined}
+                onPointerUp={isFront ? onCardPointerUp : undefined}
+                onPointerCancel={isFront ? onCardPointerCancel : undefined}
+                onClick={isFront ? onFrontClick : (e) => e.preventDefault()}
+              >
+                <CardContent proj={proj} index={projIndex} />
+              </Link>
+            );
+          })}
+        </div>
+
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "28px",
+            fontSize: "12px",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.16em",
+            opacity: swiped ? 0 : 0.5,
+            transition: "opacity 0.4s ease",
+          }}
+        >
+          Karte wegwischen für das nächste Projekt ↔
         </div>
       </section>
     );
