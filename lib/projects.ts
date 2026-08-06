@@ -209,7 +209,6 @@ export const projects: Project[] = [
       { slotId: "detail-4b", ratio: "600/1223", src: "/projects/rewe-art-direction/sesameis-rezept.jpg", caption: "Rückseite mit Zutaten und Zubereitung", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-4c", ratio: "1/1", src: "/projects/rewe-art-direction/neukundenrabatt.jpg", video: "/projects/rewe-art-direction/neukundenrabatt.mp4", caption: "Social-Ad (Video): 20 € Neukundengutschein für den REWE Lieferservice", placeholder: "Video hier ablegen" },
       { slotId: "detail-5", ratio: "1/1", src: "/projects/rewe-art-direction/mitarbeitendenrabatt.jpg", caption: "Recruiting-Sujet: Mitarbeitendenrabatt", placeholder: "Foto (Hochformat) hier ablegen" },
-      { slotId: "detail-7", ratio: "600/941", src: "/projects/rewe-art-direction/thekenfrische-icon.jpg", caption: "Icon: Thekenfrische", placeholder: "Icon hier ablegen" },
       { slotId: "detail-1", ratio: "1200/1662", src: "/projects/rewe-art-direction/gehwegaufsteller.jpg", caption: "Gehwegaufsteller: Spendenaktion für die Tafeln vor Ort", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "1160/1647", src: "/projects/rewe-art-direction/dankeskommunikation.jpg", caption: "Dankesplakat: „Gemeinsam Teller füllen“ für die Tafel-Kooperation", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "1140/1613", src: "/projects/rewe-art-direction/selfcheckout.jpg", caption: "Infotafel am Self-Checkout: Ablauf der Spendenaktion", placeholder: "Foto (Hochformat) hier ablegen" },
