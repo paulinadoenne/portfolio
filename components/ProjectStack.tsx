@@ -384,37 +384,34 @@ export default function ProjectStack() {
     return () => window.removeEventListener("resize", invalidate);
   }, []);
 
-  // Aktive Karte der Swipe-Reihe: die Karte mit der größten sichtbaren
-  // Fläche innerhalb des scrollbaren Streifens wird als "aktuell" markiert
-  // (Kopfzeile + Punkte-Indikator) — robuster als eine eigene
-  // scrollLeft-Berechnung, da IntersectionObserver Scroll-Snap-Endpositionen
-  // (inkl. Momentum-Scroll auf iOS) zuverlässig erfasst, ohne jeden
-  // Scroll-Tick manuell abzutasten.
+  // Aktive Karte der Swipe-Reihe: bewusst ein simpler `scroll`-Listener auf
+  // `scrollLeft`, KEIN IntersectionObserver — dessen Implementierung mit
+  // scrollbarem `root` (statt Viewport) ist gerade auf älteren iOS-Safari-
+  // Versionen während Momentum-Scroll unzuverlässig bekannt. Jede Karte hat
+  // dieselbe Breite + denselben Abstand, daher genügt eine einfache Division.
   useEffect(() => {
     if (!touchMode) return;
     const track = swipeTrackRef.current;
     if (!track) return;
-    const ratios = new Map<number, number>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const idx = Number((entry.target as HTMLElement).dataset.index);
-          ratios.set(idx, entry.intersectionRatio);
-        });
-        let bestIndex = 0;
-        let bestRatio = -1;
-        ratios.forEach((ratio, idx) => {
-          if (ratio > bestRatio) {
-            bestRatio = ratio;
-            bestIndex = idx;
-          }
-        });
-        setSwipeIndex(bestIndex);
-      },
-      { root: track, threshold: [0, 0.25, 0.5, 0.75, 1] },
-    );
-    swipeCardRefs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const first = swipeCardRefs.current[0];
+        const second = swipeCardRefs.current[1];
+        if (!first || !second) return;
+        const step = second.offsetLeft - first.offsetLeft;
+        if (step <= 0) return;
+        const idx = Math.round(track.scrollLeft / step);
+        setSwipeIndex(Math.max(0, Math.min(N - 1, idx)));
+      });
+    };
+    onScroll();
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      track.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, [touchMode]);
 
   const measureRestRects = () => {
@@ -541,7 +538,6 @@ export default function ProjectStack() {
             gap: "16px",
             overflowX: "auto",
             scrollSnapType: "x mandatory",
-            WebkitOverflowScrolling: "touch",
             padding: "0 10vw",
             scrollPadding: "0 10vw",
           }}
