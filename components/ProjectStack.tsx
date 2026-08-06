@@ -273,10 +273,26 @@ export default function ProjectStack() {
   const [navHeight, setNavHeight] = useState(0);
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
-    setReducedMotion(reduced);
-    setTouchMode(coarse && !reduced);
+    const reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Nicht nur `pointer: coarse` (echtes Touch-Gerät) — auch ein schmales
+    // Browserfenster am Desktop (klassisches "Mobile-Ansicht testen" per
+    // Fenster verkleinern, ohne echten Touch-Pointer) soll den Scroll-Modus
+    // bekommen, sonst bliebe die Seite dort im Maus-Hover-Modus stecken
+    // (Hover feuert nie, die Kaskade wirkt "eingefroren"/inaktiv). Reagiert
+    // per `change`-Listener live auf Fenstergröße/Gerätewechsel, nicht nur
+    // beim ersten Rendern.
+    const mobileMq = window.matchMedia("(pointer: coarse), (max-width: 820px)");
+    const update = () => {
+      setReducedMotion(reducedMq.matches);
+      setTouchMode(mobileMq.matches && !reducedMq.matches);
+    };
+    update();
+    reducedMq.addEventListener("change", update);
+    mobileMq.addEventListener("change", update);
+    return () => {
+      reducedMq.removeEventListener("change", update);
+      mobileMq.removeEventListener("change", update);
+    };
   }, []);
 
   useEffect(() => {
