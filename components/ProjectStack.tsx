@@ -171,11 +171,9 @@ function cardTransform(d: number, hovering: boolean) {
  * lägen die hinteren Karten außerhalb der `overflow:hidden`-Sektion und
  * wären weder sichtbar noch erreichbar. */
 function openStyle(d: number, gap: number) {
-  const zStep = gap * 0.173;
-  const rot = -4;
   return {
-    translate: centeredTranslate(-d * gap, -d * zStep),
-    rotate: `1 0 0 ${rot}deg`,
+    translate: centeredTranslate(-d * gap, 0),
+    rotate: `1 0 0 0deg`,
     scale: "1",
     zIndex: 200 - Math.round(d * 12),
     opacity: 1,
@@ -224,11 +222,16 @@ export default function ProjectStack() {
       // Viewporthöhe statt nur die obere Hälfte. `gap` muss so klein sein,
       // dass auch die äußerste Karte (samt halber Kartenhöhe) noch inner-
       // halb der Kopf-/Fußraum-Reserven liegt.
-      const cardWidth = Math.min(window.innerWidth * 0.8, 420);
+      const cardWidth = Math.min(window.innerWidth * 0.68, 360);
       const cardHeight = cardWidth * (9 / 16);
       const reserved = 190; // Kopfzeile oben + Rand unten
       const available = window.innerHeight - cardHeight - reserved;
-      const gap = Math.max(34, Math.min(150, available / (N - 1)));
+      // Untergrenze an der minimalen Touch-Zielgröße orientiert (≈44px):
+      // Jede nicht-vorderste Karte ist nur in einem `gap`-hohen Streifen an
+      // ihrem oberen Rand antippbar (der Rest wird von der davorliegenden
+      // Karte überdeckt) — bei mehr Projekten und/oder kurzen Viewports darf
+      // dieser Streifen nicht unter eine noch zuverlässig tippbare Höhe fallen.
+      const gap = Math.max(44, Math.min(150, available / (N - 1)));
       setFanGap(gap);
     };
     updateFanGap();
@@ -470,7 +473,7 @@ export default function ProjectStack() {
                 position: "absolute",
                 left: "50%",
                 top: "50%",
-                width: forceOpen ? "min(80vw, 420px)" : "min(50vw, 726px)",
+                width: forceOpen ? "min(68vw, 360px)" : "min(50vw, 726px)",
                 translate: s.translate,
                 rotate: s.rotate,
                 scale: s.scale,
