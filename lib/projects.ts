@@ -200,7 +200,7 @@ export const projects: Project[] = [
     cardVideo: "/projects/rewe-art-direction/neukundenrabatt.mp4",
     gallery: [
       { slotId: "detail-6", ratio: "1200/675", span2: true, src: "/projects/rewe-art-direction/weisser-bohnensalat.jpg", caption: "Rezeptkommunikation: Weißer Bohnensalat", placeholder: "Foto hier ablegen" },
-      { slotId: "detail-1", ratio: "1200/1662", span2: true, src: "/projects/rewe-art-direction/gehwegaufsteller.jpg", caption: "Gehwegaufsteller: Spendenaktion für die Tafeln vor Ort", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-7b", ratio: "800/1200", src: "/projects/rewe-art-direction/wassermelonen-eistee.jpg", caption: "Rezeptkommunikation: Wassermelonen-Limetten-Eistee", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "1200/1687", src: "/projects/rewe-art-direction/dankeskommunikation.jpg", caption: "Dankesplakat: „Gemeinsam Teller füllen“ für die Tafel-Kooperation", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "1200/1673", src: "/projects/rewe-art-direction/selfcheckout.jpg", caption: "Infotafel am Self-Checkout: Ablauf der Spendenaktion", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-4", ratio: "600/1223", src: "/projects/rewe-art-direction/sesameis.jpg", caption: "Xmas-POS für REWE Feine Welt: Sesamreis mit Kokos auf Mango-Spiegel", placeholder: "Foto (Hochformat) hier ablegen" },
@@ -208,7 +208,7 @@ export const projects: Project[] = [
       { slotId: "detail-4c", ratio: "1/1", src: "/projects/rewe-art-direction/neukundenrabatt.jpg", video: "/projects/rewe-art-direction/neukundenrabatt.mp4", caption: "Social-Ad (Video): 20 € Neukundengutschein für den REWE Lieferservice", placeholder: "Video hier ablegen" },
       { slotId: "detail-5", ratio: "1/1", src: "/projects/rewe-art-direction/mitarbeitendenrabatt.jpg", caption: "Recruiting-Sujet: Mitarbeitendenrabatt", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-7", ratio: "600/941", src: "/projects/rewe-art-direction/thekenfrische-icon.jpg", caption: "Icon: Thekenfrische", placeholder: "Icon hier ablegen" },
-      { slotId: "detail-7b", ratio: "800/1200", src: "/projects/rewe-art-direction/wassermelonen-eistee.jpg", caption: "Rezeptkommunikation: Wassermelonen-Limetten-Eistee", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-1", ratio: "1200/1662", span2: true, src: "/projects/rewe-art-direction/gehwegaufsteller.jpg", caption: "Gehwegaufsteller: Spendenaktion für die Tafeln vor Ort", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-8", ratio: "4/5", caption: "Rezeptkommunikation: Bratlinge mit Pastinaken-Möhren-Gemüse", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-9",
