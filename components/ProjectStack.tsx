@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ImageSlot from "./ImageSlot";
-import { projects } from "@/lib/projects";
+import { projects, type Project } from "@/lib/projects";
 
 const N = projects.length;
 
@@ -51,6 +51,99 @@ function StackVideo({
       {webm && <source src={webm} type="video/webm" />}
       <source src={src} type="video/mp4" />
     </video>
+  );
+}
+
+/* Karteninhalt (Vorschaubild/-video + Titel-Overlay) — identisch für die
+ * Desktop-/Reduced-Motion-Karten und die mobile Swipe-Reihe, daher als
+ * gemeinsame Funktion statt doppelt gepflegtem JSX. */
+function CardContent({ proj, index }: { proj: Project; index: number }) {
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        aspectRatio: "16/9",
+        overflow: "hidden",
+        background: "var(--img-bg)",
+      }}
+    >
+      {proj.cardVideo || proj.heroVideo ? (
+        <StackVideo
+          src={proj.cardVideo ?? proj.heroVideo!}
+          webm={proj.cardVideo ? proj.cardVideoWebm : proj.heroVideoWebm}
+          poster={proj.heroVideoPoster}
+          alt={proj.heroPlaceholder}
+        />
+      ) : (
+        <ImageSlot
+          placeholder={`Projektbild ${index + 1} hier ablegen`}
+          src={proj.heroVideoPoster}
+        />
+      )}
+      {/* Titel-Overlay statt eigener Header-Leiste — Karte ist der
+          Screenshot selbst, wie im Rondell-Vorbild. */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "16px",
+          padding: "10px 16px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            gap: "10px",
+            minWidth: 0,
+          }}
+        >
+          <span
+            style={{
+              fontSize: "12px",
+              fontWeight: 700,
+              color: "#ffffff",
+              opacity: 0.85,
+            }}
+          >
+            {proj.index}/
+          </span>
+          <span
+            style={{
+              fontWeight: 700,
+              fontSize: "15px",
+              color: "#ffffff",
+              textTransform: "uppercase",
+              letterSpacing: "0.03em",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {proj.title}
+          </span>
+        </div>
+        <span
+          style={{
+            fontSize: "11px",
+            fontWeight: 700,
+            color: "#ffffff",
+            textTransform: "uppercase",
+            letterSpacing: "0.12em",
+            opacity: 0.75,
+            whiteSpace: "nowrap",
+          }}
+        >
+          {proj.tag}
+        </span>
+      </div>
+    </div>
   );
 }
 
@@ -175,10 +268,8 @@ function cardTransform(d: number, hovering: boolean) {
  * `perspective`+`rotateX` gekipptes Element hat einen tatsächlich
  * gerenderten (und damit tapbaren) Umriss, der von seinem achsenparallelen
  * `getBoundingClientRect()` abweicht — auf Touch-Geräten griff dadurch ein
- * Tap auf eine sichtbar überlappende Karte oft komplett ins Leere
- * (`elementFromPoint` traf weder die erwartete noch irgendeine Karte,
- * sondern den dahinterliegenden Wrapper). Flach bleibt der Tap-Bereich exakt
- * die sichtbare Fläche. */
+ * Tap auf eine sichtbar überlappende Karte oft komplett ins Leere. Flach
+ * bleibt der Tap-Bereich exakt die sichtbare Fläche. */
 function openStyle(d: number, gap: number) {
   return {
     translate: centeredTranslate(-d * gap, 0),
@@ -188,44 +279,6 @@ function openStyle(d: number, gap: number) {
     opacity: 1,
   };
 }
-
-/* Scroll-gesteuerte Kaskade für Touch-Geräte: Da es keine Hover-Geste gibt,
- * übernimmt die Scroll-Position die Rolle des Cursors (`p` in `cardTransform`
- * wird hier durch den Scroll-Fortschritt ersetzt, siehe `scrollP`). Optisch
- * an `cardTransform` angelehnt (Fokuskarte groß & vorn, Rest gestaffelt
- * dahinter), aber bewusst ohne Rotation/Tiefe — aus demselben Grund wie bei
- * `openStyle`: Touch-Hit-Testing muss exakt zur sichtbaren Fläche passen. */
-function scrollCardTransform(d: number) {
-  const gap = 34;
-  const foc = focusFactor(Math.abs(d));
-  const scale = 1 + foc * 0.16;
-
-  if (d >= 0) {
-    const untouched = d > 0.02;
-    const zIndex = untouched ? 500 - Math.round(d * 10) : 600 + Math.round(foc * 100);
-    const neighborPush = untouched ? 210 : 0;
-    return {
-      translate: centeredTranslate(-d * gap - neighborPush, 0),
-      rotate: `1 0 0 0deg`,
-      scale: `${scale}`,
-      zIndex,
-      opacity: Math.max(0.55, 1 - d * 0.065),
-    };
-  }
-
-  const e = -d;
-  const shrink = Math.max(0.7, 1 - e * 0.08);
-  return {
-    translate: centeredTranslate(e * 340, 0),
-    rotate: `1 0 0 0deg`,
-    scale: `${scale * shrink}`,
-    zIndex: 150 + Math.round(foc * 40) - Math.round(e),
-    opacity: Math.max(0.15, 1 - e * 0.16),
-  };
-}
-
-// vh Scrollstrecke pro Projekt-Übergang im Touch-Scroll-Modus.
-const SCROLL_STEP_VH = 70;
 
 export default function ProjectStack() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -245,8 +298,8 @@ export default function ProjectStack() {
   // `prefers-reduced-motion`: statischer, voll aufgefächerter Fallback ohne
   // jede Animation (siehe `openStyle`).
   const [reducedMotion, setReducedMotion] = useState(false);
-  // Coarse Pointer (Touch) ohne reduzierte Bewegung: Scroll-gesteuerte
-  // Kaskade statt Hover-Geste (siehe `scrollCardTransform`).
+  // Coarse Pointer (Touch) oder schmaler Viewport: horizontale Swipe-Reihe
+  // statt Hover-Kaskade (siehe `touchMode`-Zweig im JSX unten).
   const [touchMode, setTouchMode] = useState(false);
   const [hinted, setHinted] = useState(false);
   const raf = useRef(0);
@@ -260,37 +313,21 @@ export default function ProjectStack() {
   // der Viewporthöhe an, damit alle N Karten innerhalb der Sektion sichtbar
   // & antippbar bleiben (siehe Kommentar bei openStyle).
   const [fanGap, setFanGap] = useState(150);
-  // Scroll-Fortschritt im Touch-Modus, bereits auf denselben Wertebereich
-  // wie `p` abgebildet (0…N-1, gebrochen zwischen den Karten).
-  const [scrollP, setScrollP] = useState(0);
-  const scrollTrackRef = useRef<HTMLElement>(null);
-  const scrollRaf = useRef(0);
-  // Höhe der (separat gerenderten, `position: sticky`) Seiten-Navigation:
-  // Der gepinnte Kartenstapel muss darunter einrasten (`top: navHeight`),
-  // sonst rutscht er beim Scrollen UNTER die Nav-Leiste statt sich direkt
-  // darunter anzuschließen — Taps auf die dort verdeckte Kartenfläche
-  // würden sonst stattdessen die Nav-Links treffen.
-  const [navHeight, setNavHeight] = useState(0);
-  // Viewporthöhe in JS-gemessenen Pixeln statt CSS `100vh`: Mobile Browser
-  // ändern `window.innerHeight` live, wenn die Adressleiste beim Scrollen
-  // ein-/ausblendet, aber `100vh` bleibt dabei je nach Browser auf dem
-  // ANFÄNGLICHEN (größeren, Adressleiste sichtbar) Wert stehen bzw. driftet
-  // inkonsistent zur JS-Messung. Da die Scroll-Fortschritts-Berechnung
-  // unten bereits `window.innerHeight` verwendet, MUSS auch die Höhe der
-  // Sektion/des gepinnten Wrappers exakt demselben Wert folgen, sonst
-  // driftet die Kaskade auf echten Handys auseinander (Scrollen bewegt
-  // scheinbar nichts, oder springt am Ende hart).
-  const [viewportHeight, setViewportHeight] = useState(0);
+  // Mobile Swipe-Reihe: horizontal scrollbarer Kartenstreifen mit nativem
+  // CSS scroll-snap statt eigener Scroll-/Transform-Mathematik — swipen ist
+  // dadurch normales Browser-Scrollverhalten (robust über alle Geräte
+  // hinweg) statt selbst nachgebautes Touch-Handling.
+  const swipeTrackRef = useRef<HTMLDivElement>(null);
+  const swipeCardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [swipeIndex, setSwipeIndex] = useState(0);
 
   useEffect(() => {
     const reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
     // Nicht nur `pointer: coarse` (echtes Touch-Gerät) — auch ein schmales
     // Browserfenster am Desktop (klassisches "Mobile-Ansicht testen" per
-    // Fenster verkleinern, ohne echten Touch-Pointer) soll den Scroll-Modus
-    // bekommen, sonst bliebe die Seite dort im Maus-Hover-Modus stecken
-    // (Hover feuert nie, die Kaskade wirkt "eingefroren"/inaktiv). Reagiert
-    // per `change`-Listener live auf Fenstergröße/Gerätewechsel, nicht nur
-    // beim ersten Rendern.
+    // Fenster verkleinern, ohne echten Touch-Pointer) soll den Swipe-Modus
+    // bekommen. Reagiert per `change`-Listener live auf Fenstergröße/
+    // Gerätewechsel, nicht nur beim ersten Rendern.
     const mobileMq = window.matchMedia("(pointer: coarse), (max-width: 820px)");
     const update = () => {
       setReducedMotion(reducedMq.matches);
@@ -304,34 +341,6 @@ export default function ProjectStack() {
       mobileMq.removeEventListener("change", update);
     };
   }, []);
-
-  useEffect(() => {
-    if (!touchMode) return;
-    const updateNavHeight = () => {
-      const nav = document.querySelector("nav");
-      setNavHeight(nav ? nav.getBoundingClientRect().height : 0);
-    };
-    updateNavHeight();
-    window.addEventListener("resize", updateNavHeight);
-    return () => window.removeEventListener("resize", updateNavHeight);
-  }, [touchMode]);
-
-  useEffect(() => {
-    if (!touchMode) return;
-    const updateViewportHeight = () => setViewportHeight(window.innerHeight);
-    updateViewportHeight();
-    // `resize` allein reicht auf iOS Safari nicht immer, wenn sich nur die
-    // Adressleiste ein-/ausblendet (kein "echtes" Resize-Event dabei) —
-    // `visualViewport`, wo vorhanden, meldet auch diese Änderungen.
-    window.addEventListener("resize", updateViewportHeight);
-    window.addEventListener("orientationchange", updateViewportHeight);
-    window.visualViewport?.addEventListener("resize", updateViewportHeight);
-    return () => {
-      window.removeEventListener("resize", updateViewportHeight);
-      window.removeEventListener("orientationchange", updateViewportHeight);
-      window.visualViewport?.removeEventListener("resize", updateViewportHeight);
-    };
-  }, [touchMode]);
 
   useEffect(() => {
     const updateFanGap = () => {
@@ -380,42 +389,38 @@ export default function ProjectStack() {
     return () => window.removeEventListener("resize", invalidate);
   }, []);
 
-  // Touch-Scroll-Modus: die Sektion ist deutlich höher als 100vh (siehe
-  // `SCROLL_STEP_VH`) und über `position: sticky` im Viewport fixiert
-  // (siehe JSX unten) — der Scroll-Fortschritt INNERHALB dieser Strecke
-  // treibt `scrollP` genau wie sonst die Maus `p` treibt.
+  // Aktive Karte der Swipe-Reihe: die Karte mit der größten sichtbaren
+  // Fläche innerhalb des scrollbaren Streifens wird als "aktuell" markiert
+  // (Kopfzeile + Punkte-Indikator) — robuster als eine eigene
+  // scrollLeft-Berechnung, da IntersectionObserver Scroll-Snap-Endpositionen
+  // (inkl. Momentum-Scroll auf iOS) zuverlässig erfasst, ohne jeden
+  // Scroll-Tick manuell abzutasten.
   useEffect(() => {
     if (!touchMode) return;
-    const onScroll = () => {
-      if (scrollRaf.current) cancelAnimationFrame(scrollRaf.current);
-      scrollRaf.current = requestAnimationFrame(() => {
-        const el = scrollTrackRef.current;
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        // Sichtbare (gepinnte) Höhe ist nur `100vh - navHeight`, nicht die
-        // volle Viewporthöhe (siehe `pinnedWrapperStyle`) — die Scrollstrecke
-        // muss exakt dazu passen, sonst driftet `scrollP` gegen Ende der
-        // Sektion auseinander (springt vorzeitig auf die letzte Karte oder
-        // erreicht sie nie ganz).
-        const pinnedHeight = window.innerHeight - navHeight;
-        const total = el.offsetHeight - pinnedHeight;
-        if (total <= 0) {
-          setScrollP(0);
-          return;
-        }
-        const scrolled = Math.min(Math.max(-rect.top, 0), total);
-        setScrollP((scrolled / total) * (N - 1));
-      });
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(scrollRaf.current);
-    };
-  }, [touchMode, navHeight]);
+    const track = swipeTrackRef.current;
+    if (!track) return;
+    const ratios = new Map<number, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const idx = Number((entry.target as HTMLElement).dataset.index);
+          ratios.set(idx, entry.intersectionRatio);
+        });
+        let bestIndex = 0;
+        let bestRatio = -1;
+        ratios.forEach((ratio, idx) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestIndex = idx;
+          }
+        });
+        setSwipeIndex(bestIndex);
+      },
+      { root: track, threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+    swipeCardRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, [touchMode]);
 
   const measureRestRects = () => {
     const rects = cardRefs.current.map((el) => el?.getBoundingClientRect());
@@ -444,7 +449,7 @@ export default function ProjectStack() {
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
-    if (reducedMotion || touchMode) return;
+    if (reducedMotion) return;
     const clientY = e.clientY;
     const clientX = e.clientX;
     // Zu Beginn einer Hover-Session frisch messen (garantiert die aktuelle
@@ -483,60 +488,116 @@ export default function ProjectStack() {
   };
 
   const onMouseLeave = () => {
-    if (reducedMotion || touchMode) return;
+    if (reducedMotion) return;
     if (raf.current) cancelAnimationFrame(raf.current);
     pTargetRef.current = 0;
     setHovering(false);
   };
 
-  // Kompakte, oben fixierte Kopfzeile (statt vertikal zentriert wie am
-  // Desktop) für beide Nicht-Hover-Modi: bei `reducedMotion` liegen die
-  // Karten flächig übereinander im Viewport, bei `touchMode` sind sie per
-  // `position: sticky` ebenfalls im Viewport fixiert (siehe JSX) — in
-  // beiden Fällen bräuchte eine vertikal zentrierte Kopfzeile zu viel vom
-  // knappen mobilen Raum.
-  const compactHeader = reducedMotion || touchMode;
-
   const displayIndex = reducedMotion
     ? hoverIndex
-    : touchMode
-      ? Math.max(0, Math.min(N - 1, Math.round(scrollP)))
-      : Math.max(0, Math.min(N - 1, Math.round(p)));
+    : Math.max(0, Math.min(N - 1, Math.round(p)));
 
-  // Bis zur ersten JS-Messung (ein Render-Zyklus) `100vh` als Übergangswert,
-  // danach ausschließlich der gemessene Pixelwert — siehe Kommentar bei
-  // `viewportHeight` weiter oben, warum CSS `vh` hier nicht dauerhaft
-  // verwendet werden darf.
-  const sectionHeight = touchMode
-    ? viewportHeight > 0
-      ? `${viewportHeight + (N - 1) * viewportHeight * (SCROLL_STEP_VH / 100)}px`
-      : `calc(100vh + ${(N - 1) * SCROLL_STEP_VH}vh)`
-    : "100vh";
+  if (touchMode) {
+    return (
+      <section
+        id="arbeiten"
+        style={{
+          position: "relative",
+          zIndex: 60,
+          padding: "clamp(72px, 16vw, 104px) 0 clamp(40px, 8vw, 64px) 0",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+            gap: "16px",
+            padding: "0 20px",
+            marginBottom: "16px",
+          }}
+        >
+          <span style={{ fontSize: "13px", fontWeight: 700, letterSpacing: "0.14em" }}>
+            {"0" + (swipeIndex + 1) + " / 0" + N}
+          </span>
+          <span
+            style={{
+              fontSize: "13px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.14em",
+              textAlign: "right",
+              maxWidth: "55vw",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {projects[swipeIndex].title}
+          </span>
+        </div>
 
-  // Bei `touchMode` bleibt der eigentliche Inhalt (Kopfzeile + Kartenstapel)
-  // über die gesamte Scrollstrecke der Sektion im Viewport fixiert
-  // (`position: sticky`) — dafür darf die Sektion selbst KEIN
-  // `overflow: hidden` tragen (das würde `sticky` unterbinden, siehe
-  // Kommentar an der Sektion). In allen anderen Modi ist dieser Wrapper nur
-  // ein transparenter Passthrough mit denselben Maßen wie zuvor direkt an
-  // der Sektion.
-  const pinnedWrapperStyle: React.CSSProperties = touchMode
-    ? {
-        position: "sticky",
-        top: navHeight,
-        height:
-          viewportHeight > 0
-            ? `${viewportHeight - navHeight}px`
-            : `calc(100vh - ${navHeight}px)`,
-        width: "100%",
-        overflow: "hidden",
-      }
-    : { position: "absolute", inset: 0 };
+        <div
+          ref={swipeTrackRef}
+          className="pd-swipe-track"
+          style={{
+            display: "flex",
+            gap: "16px",
+            overflowX: "auto",
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch",
+            padding: "0 10vw",
+            scrollPadding: "0 10vw",
+          }}
+        >
+          {projects.map((proj, i) => (
+            <Link
+              key={proj.slug}
+              ref={(el) => {
+                swipeCardRefs.current[i] = el;
+              }}
+              data-index={i}
+              href={`/projekt/${proj.slug}`}
+              style={{
+                flex: "0 0 auto",
+                width: "min(80vw, 420px)",
+                scrollSnapAlign: "center",
+              }}
+            >
+              <CardContent proj={proj} index={i} />
+            </Link>
+          ))}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "8px",
+            marginTop: "24px",
+          }}
+        >
+          {projects.map((_, i) => (
+            <span
+              key={i}
+              style={{
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                background: i === swipeIndex ? "var(--ink)" : "rgba(17,17,17,0.25)",
+                transition: "background 0.3s ease",
+              }}
+            />
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
       id="arbeiten"
-      ref={scrollTrackRef}
       style={{
         position: "relative",
         // Eigener Stacking-Context nötig: `transform-style:preserve-3d` auf
@@ -546,281 +607,147 @@ export default function ProjectStack() {
         // eigenes z-index hier läge der ganze Kartenstapel effektiv auf
         // Ebene 0. BubbleField liegt bewusst über allen Inhalten (850).
         zIndex: 60,
-        height: sectionHeight,
-        overflow: touchMode ? "visible" : "hidden",
+        height: "100vh",
+        overflow: "hidden",
         perspective: "1815px",
         perspectiveOrigin: "50% 16%",
       }}
     >
-      <div style={pinnedWrapperStyle}>
-        {/* Fade-Saum oben */}
+      {/* Fade-Saum oben */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "6vh",
+          background:
+            "linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0) 100%)",
+          zIndex: 350,
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          left: reducedMotion ? "20px" : "40px",
+          top: reducedMotion ? "76px" : "50%",
+          transform: reducedMotion ? "none" : "translateY(-50%)",
+          fontSize: "13px",
+          fontWeight: 700,
+          letterSpacing: "0.14em",
+          zIndex: 400,
+        }}
+      >
+        {"0" + (displayIndex + 1) + " / 0" + N}
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          right: reducedMotion ? "20px" : "40px",
+          top: reducedMotion ? "76px" : "50%",
+          transform: reducedMotion ? "none" : "translateY(-50%)",
+          maxWidth: reducedMotion ? "50vw" : undefined,
+          overflow: reducedMotion ? "hidden" : undefined,
+          textOverflow: reducedMotion ? "ellipsis" : undefined,
+          whiteSpace: reducedMotion ? "nowrap" : undefined,
+          fontSize: "13px",
+          fontWeight: 700,
+          textTransform: "uppercase",
+          letterSpacing: "0.14em",
+          textAlign: "right",
+          zIndex: 400,
+        }}
+      >
+        {!reducedMotion && projects[displayIndex].slug === "the-double-standard-of-aging" ? (
+          <>
+            The Double Standard
+            <br />
+            of Aging
+          </>
+        ) : (
+          projects[displayIndex].title
+        )}
+      </div>
+      {!reducedMotion && (
         <div
           style={{
             position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "6vh",
-            background:
-              "linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0) 100%)",
-            zIndex: 350,
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            left: compactHeader ? "20px" : "40px",
-            top: compactHeader ? "76px" : "50%",
-            transform: compactHeader ? "none" : "translateY(-50%)",
-            fontSize: "13px",
-            fontWeight: 700,
-            letterSpacing: "0.14em",
-            zIndex: 400,
-          }}
-        >
-          {"0" + (displayIndex + 1) + " / 0" + N}
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            right: compactHeader ? "20px" : "40px",
-            top: compactHeader ? "76px" : "50%",
-            transform: compactHeader ? "none" : "translateY(-50%)",
-            maxWidth: compactHeader ? "50vw" : undefined,
-            overflow: compactHeader ? "hidden" : undefined,
-            textOverflow: compactHeader ? "ellipsis" : undefined,
-            whiteSpace: compactHeader ? "nowrap" : undefined,
-            fontSize: "13px",
+            left: "50%",
+            bottom: "28px",
+            transform: "translateX(-50%)",
+            fontSize: "12px",
             fontWeight: 700,
             textTransform: "uppercase",
-            letterSpacing: "0.14em",
-            textAlign: "right",
-            zIndex: 400,
+            letterSpacing: "0.16em",
+            opacity: hinted ? 0 : 0.5,
+            zIndex: 250,
+            transition: "opacity 0.4s ease",
           }}
         >
-          {!compactHeader && projects[displayIndex].slug === "the-double-standard-of-aging" ? (
-            // Der manuelle Zeilenumbruch ist nur für das geräumige Desktop-
-            // Layout gedacht. In `compactHeader`-Modi ist die Zeile per
-            // `whiteSpace:nowrap` + `textOverflow:ellipsis` einzeilig
-            // angelegt (siehe Style oben) — ein erzwungener <br/> darin
-            // erzeugt zwei Zeilen, deren Kürzung sich gegenseitig
-            // überlagert. Dort reicht die normale Ellipsis-Kürzung.
-            <>
-              The Double Standard
-              <br />
-              of Aging
-            </>
-          ) : (
-            projects[displayIndex].title
-          )}
+          Cursor nach oben über die Karten bewegen ↑
         </div>
-        {!reducedMotion && !touchMode && (
-          <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              bottom: "28px",
-              transform: "translateX(-50%)",
-              fontSize: "12px",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.16em",
-              opacity: hinted ? 0 : 0.5,
-              zIndex: 250,
-              transition: "opacity 0.4s ease",
-            }}
-          >
-            Cursor nach oben über die Karten bewegen ↑
-          </div>
-        )}
-        {touchMode && (
-          <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              bottom: "28px",
-              transform: "translateX(-50%)",
-              fontSize: "12px",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.16em",
-              opacity: displayIndex === 0 ? 0.5 : 0,
-              zIndex: 250,
-              transition: "opacity 0.4s ease",
-              pointerEvents: "none",
-            }}
-          >
-            Scrollen, um Projekte zu öffnen ↓
-          </div>
-        )}
+      )}
 
-        <div
-          ref={wrapRef}
-          onMouseMove={onMouseMove}
-          onMouseLeave={onMouseLeave}
-          style={{
-            position: "absolute",
-            inset: 0,
-            // Touch-Karten nutzen keine 3D-Rotation mehr (siehe
-            // `scrollCardTransform`) — `preserve-3d` bringt hier keinen
-            // optischen Nutzen, hat aber in Kombination mit `perspective`
-            // auf der Sektion selbst bei manchen Kartenpositionen zu
-            // fehlgeschlagenem Touch-Hit-Testing geführt (Taps landeten auf
-            // dem Wrapper statt auf der sichtbar getroffenen Karte).
-            transformStyle: touchMode ? "flat" : "preserve-3d",
-          }}
-        >
-          {projects.map((proj, i) => {
-            let s: {
-              translate: string;
-              rotate: string;
-              scale: string;
-              zIndex: number;
-              opacity: number;
-            };
-            let clickable: boolean;
-            let width: string;
-            if (reducedMotion) {
-              s = openStyle(i - (N - 1) / 2, fanGap);
-              clickable = true;
-              width = "min(68vw, 360px)";
-            } else if (touchMode) {
-              const d = i - scrollP;
-              s = scrollCardTransform(d);
-              // exakt die Karte, die auch in der Kopfzeile angezeigt wird
-              clickable = i === displayIndex;
-              width = "min(68vw, 360px)";
-            } else {
-              const d = i - p;
-              s = cardTransform(d, hovering);
-              // exakt die Karte, die auch in der Kopfzeile angezeigt wird
-              // (in Ruhe ohne Hover ist das die erste Karte, sonst die berührte)
-              clickable = i === displayIndex;
-              width = "min(50vw, 726px)";
-            }
-            return (
-              <Link
-                key={proj.slug}
-                ref={(el) => {
-                  cardRefs.current[i] = el;
-                }}
-                href={`/projekt/${proj.slug}`}
-                onMouseEnter={reducedMotion ? () => setHoverIndex(i) : undefined}
-                style={{
-                  position: "absolute",
-                  left: "50%",
-                  top: "50%",
-                  width,
-                  translate: s.translate,
-                  rotate: s.rotate,
-                  scale: s.scale,
-                  zIndex: s.zIndex,
-                  opacity: s.opacity,
-                  // Im Touch-Scroll-Modus treibt bereits der Scroll selbst die
-                  // Bewegung an (`scrollP` folgt 1:1 der Fingerbewegung) — eine
-                  // zusätzliche CSS-Transition würde die Karten dem Scroll
-                  // hinterherhinken lassen, sodass die tatsächlich gerenderte
-                  // (und damit tapbare) Position kurzzeitig von der zuletzt
-                  // berechneten abweicht.
-                  transition:
-                    reducedMotion || touchMode
-                      ? "none"
-                      : "translate 0.6s ease-out, rotate 0.6s ease-out, scale 0.6s ease-out, opacity 0.6s ease-out",
-                  willChange: "translate, rotate, scale",
-                  backfaceVisibility: "hidden",
-                  pointerEvents: clickable ? "auto" : "none",
-                }}
-              >
-                <div
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    aspectRatio: "16/9",
-                    overflow: "hidden",
-                    background: "var(--img-bg)",
-                  }}
-                >
-                  {proj.cardVideo || proj.heroVideo ? (
-                    <StackVideo
-                      src={proj.cardVideo ?? proj.heroVideo!}
-                      webm={proj.cardVideo ? proj.cardVideoWebm : proj.heroVideoWebm}
-                      poster={proj.heroVideoPoster}
-                      alt={proj.heroPlaceholder}
-                    />
-                  ) : (
-                    <ImageSlot
-                      placeholder={`Projektbild ${i + 1} hier ablegen`}
-                      src={proj.heroVideoPoster}
-                    />
-                  )}
-                  {/* Titel-Overlay statt eigener Header-Leiste — Karte ist der
-                      Screenshot selbst, wie im Rondell-Vorbild. */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "16px",
-                      padding: "10px 16px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "baseline",
-                        gap: "10px",
-                        minWidth: 0,
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: 700,
-                          color: "#ffffff",
-                          opacity: 0.85,
-                        }}
-                      >
-                        {proj.index}/
-                      </span>
-                      <span
-                        style={{
-                          fontWeight: 700,
-                          fontSize: "15px",
-                          color: "#ffffff",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.03em",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {proj.title}
-                      </span>
-                    </div>
-                    <span
-                      style={{
-                        fontSize: "11px",
-                        fontWeight: 700,
-                        color: "#ffffff",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.12em",
-                        opacity: 0.75,
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {proj.tag}
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+      <div
+        ref={wrapRef}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        style={{
+          position: "absolute",
+          inset: 0,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {projects.map((proj, i) => {
+          let s: {
+            translate: string;
+            rotate: string;
+            scale: string;
+            zIndex: number;
+            opacity: number;
+          };
+          let clickable: boolean;
+          if (reducedMotion) {
+            s = openStyle(i - (N - 1) / 2, fanGap);
+            clickable = true;
+          } else {
+            const d = i - p;
+            s = cardTransform(d, hovering);
+            // exakt die Karte, die auch in der Kopfzeile angezeigt wird
+            // (in Ruhe ohne Hover ist das die erste Karte, sonst die berührte)
+            clickable = i === displayIndex;
+          }
+          return (
+            <Link
+              key={proj.slug}
+              ref={(el) => {
+                cardRefs.current[i] = el;
+              }}
+              href={`/projekt/${proj.slug}`}
+              onMouseEnter={reducedMotion ? () => setHoverIndex(i) : undefined}
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                width: reducedMotion ? "min(68vw, 360px)" : "min(50vw, 726px)",
+                translate: s.translate,
+                rotate: s.rotate,
+                scale: s.scale,
+                zIndex: s.zIndex,
+                opacity: s.opacity,
+                transition: reducedMotion
+                  ? "none"
+                  : "translate 0.6s ease-out, rotate 0.6s ease-out, scale 0.6s ease-out, opacity 0.6s ease-out",
+                willChange: "translate, rotate, scale",
+                backfaceVisibility: "hidden",
+                pointerEvents: clickable ? "auto" : "none",
+              }}
+            >
+              <CardContent proj={proj} index={i} />
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
