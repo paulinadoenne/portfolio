@@ -271,6 +271,16 @@ export default function ProjectStack() {
   // darunter anzuschließen — Taps auf die dort verdeckte Kartenfläche
   // würden sonst stattdessen die Nav-Links treffen.
   const [navHeight, setNavHeight] = useState(0);
+  // Viewporthöhe in JS-gemessenen Pixeln statt CSS `100vh`: Mobile Browser
+  // ändern `window.innerHeight` live, wenn die Adressleiste beim Scrollen
+  // ein-/ausblendet, aber `100vh` bleibt dabei je nach Browser auf dem
+  // ANFÄNGLICHEN (größeren, Adressleiste sichtbar) Wert stehen bzw. driftet
+  // inkonsistent zur JS-Messung. Da die Scroll-Fortschritts-Berechnung
+  // unten bereits `window.innerHeight` verwendet, MUSS auch die Höhe der
+  // Sektion/des gepinnten Wrappers exakt demselben Wert folgen, sonst
+  // driftet die Kaskade auf echten Handys auseinander (Scrollen bewegt
+  // scheinbar nichts, oder springt am Ende hart).
+  const [viewportHeight, setViewportHeight] = useState(0);
 
   useEffect(() => {
     const reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -304,6 +314,23 @@ export default function ProjectStack() {
     updateNavHeight();
     window.addEventListener("resize", updateNavHeight);
     return () => window.removeEventListener("resize", updateNavHeight);
+  }, [touchMode]);
+
+  useEffect(() => {
+    if (!touchMode) return;
+    const updateViewportHeight = () => setViewportHeight(window.innerHeight);
+    updateViewportHeight();
+    // `resize` allein reicht auf iOS Safari nicht immer, wenn sich nur die
+    // Adressleiste ein-/ausblendet (kein "echtes" Resize-Event dabei) —
+    // `visualViewport`, wo vorhanden, meldet auch diese Änderungen.
+    window.addEventListener("resize", updateViewportHeight);
+    window.addEventListener("orientationchange", updateViewportHeight);
+    window.visualViewport?.addEventListener("resize", updateViewportHeight);
+    return () => {
+      window.removeEventListener("resize", updateViewportHeight);
+      window.removeEventListener("orientationchange", updateViewportHeight);
+      window.visualViewport?.removeEventListener("resize", updateViewportHeight);
+    };
   }, [touchMode]);
 
   useEffect(() => {
@@ -476,8 +503,14 @@ export default function ProjectStack() {
       ? Math.max(0, Math.min(N - 1, Math.round(scrollP)))
       : Math.max(0, Math.min(N - 1, Math.round(p)));
 
+  // Bis zur ersten JS-Messung (ein Render-Zyklus) `100vh` als Übergangswert,
+  // danach ausschließlich der gemessene Pixelwert — siehe Kommentar bei
+  // `viewportHeight` weiter oben, warum CSS `vh` hier nicht dauerhaft
+  // verwendet werden darf.
   const sectionHeight = touchMode
-    ? `calc(100vh + ${(N - 1) * SCROLL_STEP_VH}vh)`
+    ? viewportHeight > 0
+      ? `${viewportHeight + (N - 1) * viewportHeight * (SCROLL_STEP_VH / 100)}px`
+      : `calc(100vh + ${(N - 1) * SCROLL_STEP_VH}vh)`
     : "100vh";
 
   // Bei `touchMode` bleibt der eigentliche Inhalt (Kopfzeile + Kartenstapel)
@@ -491,7 +524,10 @@ export default function ProjectStack() {
     ? {
         position: "sticky",
         top: navHeight,
-        height: `calc(100vh - ${navHeight}px)`,
+        height:
+          viewportHeight > 0
+            ? `${viewportHeight - navHeight}px`
+            : `calc(100vh - ${navHeight}px)`,
         width: "100%",
         overflow: "hidden",
       }
