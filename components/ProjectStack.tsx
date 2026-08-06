@@ -313,13 +313,6 @@ export default function ProjectStack() {
   // der Viewporthöhe an, damit alle N Karten innerhalb der Sektion sichtbar
   // & antippbar bleiben (siehe Kommentar bei openStyle).
   const [fanGap, setFanGap] = useState(150);
-  // Mobile Swipe-Reihe: horizontal scrollbarer Kartenstreifen mit nativem
-  // CSS scroll-snap statt eigener Scroll-/Transform-Mathematik — swipen ist
-  // dadurch normales Browser-Scrollverhalten (robust über alle Geräte
-  // hinweg) statt selbst nachgebautes Touch-Handling.
-  const swipeTrackRef = useRef<HTMLDivElement>(null);
-  const swipeCardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const [swipeIndex, setSwipeIndex] = useState(0);
 
   useEffect(() => {
     // Bewusst denkbar einfach gehalten (reines `innerWidth`, kein
@@ -383,36 +376,6 @@ export default function ProjectStack() {
     window.addEventListener("resize", invalidate);
     return () => window.removeEventListener("resize", invalidate);
   }, []);
-
-  // Aktive Karte der Swipe-Reihe: bewusst ein simpler `scroll`-Listener auf
-  // `scrollLeft`, KEIN IntersectionObserver — dessen Implementierung mit
-  // scrollbarem `root` (statt Viewport) ist gerade auf älteren iOS-Safari-
-  // Versionen während Momentum-Scroll unzuverlässig bekannt. Jede Karte hat
-  // dieselbe Breite + denselben Abstand, daher genügt eine einfache Division.
-  useEffect(() => {
-    if (!touchMode) return;
-    const track = swipeTrackRef.current;
-    if (!track) return;
-    let raf = 0;
-    const onScroll = () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const first = swipeCardRefs.current[0];
-        const second = swipeCardRefs.current[1];
-        if (!first || !second) return;
-        const step = second.offsetLeft - first.offsetLeft;
-        if (step <= 0) return;
-        const idx = Math.round(track.scrollLeft / step);
-        setSwipeIndex(Math.max(0, Math.min(N - 1, idx)));
-      });
-    };
-    onScroll();
-    track.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      track.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, [touchMode]);
 
   const measureRestRects = () => {
     const rects = cardRefs.current.map((el) => el?.getBoundingClientRect());
@@ -497,89 +460,23 @@ export default function ProjectStack() {
         style={{
           position: "relative",
           zIndex: 60,
-          padding: "clamp(72px, 16vw, 104px) 0 clamp(40px, 8vw, 64px) 0",
+          padding: "clamp(72px, 16vw, 104px) 20px clamp(40px, 8vw, 64px) 20px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-            gap: "16px",
-            padding: "0 20px",
-            marginBottom: "16px",
-          }}
-        >
-          <span style={{ fontSize: "13px", fontWeight: 700, letterSpacing: "0.14em" }}>
-            {"0" + (swipeIndex + 1) + " / 0" + N}
-          </span>
-          <span
-            style={{
-              fontSize: "13px",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.14em",
-              textAlign: "right",
-              maxWidth: "55vw",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {projects[swipeIndex].title}
-          </span>
-        </div>
-
-        <div
-          ref={swipeTrackRef}
-          className="pd-swipe-track"
-          style={{
-            display: "flex",
-            gap: "16px",
-            overflowX: "auto",
-            scrollSnapType: "x mandatory",
-            padding: "0 10vw",
-            scrollPadding: "0 10vw",
-          }}
-        >
+        {/* Bewusst die denkbar einfachste Lösung: eine normale, vertikal
+            gestapelte Liste in ganz gewöhnlichem Dokumentfluss. Kein
+            horizontales Scroll-Snap, kein Scroll-Listener, keine eigene
+            Positionierung — jede Karte ist ein stinknormaler Block-Link, den
+            man wie jeden anderen Seiteninhalt herunterscrollt und antippt.
+            Nach mehreren Anläufen mit ausgefeilteren (Scroll-Kaskade,
+            Swipe-Karussell) Lösungen, die sich auf echten iOS-Geräten trotz
+            sauberer Tests nicht reproduzierbar als funktionierend bestätigen
+            ließen, hat Zuverlässigkeit hier Vorrang vor Optik. */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           {projects.map((proj, i) => (
-            <Link
-              key={proj.slug}
-              ref={(el) => {
-                swipeCardRefs.current[i] = el;
-              }}
-              data-index={i}
-              href={`/projekt/${proj.slug}`}
-              style={{
-                flex: "0 0 auto",
-                width: "min(80vw, 420px)",
-                scrollSnapAlign: "center",
-              }}
-            >
+            <Link key={proj.slug} href={`/projekt/${proj.slug}`} style={{ display: "block" }}>
               <CardContent proj={proj} index={i} />
             </Link>
-          ))}
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "8px",
-            marginTop: "24px",
-          }}
-        >
-          {projects.map((_, i) => (
-            <span
-              key={i}
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: i === swipeIndex ? "var(--ink)" : "rgba(17,17,17,0.25)",
-                transition: "background 0.3s ease",
-              }}
-            />
           ))}
         </div>
       </section>
