@@ -121,7 +121,7 @@ export const projects: Project[] = [
     aufgabe:
       "Für lange Live-Auftritte wie DJ-Sets sollte ein visuelles Konzept entstehen, das über einen klassischen Screen hinausgeht und selbst Teil der Bühne wird.",
     umsetzung:
-      "Entstanden ist eine Sammlung von Videos, die auf alten Röhrenfernsehern gezeigt werden. Die Fernseher bewegen sich frei im Raum und reagieren im Takt der Musik, sodass Bild und Bühne zu einer Einheit verschmelzen. Das Konzept ist unendlich erweiterbar und lässt sich fortlaufend personalisieren, wodurch es sich an ganz unterschiedliche Auftritte und Settings anpassen lässt.",
+      "Entstanden ist eine Sammlung von Videos, die auf alten Röhrenfernsehern gezeigt werden. Die Fernseher bewegen sich frei im Raum und reagieren im Takt eines Tracks von DJ Schoonebeek, sodass Bild und Bühne zu einer Einheit verschmelzen. Das Konzept ist unendlich erweiterbar und lässt sich fortlaufend personalisieren, wodurch es sich an ganz unterschiedliche Auftritte und Settings anpassen lässt.",
     heroPlaceholder: "Filmstill hier ablegen",
     heroVideo: "/projects/abgabe/film.mp4",
     heroVideoPoster: "/projects/abgabe/poster.jpg",
