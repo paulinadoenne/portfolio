@@ -208,7 +208,7 @@ export const projects: Project[] = [
       { slotId: "detail-4c", ratio: "1/1", src: "/projects/rewe-art-direction/neukundenrabatt.jpg", video: "/projects/rewe-art-direction/neukundenrabatt.mp4", caption: "Social-Ad (Video): 20 € Neukundengutschein für den REWE Lieferservice", placeholder: "Video hier ablegen" },
       { slotId: "detail-5", ratio: "1/1", src: "/projects/rewe-art-direction/mitarbeitendenrabatt.jpg", caption: "Recruiting-Sujet: Mitarbeitendenrabatt", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-7", ratio: "600/941", src: "/projects/rewe-art-direction/thekenfrische-icon.jpg", caption: "Icon: Thekenfrische", placeholder: "Icon hier ablegen" },
-      { slotId: "detail-1", ratio: "1200/1662", span2: true, src: "/projects/rewe-art-direction/gehwegaufsteller.jpg", caption: "Gehwegaufsteller: Spendenaktion für die Tafeln vor Ort", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-1", ratio: "1200/1662", src: "/projects/rewe-art-direction/gehwegaufsteller.jpg", caption: "Gehwegaufsteller: Spendenaktion für die Tafeln vor Ort", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-8", ratio: "4/5", caption: "Rezeptkommunikation: Bratlinge mit Pastinaken-Möhren-Gemüse", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-9",
