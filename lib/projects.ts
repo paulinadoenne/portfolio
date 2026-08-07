@@ -256,16 +256,16 @@ export const projects: Project[] = [
     umsetzung:
       "Entstanden ist eine kleine Publikationsreihe, die den Entstehungsprozess der Sitzmöbel begleitet. Statt einer klassischen Bindung halten original Spanngurte in Signalfarben die Hefte zusammen: dasselbe Material, aus dem auch die dokumentierten Objekte gebaut sind, wird so selbst zum gestalterischen und inhaltlichen Element.",
     heroPlaceholder: "Sujet hier ablegen",
-    heroVideoPoster: "/projects/bricoleur/publikationen-stehend.jpg",
+    heroVideoPoster: "/projects/bricoleur/publikationen-haengend.jpg",
     gallery: [
-      { slotId: "detail-1", ratio: "1284/1925", src: "/projects/bricoleur/publikationen-stehend.jpg", caption: "Die drei Ausgaben, gebunden mit original Spanngurten", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-1", ratio: "1600/2400", src: "/projects/bricoleur/publikationen-haengend.jpg", caption: "Die fertigen Publikationen, zusammengehalten von Spanngurten", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "1283/1924", src: "/projects/bricoleur/bindung-detail.jpg", caption: "Detail: Bindung aus recycelten Spanngurten", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "1282/1924", src: "/projects/bricoleur/publikationen-uebersicht.jpg", caption: "Titelseiten der Publikationsreihe", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
-    closingCaption: "Die fertigen Publikationen, zusammengehalten von Spanngurten",
+    closingCaption: "Die drei Ausgaben, gebunden mit original Spanngurten",
     closingPlaceholder: "Situationsfoto hier ablegen",
-    closingSrc: "/projects/bricoleur/publikationen-haengend.jpg",
+    closingSrc: "/projects/bricoleur/publikationen-stehend.jpg",
   },
 ];
 
