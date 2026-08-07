@@ -197,7 +197,7 @@ export const projects: Project[] = [
     aufgabe:
       "Als Werkstudentin in der Art Direction bei REWE entstand eine breite Auswahl an Werbemitteln: von Rezeptkommunikation über Store-Kommunikation bis zu einer Spendenaktion für die Tafeln, immer innerhalb des bestehenden REWE-Markenauftritts.",
     umsetzung:
-      "Vom Gehwegaufsteller über die Kassenzonen-Kommunikation bis zur Rezeptkarte fürs Weihnachtsgeschäft: Jedes Format verlangt ein eigenes Zusammenspiel aus Bild, Text und Markenelementen, von großformatigem Print bis zum kleinteiligen Point-of-Sale-Aufsteller.",
+      "Vom Gehwegaufsteller über die Kassenzonen-Kommunikation bis zur Rezeptkarte fürs Weihnachtsgeschäft: Jedes Format verlangt ein eigenes Zusammenspiel aus Bild, Text und Markenelementen, von großformatigem Print bis zu Social-Media-Formaten für Plattformen wie YouTube und Pinterest.",
     heroPlaceholder: "Sujet hier ablegen",
     heroVideoPoster: "/projects/rewe-art-direction/gehwegaufsteller.jpg",
     cardVideo: "/projects/rewe-art-direction/neukundenrabatt.mp4",
