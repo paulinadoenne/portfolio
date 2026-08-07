@@ -217,6 +217,31 @@ export const projects: Project[] = [
     closingPlaceholder: "Situationsfoto hier ablegen",
     closingSrc: "/projects/fraktale-welt/still-closing.jpg",
   },
+  {
+    index: "07",
+    slug: "stand-der-dinge",
+    title: "Stand der Dinge",
+    tag: "Editorial & Plakatdesign · Hochschulprojekt",
+    kunde: "Peter Behrens School of Arts (PBSA), Hochschule Düsseldorf",
+    rolle: "Gestaltung (mit Gwen Buhl und Nele Grüter)",
+    jahr: "2024",
+    leistungen: "Konzept, Layout, Typografie",
+    aufgabe:
+      "Für die Ausstellung „Stand der Dinge“ des Studiengangs New Craft Object Design an der Peter Behrens School of Arts sollten Einladungskarte und Faltblatt entstehen: Über 40 Semester- und Alumni-Arbeiten aus den Bereichen Produkt, Objekt und Schmuck mussten übersichtlich gelistet und die Ausstellung als eigenständiger Auftritt sichtbar gemacht werden.",
+    umsetzung:
+      "Die grafische Klammer bildet eine großformatige Wortmarke aus „STAND DER DINGE“: Auf der Einladungskarte läuft sie durch eine diagonale Linie, auf dem Faltblatt wird sie zur Titelseite über der Werkliste. Innen sortiert eine klare Tabellenstruktur alle Arbeiten nach Name, Titel und Material, die Rückseite stellt in Schwarz-Weiß-Fotografie und mit dem gelben Markenakzent der PBSA den Studiengang vor.",
+    heroPlaceholder: "Sujet hier ablegen",
+    heroVideoPoster: "/projects/stand-der-dinge/produktion.jpg",
+    gallery: [
+      { slotId: "detail-1", ratio: "3250/2187", span2: true, src: "/projects/stand-der-dinge/produktion.jpg", caption: "Produktion: gedruckte Einladungskarten und Faltblätter", placeholder: "Foto hier ablegen" },
+      { slotId: "detail-2", ratio: "1166/1654", src: "/projects/stand-der-dinge/einladung.jpg", caption: "Einladungskarte: Stand der Dinge", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "1754/2480", src: "/projects/stand-der-dinge/faltblatt-vorne.jpg", caption: "Faltblatt (Vorderseite): Titel und Werkliste", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-4", ratio: "1754/2480", src: "/projects/stand-der-dinge/faltblatt-hinten.jpg", caption: "Faltblatt (Rückseite): Studiengang New Craft Object Design", placeholder: "Foto (Hochformat) hier ablegen" },
+    ],
+    closingSlotId: "detail-5",
+    closingCaption: "Bildunterschrift eintragen",
+    closingPlaceholder: "Situationsfoto hier ablegen",
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {
