@@ -193,7 +193,7 @@ export const projects: Project[] = [
     kunde: "REWE Dein Markt",
     rolle: "Art Direction (Werkstudentin)",
     jahr: "2025/2026",
-    leistungen: "Layout, Bildregie, Reinzeichnung, Retusche",
+    leistungen: "Layout, Retusche, Social-Media- und Print-Assets",
     aufgabe:
       "Als Werkstudentin in der Art Direction bei REWE entstand eine breite Auswahl an Werbemitteln: von Rezeptkommunikation über Store-Kommunikation bis zu einer Spendenaktion für die Tafeln, immer innerhalb des bestehenden REWE-Markenauftritts.",
     umsetzung:
