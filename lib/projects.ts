@@ -99,7 +99,7 @@ export const projects: Project[] = [
     gallery: [
       { slotId: "detail-6", ratio: "1200/675", span2: true, src: "/projects/rewe-art-direction/weisser-bohnensalat.jpg", caption: "Rezeptkommunikation: Weißer Bohnensalat", placeholder: "Foto hier ablegen" },
       { slotId: "detail-7b", ratio: "800/1200", src: "/projects/rewe-art-direction/wassermelonen-eistee.jpg", caption: "Rezeptkommunikation: Wassermelonen-Limetten-Eistee", placeholder: "Foto (Hochformat) hier ablegen" },
-      { slotId: "detail-8", ratio: "4/5", caption: "Rezeptkommunikation: Bratlinge mit Pastinaken-Möhren-Gemüse", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-8", ratio: "2/3", src: "/projects/rewe-art-direction/erdbeer-spargel-salat.jpg", caption: "Rezeptkommunikation (Pinterest): Erdbeer-Spargel-Salat", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-4", ratio: "591/1219", src: "/projects/rewe-art-direction/sesameis.jpg", caption: "Xmas-POS für REWE Feine Welt: Sesamreis mit Kokos auf Mango-Spiegel", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-4b", ratio: "595/1223", src: "/projects/rewe-art-direction/sesameis-rezept.jpg", caption: "Rückseite mit Zutaten und Zubereitung", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-4c", ratio: "1/1", src: "/projects/rewe-art-direction/neukundenrabatt.jpg", video: "/projects/rewe-art-direction/neukundenrabatt.mp4", caption: "Social-Ad (Video): 20 € Neukundengutschein für den REWE Lieferservice", placeholder: "Video hier ablegen" },
