@@ -242,6 +242,31 @@ export const projects: Project[] = [
     closingCaption: "Bildunterschrift eintragen",
     closingPlaceholder: "Situationsfoto hier ablegen",
   },
+  {
+    index: "08",
+    slug: "bricoleur",
+    title: "Bricoleur",
+    tag: "Editorial Design · Dokumentation",
+    kunde: "Eigenprojekt (Kooperationskurs Kommunikationsdesign × Objektdesign, HSD)",
+    rolle: "Dokumentation (im Dreier-Team)",
+    jahr: "2023",
+    leistungen: "Konzept, Editorial Design, Fotografie, Bindung",
+    aufgabe:
+      "Bricoleur ist eine Kooperation zwischen Kommunikationsdesigner*innen und Objektdesigner*innen der Hochschule Düsseldorf. Die Aufgabe der Objektdesign-Seite bestand darin, Sitzgelegenheiten aus gespendeten Spanplatten und Spanngurten zu gestalten, in einem Dreier-Team übernahmen wir als Kommunikationsdesignerinnen die Dokumentation des Kurses.",
+    umsetzung:
+      "Entstanden ist eine kleine Publikationsreihe, die den Entstehungsprozess der Sitzmöbel begleitet. Statt einer klassischen Bindung halten original Spanngurte in Signalfarben die Hefte zusammen: dasselbe Material, aus dem auch die dokumentierten Objekte gebaut sind, wird so selbst zum gestalterischen und inhaltlichen Element.",
+    heroPlaceholder: "Sujet hier ablegen",
+    heroVideoPoster: "/projects/bricoleur/publikationen-stehend.jpg",
+    gallery: [
+      { slotId: "detail-1", ratio: "1284/1925", src: "/projects/bricoleur/publikationen-stehend.jpg", caption: "Die drei Ausgaben, gebunden mit original Spanngurten", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-2", ratio: "1283/1924", src: "/projects/bricoleur/bindung-detail.jpg", caption: "Detail: Bindung aus recycelten Spanngurten", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "1282/1924", src: "/projects/bricoleur/publikationen-uebersicht.jpg", caption: "Titelseiten der Publikationsreihe", placeholder: "Foto (Hochformat) hier ablegen" },
+    ],
+    closingSlotId: "detail-4",
+    closingCaption: "Die fertigen Publikationen, zusammengehalten von Spanngurten",
+    closingPlaceholder: "Situationsfoto hier ablegen",
+    closingSrc: "/projects/bricoleur/publikationen-haengend.jpg",
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {
