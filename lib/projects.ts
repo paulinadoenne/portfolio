@@ -119,7 +119,7 @@ export const projects: Project[] = [
     tag: "Audiovisuelle Animation · Uni-Projekt",
     kunde: "Eigenprojekt (Uni-Projekt)",
     rolle: "Konzept, Video & Animation",
-    jahr: "Jahr eintragen",
+    jahr: "2024",
     leistungen: "Konzept, Videoproduktion, Bühnenkonzept",
     aufgabe:
       "Für lange Live-Auftritte wie DJ-Sets sollte ein visuelles Konzept entstehen, das über einen klassischen Screen hinausgeht und selbst Teil der Bühne wird.",
@@ -131,7 +131,7 @@ export const projects: Project[] = [
     gallery: [
       { slotId: "detail-1", ratio: "16/9", span2: true, src: "/projects/abgabe/still-scattered.jpg", caption: "Filmstill: frei im Raum schwebende Röhrenfernseher", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "3887/2150", src: "/projects/abgabe/still-tv-closeup.jpg", caption: "Filmstill: Close-up eines Röhrenfernsehers", placeholder: "Foto (Hochformat) hier ablegen" },
-      { slotId: "detail-3", ratio: "2320/1531", src: "/projects/abgabe/still-graphic-hand.jpg", caption: "Filmstill: grafische Sequenz", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "2320/1283", src: "/projects/abgabe/still-graphic-hand.jpg", caption: "Filmstill: grafische Sequenz", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
     closingCaption: "Filmstill: Röhrenfernseher in surrealer Unterwasser-Szenerie",
