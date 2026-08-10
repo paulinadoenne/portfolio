@@ -54,33 +54,6 @@ export type Project = {
 export const projects: Project[] = [
   {
     index: "01",
-    slug: "the-double-standard-of-aging",
-    title: "The Double Standard of Aging",
-    tag: "Bachelorarbeit · Kinetic Typography",
-    kunde: "Eigenprojekt (Bachelorarbeit)",
-    rolle: "Konzept, Recherche, Typografie, Animation & Soundcollage",
-    jahr: "2026",
-    leistungen: "Recherche, Interviews, Skript, Kinetic Typography, Soundcollage",
-    aufgabe:
-      "Für die Bachelorarbeit sollte ein Kurzfilm entstehen, der den doppelten Standard beim Altern sichtbar macht: Warum werden Frauen und Männer gesellschaftlich so unterschiedlich bewertet, wenn es um Aussehen, Selbstbild und Lebensplanung geht? Grundlage sind reale Interview-Aussagen, die den Film tragen.",
-    umsetzung:
-      "Gestalterisch orientiert sich der Film an Barbara Kruger und Jenny Holzer: Krugers bildhafte Sprache aus roten Flächen und knapper, unmissverständlicher Typografie trifft auf Holzers reduzierte, fast plakative Textaussagen. Aus den Interviews wurden prägnante Zeilen zu einem Skript montiert und als kinetische Typografie inszeniert: jede Aussage bekommt ihren eigenen Rhythmus im Takt der Stimme. Auch die Soundcollage, die diesen Takt trägt, stammt aus eigener Gestaltung. Die reduzierte Rot-Weiß-Palette hält den Fokus konsequent auf dem gesprochenen Wort.",
-    heroPlaceholder: "Filmstill · The Double Standard of Aging",
-    heroRatio: "16/9",
-    heroVideo: "/projects/the-double-standard-of-aging/film.mp4",
-    heroVideoWebm: "/projects/the-double-standard-of-aging/film.webm",
-    heroVideoPoster: "/projects/the-double-standard-of-aging/poster.jpg",
-    gallery: [
-      { slotId: "detail-1", ratio: "16/9", span2: true, src: "/projects/the-double-standard-of-aging/still-unsicherheit.jpg", caption: "Filmstill: „…von einerseits ’ner sehr großen Unsicherheit“", placeholder: "Filmstill hier ablegen" },
-      { slotId: "detail-2", ratio: "720/1280", src: "/projects/the-double-standard-of-aging/vorhang-poster.jpg", video: "/projects/the-double-standard-of-aging/vorhang.mp4", caption: "Filmstill (Video): „Aging is much more a social judgment than a biological eventuality“", placeholder: "Video hier ablegen" },
-    ],
-    closingSlotId: "detail-4",
-    closingCaption: "Filmstill: „Der hatte gedacht, ich wär deutlich jünger.“",
-    closingPlaceholder: "Making-of hier ablegen",
-    closingSrc: "/projects/the-double-standard-of-aging/still-juenger.jpg",
-  },
-  {
-    index: "02",
     slug: "rewe-art-direction",
     title: "REWE Art Direction",
     tag: "Art Direction · Werkstudentin",
@@ -110,6 +83,33 @@ export const projects: Project[] = [
     closingSlotId: "detail-9",
     closingCaption: "Bildunterschrift eintragen",
     closingPlaceholder: "Situationsfoto hier ablegen",
+  },
+  {
+    index: "02",
+    slug: "the-double-standard-of-aging",
+    title: "The Double Standard of Aging",
+    tag: "Bachelorarbeit · Kinetic Typography",
+    kunde: "Eigenprojekt (Bachelorarbeit)",
+    rolle: "Konzept, Recherche, Typografie, Animation & Soundcollage",
+    jahr: "2026",
+    leistungen: "Recherche, Interviews, Skript, Kinetic Typography, Soundcollage",
+    aufgabe:
+      "Für die Bachelorarbeit sollte ein Kurzfilm entstehen, der den doppelten Standard beim Altern sichtbar macht: Warum werden Frauen und Männer gesellschaftlich so unterschiedlich bewertet, wenn es um Aussehen, Selbstbild und Lebensplanung geht? Grundlage sind reale Interview-Aussagen, die den Film tragen.",
+    umsetzung:
+      "Gestalterisch orientiert sich der Film an Barbara Kruger und Jenny Holzer: Krugers bildhafte Sprache aus roten Flächen und knapper, unmissverständlicher Typografie trifft auf Holzers reduzierte, fast plakative Textaussagen. Aus den Interviews wurden prägnante Zeilen zu einem Skript montiert und als kinetische Typografie inszeniert: jede Aussage bekommt ihren eigenen Rhythmus im Takt der Stimme. Auch die Soundcollage, die diesen Takt trägt, stammt aus eigener Gestaltung. Die reduzierte Rot-Weiß-Palette hält den Fokus konsequent auf dem gesprochenen Wort.",
+    heroPlaceholder: "Filmstill · The Double Standard of Aging",
+    heroRatio: "16/9",
+    heroVideo: "/projects/the-double-standard-of-aging/film.mp4",
+    heroVideoWebm: "/projects/the-double-standard-of-aging/film.webm",
+    heroVideoPoster: "/projects/the-double-standard-of-aging/poster.jpg",
+    gallery: [
+      { slotId: "detail-1", ratio: "16/9", span2: true, src: "/projects/the-double-standard-of-aging/still-unsicherheit.jpg", caption: "Filmstill: „…von einerseits ’ner sehr großen Unsicherheit“", placeholder: "Filmstill hier ablegen" },
+      { slotId: "detail-2", ratio: "720/1280", src: "/projects/the-double-standard-of-aging/vorhang-poster.jpg", video: "/projects/the-double-standard-of-aging/vorhang.mp4", caption: "Filmstill (Video): „Aging is much more a social judgment than a biological eventuality“", placeholder: "Video hier ablegen" },
+    ],
+    closingSlotId: "detail-4",
+    closingCaption: "Filmstill: „Der hatte gedacht, ich wär deutlich jünger.“",
+    closingPlaceholder: "Making-of hier ablegen",
+    closingSrc: "/projects/the-double-standard-of-aging/still-juenger.jpg",
   },
   {
     index: "03",
@@ -193,31 +193,6 @@ export const projects: Project[] = [
   },
   {
     index: "06",
-    slug: "fraktale-welt",
-    title: "Fraktale Welt",
-    tag: "Musikvideo · Uni-Projekt",
-    kunde: "Eigenprojekt (Uni-Projekt)",
-    rolle: "Konzept, Kamera & Motion Design",
-    jahr: "2024",
-    leistungen: "Konzept, Dreh, Motion Design, Schnitt",
-    aufgabe:
-      "Im Rahmen eines Uni-Projekts sollte zu einem frei gewählten Track ein Musikvideo entstehen. Die Wahl fiel auf „Night Sun“ von DJane Nava: ein anonymer Mann zieht durch die Nacht und wird dabei zunehmend überfordert von den Reizen, die die Night Sun über ihn bringt.",
-    umsetzung:
-      "Gedreht wurde mit zwei Kameras. Der Camcorder liefert die POV-Aufnahmen, die den Mann aus seiner eigenen Perspektive durch die Nacht begleiten, während das Smartphone einfängt, was ihm dabei begegnet: Neonschilder, Lichtreflexe, flüchtige Eindrücke der Stadt. Im Schnitt verdichten sich beide Perspektiven zu einem zunehmend fragmentierten, fraktalen Bildrhythmus, der die wachsende Reizüberflutung des Protagonisten spürbar macht.",
-    heroPlaceholder: "Filmstill · Night Sun (DJane Nava)",
-    heroVideo: "/projects/fraktale-welt/film.mov",
-    heroVideoPoster: "/projects/fraktale-welt/poster.jpg",
-    gallery: [
-      { slotId: "detail-2", ratio: "4/5", src: "/projects/fraktale-welt/still-neon-figur.jpg", caption: "Filmstill: Neonschild-Überlagerung", placeholder: "Foto (Hochformat) hier ablegen" },
-      { slotId: "detail-3", ratio: "4/5", src: "/projects/fraktale-welt/still-glitch-lauf.jpg", caption: "Filmstill: fraktale Überlagerung", placeholder: "Foto (Hochformat) hier ablegen" },
-    ],
-    closingSlotId: "detail-4",
-    closingCaption: "Filmstill: Night Sun",
-    closingPlaceholder: "Situationsfoto hier ablegen",
-    closingSrc: "/projects/fraktale-welt/still-closing.jpg",
-  },
-  {
-    index: "07",
     slug: "stand-der-dinge",
     title: "Stand der Dinge",
     tag: "Editorial & Plakatdesign · Werkauftrag",
@@ -242,7 +217,7 @@ export const projects: Project[] = [
     closingPlaceholder: "Situationsfoto hier ablegen",
   },
   {
-    index: "08",
+    index: "07",
     slug: "bricoleur",
     title: "Bricoleur",
     tag: "Editorial Design · Dokumentation",
@@ -265,6 +240,31 @@ export const projects: Project[] = [
     closingCaption: "Detail: Bindung aus recycelten Spanngurten",
     closingPlaceholder: "Situationsfoto hier ablegen",
     closingSrc: "/projects/bricoleur/bindung-detail.jpg",
+  },
+  {
+    index: "08",
+    slug: "fraktale-welt",
+    title: "Fraktale Welt",
+    tag: "Musikvideo · Uni-Projekt",
+    kunde: "Eigenprojekt (Uni-Projekt)",
+    rolle: "Konzept, Kamera & Motion Design",
+    jahr: "2024",
+    leistungen: "Konzept, Dreh, Motion Design, Schnitt",
+    aufgabe:
+      "Im Rahmen eines Uni-Projekts sollte zu einem frei gewählten Track ein Musikvideo entstehen. Die Wahl fiel auf „Night Sun“ von DJane Nava: ein anonymer Mann zieht durch die Nacht und wird dabei zunehmend überfordert von den Reizen, die die Night Sun über ihn bringt.",
+    umsetzung:
+      "Gedreht wurde mit zwei Kameras. Der Camcorder liefert die POV-Aufnahmen, die den Mann aus seiner eigenen Perspektive durch die Nacht begleiten, während das Smartphone einfängt, was ihm dabei begegnet: Neonschilder, Lichtreflexe, flüchtige Eindrücke der Stadt. Im Schnitt verdichten sich beide Perspektiven zu einem zunehmend fragmentierten, fraktalen Bildrhythmus, der die wachsende Reizüberflutung des Protagonisten spürbar macht.",
+    heroPlaceholder: "Filmstill · Night Sun (DJane Nava)",
+    heroVideo: "/projects/fraktale-welt/film.mov",
+    heroVideoPoster: "/projects/fraktale-welt/poster.jpg",
+    gallery: [
+      { slotId: "detail-2", ratio: "4/5", src: "/projects/fraktale-welt/still-neon-figur.jpg", caption: "Filmstill: Neonschild-Überlagerung", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "4/5", src: "/projects/fraktale-welt/still-glitch-lauf.jpg", caption: "Filmstill: fraktale Überlagerung", placeholder: "Foto (Hochformat) hier ablegen" },
+    ],
+    closingSlotId: "detail-4",
+    closingCaption: "Filmstill: Night Sun",
+    closingPlaceholder: "Situationsfoto hier ablegen",
+    closingSrc: "/projects/fraktale-welt/still-closing.jpg",
   },
 ];
 
