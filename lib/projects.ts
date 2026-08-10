@@ -130,8 +130,8 @@ export const projects: Project[] = [
     heroVideoPoster: "/projects/abgabe/poster.jpg",
     gallery: [
       { slotId: "detail-1", ratio: "16/9", span2: true, src: "/projects/abgabe/still-scattered.jpg", caption: "Filmstill: frei im Raum schwebende Röhrenfernseher", placeholder: "Filmstill hier ablegen" },
-      { slotId: "detail-2", ratio: "4/5", src: "/projects/abgabe/still-tv-closeup.jpg", caption: "Filmstill: Close-up eines Röhrenfernsehers", placeholder: "Foto (Hochformat) hier ablegen" },
-      { slotId: "detail-3", ratio: "4/5", src: "/projects/abgabe/still-face.jpg", caption: "Filmstill: grafische Sequenz", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-2", ratio: "3887/2150", src: "/projects/abgabe/still-tv-closeup.jpg", caption: "Filmstill: Close-up eines Röhrenfernsehers", placeholder: "Foto (Hochformat) hier ablegen" },
+      { slotId: "detail-3", ratio: "2320/1531", src: "/projects/abgabe/still-graphic-hand.jpg", caption: "Filmstill: grafische Sequenz", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
     closingCaption: "Filmstill: Röhrenfernseher in surrealer Unterwasser-Szenerie",
