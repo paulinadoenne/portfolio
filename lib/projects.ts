@@ -260,7 +260,6 @@ export const projects: Project[] = [
     gallery: [
       { slotId: "detail-1", ratio: "1600/2400", src: "/projects/bricoleur/publikationen-haengend.jpg", caption: "Die fertigen Publikationen, zusammengehalten von Spanngurten", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "1282/1924", src: "/projects/bricoleur/publikationen-uebersicht.jpg", caption: "Titelseiten der Publikationsreihe", placeholder: "Foto (Hochformat) hier ablegen" },
-      { slotId: "detail-3", ratio: "1284/1925", src: "/projects/bricoleur/publikationen-stehend.jpg", caption: "Die drei Ausgaben, gebunden mit original Spanngurten", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
     closingCaption: "Detail: Bindung aus recycelten Spanngurten",
