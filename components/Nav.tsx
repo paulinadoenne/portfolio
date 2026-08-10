@@ -46,7 +46,7 @@ export function HomeNav() {
           opacity: 0.6,
         }}
       >
-        Kommunikationsdesign · Portfolio 2026
+        Kommunikationsdesign · Portfolio
       </div>
       <div style={{ display: "flex", gap: "32px", ...label }}>
         <a href="#arbeiten">Arbeiten</a>

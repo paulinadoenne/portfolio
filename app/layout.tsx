@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Paulina Dönne · Kommunikationsdesign",
   description:
-    "Portfolio von Paulina Dönne, Kommunikationsdesignerin: Commercials, Editorial, Animation und Werbemittel. Portfolio 2026.",
+    "Portfolio von Paulina Dönne, Kommunikationsdesignerin: Commercials, Editorial, Animation und Werbemittel.",
 };
 
 export default function RootLayout({

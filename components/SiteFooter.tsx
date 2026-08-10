@@ -3,10 +3,10 @@ import Reveal from "./Reveal";
 
 const MARQUEE_WORDS = [
   "Offen für Anfragen",
-  "Portfolio 2026",
+  "Portfolio",
   "Kommunikationsdesign",
   "Offen für Anfragen",
-  "Portfolio 2026",
+  "Portfolio",
   "Kommunikationsdesign",
 ];
 
@@ -99,7 +99,12 @@ export default function SiteFooter() {
           <a href="mailto:paulinadoenne@outlook.com" style={{ color: "#ffffff" }}>
             E-Mail
           </a>
-          <a href="#" style={{ color: "#ffffff" }}>
+          <a
+            href="https://www.instagram.com/bisdoenne/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#ffffff" }}
+          >
             Instagram
           </a>
           <a href="#" style={{ color: "#ffffff" }}>
