@@ -107,7 +107,12 @@ export default function SiteFooter() {
           >
             Instagram
           </a>
-          <a href="#" style={{ color: "#ffffff" }}>
+          <a
+            href="https://www.linkedin.com/in/paulina-d%C3%B6nne-b091b4261/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#ffffff" }}
+          >
             LinkedIn
           </a>
         </div>
