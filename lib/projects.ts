@@ -158,7 +158,7 @@ export const projects: Project[] = [
     heroVideoNextPoster: "/projects/fake-it-til-you-make-it/poster-red.jpg",
     gallery: [
       { slotId: "detail-1", ratio: "21/9", span2: true, src: "/projects/fake-it-til-you-make-it/detail-red-wide.jpg", caption: "Filmstill: „Are you wearing a red cap?“", placeholder: "Filmstill hier ablegen" },
-      { slotId: "detail-2", ratio: "8/1", span2: true, src: "/projects/fake-it-til-you-make-it/detail-yellow-spiral.jpg", caption: "Filmstill: „Are you wearing a yellow jacket?“", placeholder: "Filmstill hier ablegen" },
+      { slotId: "detail-2", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-yellow-spiral.jpg", caption: "Filmstill: „Are you wearing a yellow jacket?“", placeholder: "Filmstill (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-red-portrait.jpg", caption: "Filmstill: „Are you wearing a red cap?“", placeholder: "Filmstill (Hochformat) hier ablegen" },
     ],
     closingSlotId: "detail-4",
