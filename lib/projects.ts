@@ -128,7 +128,7 @@ export const projects: Project[] = [
     heroVideo: "/projects/abgabe/film.mp4",
     heroVideoPoster: "/projects/abgabe/poster.jpg",
     gallery: [
-      { slotId: "detail-1", ratio: "16/9", span2: true, src: "/projects/abgabe/still-scattered.jpg", caption: "Filmstill: frei im Raum schwebende Röhrenfernseher", placeholder: "Filmstill hier ablegen" },
+      { slotId: "detail-1", ratio: "3931/2170", span2: true, src: "/projects/abgabe/still-scattered.jpg", caption: "Filmstill: frei im Raum schwebende Röhrenfernseher", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "3887/2150", src: "/projects/abgabe/still-tv-closeup.jpg", caption: "Filmstill: Close-up eines Röhrenfernsehers", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "2320/1283", src: "/projects/abgabe/still-graphic-hand.jpg", caption: "Filmstill: grafische Sequenz", placeholder: "Foto (Hochformat) hier ablegen" },
     ],
