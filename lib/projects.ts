@@ -73,7 +73,6 @@ export const projects: Project[] = [
     gallery: [
       { slotId: "detail-1", ratio: "16/9", span2: true, src: "/projects/the-double-standard-of-aging/still-unsicherheit.jpg", caption: "Filmstill: „…von einerseits ’ner sehr großen Unsicherheit“", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "720/1280", src: "/projects/the-double-standard-of-aging/vorhang-poster.jpg", video: "/projects/the-double-standard-of-aging/vorhang.mp4", caption: "Filmstill (Video): „Aging is much more a social judgment than a biological eventuality“", placeholder: "Video hier ablegen" },
-      { slotId: "detail-3", ratio: "4/5", caption: "Skript-Auszug oder Storyboard", placeholder: "Skript/Storyboard hier ablegen" },
     ],
     closingSlotId: "detail-4",
     closingCaption: "Filmstill: „Der hatte gedacht, ich wär deutlich jünger.“",
