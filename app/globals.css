@@ -164,7 +164,7 @@ a:hover {
 .cv-sheet {
   width: 210mm;
   min-height: 297mm;
-  background: #ffffff;
+  background: #f7f4ef;
   color: var(--ink);
   box-shadow: 0 10px 40px rgba(17, 17, 17, 0.15);
 }
@@ -177,7 +177,7 @@ a:hover {
     display: none !important;
   }
   .cv-stage {
-    background: #ffffff;
+    background: #f7f4ef;
     padding: 0;
   }
   .cv-sheet {

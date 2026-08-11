@@ -8,62 +8,92 @@ export const metadata: Metadata = {
   title: "Lebenslauf · Paulina Dönne",
 };
 
-const sectionGrid: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "110pt 1fr",
-  gap: "18pt",
-  padding: "16pt 0",
-  borderBottom: "1pt solid #111111",
-};
-const sectionLabel: CSSProperties = {
+const pillLabel: CSSProperties = {
+  display: "inline-block",
+  background: "var(--ink)",
+  color: "#f7f4ef",
   fontSize: "9pt",
   fontWeight: 700,
   textTransform: "uppercase",
-  letterSpacing: "0.14em",
-  color: "var(--accent)",
-  paddingTop: "2pt",
+  letterSpacing: "0.1em",
+  padding: "5pt 12pt",
+  borderRadius: "3pt",
+  marginBottom: "16pt",
 };
-const jobTitleRow: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "12pt",
-  fontSize: "11.5pt",
+const entryTitle: CSSProperties = {
+  fontSize: "12.5pt",
   fontWeight: 700,
 };
-const period: CSSProperties = {
+const entryYear: CSSProperties = {
   fontWeight: 500,
-  opacity: 0.6,
-  whiteSpace: "nowrap",
 };
-const jobDesc: CSSProperties = {
-  margin: "4pt 0 0 0",
+const entryCompany: CSSProperties = {
+  fontSize: "9pt",
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: "0.07em",
+  color: "rgba(17,17,17,0.4)",
+  marginTop: "3pt",
+};
+const entryDesc: CSSProperties = {
+  margin: "5pt 0 0 0",
   fontSize: "10.5pt",
   lineHeight: 1.55,
-  opacity: 0.85,
+  color: "rgba(17,17,17,0.8)",
+  maxWidth: "330pt",
 };
-const pill: CSSProperties = {
-  border: "1pt solid #111111",
-  borderRadius: "999pt",
-  padding: "4pt 10pt",
-  fontSize: "9.5pt",
-  fontWeight: 700,
-  textTransform: "uppercase",
-  letterSpacing: "0.06em",
+const contactLabel: CSSProperties = {
+  fontSize: "11pt",
+  color: "rgba(17,17,17,0.45)",
+};
+const contactValue: CSSProperties = {
+  fontSize: "11pt",
+  textAlign: "right",
+  color: "var(--ink)",
 };
 
-const skills = [
-  "InDesign",
-  "Photoshop",
-  "Illustrator",
-  "After Effects",
-  "Blender",
-  "Cinema 4D",
-  "MS Office",
-  "Figma",
-  "Claude",
-  "ChatGPT",
-  "Nano Banana",
-  "Firefly",
+const experience = [
+  {
+    title: "werkstudentin art direction.",
+    period: "2024–2026",
+    company: "REWE Group",
+    desc: "konzeption und umsetzung von social-media-assets, art direction für werbekampagnen",
+  },
+  {
+    title: "vollzeittätigkeit.",
+    period: "2021–2022",
+    company: "Optik Dönne, Brühl",
+    desc: "brillenglasschliff, kund:innenberatung zu fassungen und gläsern, reparaturservice, organisatorische abläufe, betreuung der social-media-kanäle",
+  },
+  {
+    title: "ausbildung augenoptikerin.",
+    period: "2018–2021",
+    company: "Optik Niederprüm, Köln",
+    desc: "ausbildungsinhalte: brillenglasschliff, kund:innenberatung zu fassungen und gläsern, reparaturservice, organisatorische abläufe",
+  },
+  {
+    title: "aushilfsjob und auslandsaufenthalt.",
+    period: "2018",
+  },
+];
+
+const education = [
+  {
+    title: "bachelor kommunikationsdesign.",
+    period: "2022–2026",
+    company: "Peter-Behrens School of Arts, Düsseldorf",
+  },
+  {
+    title: "schulischer teil der fachhochschulreife.",
+    period: "2017",
+    company: "Karl-Schiller-Berufskolleg, Brühl",
+  },
+];
+
+const software = [
+  "adobe cloud (indesign, photoshop, illustrator, after effects)",
+  "blender / cinema4d · ms office",
+  "ki-tools (claude, chatgpt, nano banana, firefly, figma)",
 ];
 
 export default function LebenslaufPage() {
@@ -97,7 +127,7 @@ export default function LebenslaufPage() {
 
       <div className="cv-stage">
         <div className="cv-sheet">
-          <div style={{ padding: "52pt 48pt", minHeight: "100%" }}>
+          <div style={{ padding: "56pt 50pt", minHeight: "100%" }}>
             {/* Kopf */}
             <div
               style={{
@@ -105,156 +135,144 @@ export default function LebenslaufPage() {
                 justifyContent: "space-between",
                 alignItems: "flex-start",
                 gap: "24pt",
-                borderBottom: "2pt solid #111111",
-                paddingBottom: "20pt",
               }}
             >
               <div>
                 <div
                   style={{
                     fontWeight: 700,
-                    fontSize: "38pt",
+                    fontSize: "30pt",
                     lineHeight: 1,
-                    textTransform: "uppercase",
                   }}
                 >
-                  Paulina
-                  <br />
-                  Dönne<span style={{ color: "var(--accent)" }}>.</span>
+                  paulina dönne<span style={{ color: "var(--accent)" }}>.</span>
                 </div>
                 <div
                   style={{
-                    fontSize: "11pt",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.12em",
-                    marginTop: "10pt",
+                    fontSize: "12pt",
+                    marginTop: "8pt",
                   }}
                 >
-                  Kommunikationsdesignerin
+                  kommunikationsdesignerin
                 </div>
               </div>
               <div
-                style={{ display: "flex", gap: "20pt", alignItems: "flex-start" }}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "auto 1fr",
+                  gap: "6pt 28pt",
+                  paddingTop: "4pt",
+                }}
               >
-                <div
-                  style={{
-                    fontSize: "10pt",
-                    lineHeight: 1.7,
-                    textAlign: "right",
-                  }}
+                <div style={contactLabel}>email</div>
+                <a
+                  href="mailto:paulinadoenne@outlook.com"
+                  style={{ ...contactValue, textDecoration: "underline" }}
                 >
-                  <div>paulinadoenne@outlook.com</div>
-                  <div>Köln, Deutschland</div>
-                  <div>paulinadoenne.de</div>
+                  paulinadoenne@outlook.com
+                </a>
+                <div style={contactLabel}>standort</div>
+                <div style={contactValue}>köln, deutschland</div>
+                <div style={contactLabel}>portfolio</div>
+                <div style={{ textAlign: "right" }}>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      background: "var(--ink)",
+                      color: "#f7f4ef",
+                      fontWeight: 700,
+                      fontSize: "10.5pt",
+                      padding: "4pt 10pt",
+                      borderRadius: "3pt",
+                    }}
+                  >
+                    paulinadoenne.de
+                  </span>
                 </div>
+              </div>
+            </div>
+
+            {/* Berufserfahrung + Foto */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 130pt",
+                gap: "24pt",
+                marginTop: "64pt",
+              }}
+            >
+              <div>
+                <div style={pillLabel}>Berufserfahrung</div>
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: "16pt" }}
+                >
+                  {experience.map((e) => (
+                    <div key={e.title} style={{ breakInside: "avoid" }}>
+                      <div style={entryTitle}>
+                        {e.title} <span style={entryYear}>({e.period})</span>
+                      </div>
+                      {e.company && <div style={entryCompany}>{e.company}</div>}
+                      {e.desc && <p style={entryDesc}>{e.desc}</p>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div style={{ alignSelf: "start" }}>
                 <div
                   style={{
                     position: "relative",
-                    width: "78pt",
-                    height: "100pt",
+                    width: "130pt",
+                    height: "146pt",
                     overflow: "hidden",
                     background: "var(--img-bg)",
-                    flex: "none",
+                    border: "1pt dashed rgba(17,17,17,0.3)",
                   }}
                 >
                   <ImageSlot placeholder="Foto" src="/lebenslauf-foto.jpg" />
                 </div>
-              </div>
-            </div>
-
-            {/* Profil */}
-            <div style={sectionGrid}>
-              <div style={sectionLabel}>Profil</div>
-              <p style={{ margin: 0, fontSize: "11pt", lineHeight: 1.6 }}>
-                Kommunikationsdesignerin mit Schwerpunkt auf Commercials,
-                Editorial Design, Animation und Werbemitteln.
-              </p>
-            </div>
-
-            {/* Erfahrung */}
-            <div style={sectionGrid}>
-              <div style={sectionLabel}>Erfahrung</div>
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: "14pt" }}
-              >
-                <div style={{ breakInside: "avoid" }}>
-                  <div style={jobTitleRow}>
-                    <span>Werkstudentin Art Direction · REWE Group</span>
-                    <span style={period}>2024 – 2026</span>
-                  </div>
-                  <p style={jobDesc}>
-                    Konzeption und Umsetzung von Social-Media-Assets, Art
-                    Direction für Werbekampagnen.
-                  </p>
-                </div>
-                <div style={{ breakInside: "avoid" }}>
-                  <div style={jobTitleRow}>
-                    <span>Vollzeittätigkeit · Optik Dönne, Brühl</span>
-                    <span style={period}>2021 – 2022</span>
-                  </div>
-                  <p style={jobDesc}>
-                    Brillenglasschliff, Kund:innenberatung zu Fassungen und
-                    Gläsern, Reparaturservice, organisatorische Abläufe,
-                    Betreuung der Social-Media-Kanäle.
-                  </p>
-                </div>
-                <div style={{ breakInside: "avoid" }}>
-                  <div style={jobTitleRow}>
-                    <span>Ausbildung Augenoptikerin · Optik Niederprüm, Köln</span>
-                    <span style={period}>2018 – 2021</span>
-                  </div>
-                  <p style={jobDesc}>
-                    Ausbildungsinhalte: Brillenglasschliff,
-                    Kund:innenberatung zu Fassungen und Gläsern,
-                    Reparaturservice, organisatorische Abläufe.
-                  </p>
-                </div>
-                <div style={{ breakInside: "avoid" }}>
-                  <div style={jobTitleRow}>
-                    <span>Aushilfsjob und Auslandsaufenthalt</span>
-                    <span style={period}>2018</span>
-                  </div>
+                <div
+                  style={{
+                    fontWeight: 700,
+                    fontSize: "20pt",
+                    marginTop: "14pt",
+                  }}
+                >
+                  hallo.
                 </div>
               </div>
             </div>
 
             {/* Ausbildung */}
-            <div style={sectionGrid}>
-              <div style={sectionLabel}>Ausbildung</div>
+            <div style={{ marginTop: "40pt" }}>
+              <div style={pillLabel}>Ausbildung</div>
               <div
-                style={{ display: "flex", flexDirection: "column", gap: "14pt" }}
+                style={{ display: "flex", flexDirection: "column", gap: "12pt" }}
               >
-                <div style={{ breakInside: "avoid" }}>
-                  <div style={jobTitleRow}>
-                    <span>Bachelor Kommunikationsdesign · Peter Behrens School of Arts, Düsseldorf</span>
-                    <span style={period}>2022 – 2026</span>
+                {education.map((e) => (
+                  <div key={e.title} style={{ breakInside: "avoid" }}>
+                    <div style={entryTitle}>
+                      {e.title} <span style={entryYear}>({e.period})</span>
+                    </div>
+                    <div style={entryCompany}>{e.company}</div>
                   </div>
-                </div>
-                <div style={{ breakInside: "avoid" }}>
-                  <div style={jobTitleRow}>
-                    <span>Schulischer Teil der Fachhochschulreife · Karl-Schiller-Berufskolleg, Brühl</span>
-                    <span style={period}>2017</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
-            {/* Fähigkeiten */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "110pt 1fr",
-                gap: "18pt",
-                padding: "16pt 0",
-              }}
-            >
-              <div style={sectionLabel}>Fähigkeiten</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "6pt" }}>
-                {skills.map((s) => (
-                  <span key={s} style={pill}>
-                    {s}
-                  </span>
+            {/* Software */}
+            <div style={{ marginTop: "40pt" }}>
+              <div style={pillLabel}>Software</div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "6pt",
+                  fontSize: "11pt",
+                  lineHeight: 1.6,
+                }}
+              >
+                {software.map((s) => (
+                  <div key={s}>{s}</div>
                 ))}
               </div>
             </div>
@@ -264,18 +282,15 @@ export default function LebenslaufPage() {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                marginTop: "24pt",
-                paddingTop: "10pt",
-                borderTop: "1pt solid #111111",
-                fontSize: "8.5pt",
-                fontWeight: 500,
+                marginTop: "64pt",
+                fontSize: "10pt",
+                fontWeight: 700,
                 textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                opacity: 0.5,
+                letterSpacing: "0.06em",
               }}
             >
-              <span>Paulina Dönne · Lebenslauf</span>
-              <span>Portfolio: paulinadoenne.de</span>
+              <span>Dönne</span>
+              <span>Kommunikationsdesign</span>
             </div>
           </div>
         </div>
