@@ -6,6 +6,7 @@ export const metadata: Metadata = {
 };
 
 const PDF_PATH = "/lebenslauf-paulina-doenne.pdf";
+const IMAGE_PATH = "/lebenslauf-paulina-doenne.jpg";
 
 export default function LebenslaufPage() {
   return (
@@ -53,16 +54,16 @@ export default function LebenslaufPage() {
       <div className="cv-stage">
         <div
           className="cv-sheet"
-          style={{ background: "transparent", boxShadow: "0 10px 40px rgba(17,17,17,0.15)" }}
+          style={{ boxShadow: "0 10px 40px rgba(17,17,17,0.15)" }}
         >
-          <iframe
-            src={PDF_PATH}
-            title="Lebenslauf Paulina Dönne"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={IMAGE_PATH}
+            alt="Lebenslauf Paulina Dönne"
             style={{
               display: "block",
               width: "210mm",
-              height: "297mm",
-              border: "none",
+              height: "auto",
             }}
           />
         </div>
