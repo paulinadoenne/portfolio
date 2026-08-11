@@ -196,8 +196,9 @@ a:hover {
   }
 }
 
-/* Glas-Blasen nur mit Motion & feinem Zeiger (Desktop) — sonst aus */
-@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+/* Glas-Blasen nur mit Motion aus (Accessibility) — auch auf Mobile aktiv,
+   die Maus-Gelee-Interaktion in FlairLayer bleibt aber Desktop-only */
+@media (prefers-reduced-motion: reduce) {
   .pd-bubble-layer {
     display: none;
   }
