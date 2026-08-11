@@ -67,10 +67,12 @@ function CardContent({
 }: {
   proj: Project;
   index: number;
-  // Nur die gerade sichtbare/aktive Karte lädt ihr Video — alle anderen
-  // zeigen das (leichte) Poster-Bild. Ohne dieses Gate würden auf einen
-  // Schlag alle Stapel-Videos (teils >20MB) parallel geladen/abgespielt,
-  // was den ersten Seitenaufbau spürbar ausbremst.
+  // Nur die vorderste/aktive Karte und die direkt darunterliegende (nächste)
+  // laden ihr Video — alle anderen zeigen das (leichte) Poster-Bild. Ohne
+  // dieses Gate würden auf einen Schlag alle Stapel-Videos (teils >20MB)
+  // parallel geladen/abgespielt, was den ersten Seitenaufbau spürbar
+  // ausbremst; die zweite Karte lädt schon vor, damit sie beim Weiterblättern
+  // sofort bereitsteht.
   showVideo?: boolean;
 }) {
   return (
@@ -625,7 +627,7 @@ export default function ProjectStack() {
                 onPointerCancel={isFront ? onCardPointerCancel : undefined}
                 onClick={isFront ? onFrontClick : (e) => e.preventDefault()}
               >
-                <CardContent proj={proj} index={projIndex} showVideo={isFront} />
+                <CardContent proj={proj} index={projIndex} showVideo={pos <= 1} />
               </Link>
             );
           })}
@@ -798,7 +800,11 @@ export default function ProjectStack() {
                 pointerEvents: clickable ? "auto" : "none",
               }}
             >
-              <CardContent proj={proj} index={i} showVideo={i === displayIndex} />
+              <CardContent
+                proj={proj}
+                index={i}
+                showVideo={i === displayIndex || i === (displayIndex + 1) % N}
+              />
             </Link>
           );
         })}
