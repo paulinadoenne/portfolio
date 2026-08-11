@@ -52,13 +52,18 @@ const pill: CSSProperties = {
 };
 
 const skills = [
+  "InDesign",
   "Photoshop",
   "Illustrator",
-  "InDesign",
   "After Effects",
-  "Premiere",
-  "Figma",
+  "Blender",
   "Cinema 4D",
+  "MS Office",
+  "Figma",
+  "Claude",
+  "ChatGPT",
+  "Nano Banana",
+  "Firefly",
 ];
 
 export default function LebenslaufPage() {
@@ -153,7 +158,7 @@ export default function LebenslaufPage() {
                     flex: "none",
                   }}
                 >
-                  <ImageSlot placeholder="Foto" />
+                  <ImageSlot placeholder="Foto" src="/lebenslauf-foto.jpg" />
                 </div>
               </div>
             </div>
@@ -163,9 +168,7 @@ export default function LebenslaufPage() {
               <div style={sectionLabel}>Profil</div>
               <p style={{ margin: 0, fontSize: "11pt", lineHeight: 1.6 }}>
                 Kommunikationsdesignerin mit Schwerpunkt auf Commercials,
-                Editorial Design, Animation und Werbemitteln. Zwei bis drei Sätze
-                zum eigenen Profil hier eintragen: Was treibt dich an, wofür
-                stehst du gestalterisch?
+                Editorial Design, Animation und Werbemitteln.
               </p>
             </div>
 
@@ -177,32 +180,41 @@ export default function LebenslaufPage() {
               >
                 <div style={{ breakInside: "avoid" }}>
                   <div style={jobTitleRow}>
-                    <span>Position eintragen · Agentur / Unternehmen</span>
-                    <span style={period}>20XX – heute</span>
+                    <span>Werkstudentin Art Direction · REWE Group</span>
+                    <span style={period}>2024 – 2026</span>
                   </div>
                   <p style={jobDesc}>
-                    Kurzbeschreibung der Tätigkeit: Projekte, Verantwortung,
-                    besondere Erfolge. Ein bis zwei Zeilen genügen.
+                    Konzeption und Umsetzung von Social-Media-Assets, Art
+                    Direction für Werbekampagnen.
                   </p>
                 </div>
                 <div style={{ breakInside: "avoid" }}>
                   <div style={jobTitleRow}>
-                    <span>Praktikum / Werkstudium · Unternehmen</span>
-                    <span style={period}>20XX – 20XX</span>
+                    <span>Vollzeittätigkeit · Optik Dönne, Brühl</span>
+                    <span style={period}>2021 – 2022</span>
                   </div>
                   <p style={jobDesc}>
-                    Kurzbeschreibung der Tätigkeit und der wichtigsten Aufgaben.
+                    Brillenglasschliff, Kund:innenberatung zu Fassungen und
+                    Gläsern, Reparaturservice, organisatorische Abläufe,
+                    Betreuung der Social-Media-Kanäle.
                   </p>
                 </div>
                 <div style={{ breakInside: "avoid" }}>
                   <div style={jobTitleRow}>
-                    <span>Freie Projekte</span>
-                    <span style={period}>20XX – heute</span>
+                    <span>Ausbildung Augenoptikerin · Optik Niederprüm, Köln</span>
+                    <span style={period}>2018 – 2021</span>
                   </div>
                   <p style={jobDesc}>
-                    Freie Arbeiten für Kund:innen aus Kultur und Wirtschaft,
-                    Auswahl im Portfolio.
+                    Ausbildungsinhalte: Brillenglasschliff,
+                    Kund:innenberatung zu Fassungen und Gläsern,
+                    Reparaturservice, organisatorische Abläufe.
                   </p>
+                </div>
+                <div style={{ breakInside: "avoid" }}>
+                  <div style={jobTitleRow}>
+                    <span>Aushilfsjob und Auslandsaufenthalt</span>
+                    <span style={period}>2018</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -210,31 +222,25 @@ export default function LebenslaufPage() {
             {/* Ausbildung */}
             <div style={sectionGrid}>
               <div style={sectionLabel}>Ausbildung</div>
-              <div style={{ breakInside: "avoid" }}>
-                <div style={jobTitleRow}>
-                  <span>B.A. Kommunikationsdesign · Peter Behrens School of Arts</span>
-                  <span style={period}>20XX – 20XX</span>
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: "14pt" }}
+              >
+                <div style={{ breakInside: "avoid" }}>
+                  <div style={jobTitleRow}>
+                    <span>Bachelor Kommunikationsdesign · Peter Behrens School of Arts, Düsseldorf</span>
+                    <span style={period}>2022 – 2026</span>
+                  </div>
                 </div>
-                <p style={jobDesc}>
-                  Schwerpunkte, Abschlussarbeit oder Auszeichnungen hier
-                  eintragen.
-                </p>
+                <div style={{ breakInside: "avoid" }}>
+                  <div style={jobTitleRow}>
+                    <span>Schulischer Teil der Fachhochschulreife · Karl-Schiller-Berufskolleg, Brühl</span>
+                    <span style={period}>2017</span>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Fähigkeiten */}
-            <div style={sectionGrid}>
-              <div style={sectionLabel}>Fähigkeiten</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "6pt" }}>
-                {skills.map((s) => (
-                  <span key={s} style={pill}>
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Sprachen */}
             <div
               style={{
                 display: "grid",
@@ -243,9 +249,13 @@ export default function LebenslaufPage() {
                 padding: "16pt 0",
               }}
             >
-              <div style={sectionLabel}>Sprachen</div>
-              <div style={{ fontSize: "11pt", lineHeight: 1.7 }}>
-                Deutsch (Muttersprache) · Englisch (fließend)
+              <div style={sectionLabel}>Fähigkeiten</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "6pt" }}>
+                {skills.map((s) => (
+                  <span key={s} style={pill}>
+                    {s}
+                  </span>
+                ))}
               </div>
             </div>
 
