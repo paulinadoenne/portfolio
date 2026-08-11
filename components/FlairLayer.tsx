@@ -7,43 +7,51 @@ import { IRIS, IRIS_MASK, NEUTRAL_BG, NEUTRAL_SHADOW } from "./BubbleField";
  * Interaktions-Ebene der Startseite (Custom Cursor, Deck-Wobble, Gelee-Effekt
  * der Blasen). Die Blasen selbst rendert <BubbleField/> in der gepinnten Szene;
  * hier wird nur per [data-bubble] darauf zugegriffen. Rendert selbst nichts.
- * Deaktiviert sich bei prefers-reduced-motion und pointer:coarse.
+ * Der Gelee-Effekt reagiert auch auf Touch — nur der Custom-Cursor (Ersatz
+ * für den ausgeblendeten Mauszeiger) ist Geräten mit feinem Zeiger
+ * vorbehalten, ein Touch-Finger hat keinen dauerhaften "Cursor". Deaktiviert
+ * sich komplett bei prefers-reduced-motion.
  */
 export default function FlairLayer() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
-    if (!reduce && !coarse) setEnabled(true);
+    if (!reduce) setEnabled(true);
   }, []);
 
   useEffect(() => {
     if (!enabled) return;
 
-    // Native Maus ausblenden, solange die Glas-Seifenblase sie ersetzt
-    document.body.style.cursor = "none";
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
 
-    // Custom Cursor: kleine, nachziehende Glas-Seifenblase im Look der [data-bubble]-Blasen
-    const cursorBubble = document.createElement("div");
-    cursorBubble.style.cssText =
-      "position:absolute; width:30px; height:30px; border-radius:50%; overflow:hidden;" +
-      `background:${NEUTRAL_BG}; border:0.5px solid rgba(255,255,255,0.75); box-shadow:${NEUTRAL_SHADOW};` +
-      "-webkit-backdrop-filter:url(#pd-glass); backdrop-filter:url(#pd-glass);" +
-      "z-index:900; pointer-events:none; transform:translate(-50%,-50%); opacity:0; will-change:transform;" +
-      "transition:width 0.25s ease, height 0.25s ease";
-    const cursorIris = document.createElement("div");
-    cursorIris.style.cssText =
-      "position:absolute; inset:0; border-radius:inherit;" +
-      `background:${IRIS.replace("{ANGLE}", "205deg")};` +
-      `-webkit-mask-image:${IRIS_MASK}; mask-image:${IRIS_MASK};`;
-    const cursorShine = document.createElement("div");
-    cursorShine.style.cssText =
-      "position:absolute; top:12%; left:16%; width:30%; height:16%; border-radius:50%;" +
-      "background:rgba(255,255,255,0.85); filter:blur(3px); transform:rotate(-24deg);";
-    cursorBubble.appendChild(cursorIris);
-    cursorBubble.appendChild(cursorShine);
-    document.body.appendChild(cursorBubble);
+    // Native Maus ausblenden, solange die Glas-Seifenblase sie ersetzt
+    // (auf Touch-Geräten gibt es ohnehin keinen Cursor zum Ausblenden)
+    let cursorBubble: HTMLDivElement | null = null;
+    if (!coarse) {
+      document.body.style.cursor = "none";
+
+      // Custom Cursor: kleine, nachziehende Glas-Seifenblase im Look der [data-bubble]-Blasen
+      cursorBubble = document.createElement("div");
+      cursorBubble.style.cssText =
+        "position:absolute; width:30px; height:30px; border-radius:50%; overflow:hidden;" +
+        `background:${NEUTRAL_BG}; border:0.5px solid rgba(255,255,255,0.75); box-shadow:${NEUTRAL_SHADOW};` +
+        "-webkit-backdrop-filter:url(#pd-glass); backdrop-filter:url(#pd-glass);" +
+        "z-index:900; pointer-events:none; transform:translate(-50%,-50%); opacity:0; will-change:transform;" +
+        "transition:width 0.25s ease, height 0.25s ease";
+      const cursorIris = document.createElement("div");
+      cursorIris.style.cssText =
+        "position:absolute; inset:0; border-radius:inherit;" +
+        `background:${IRIS.replace("{ANGLE}", "205deg")};` +
+        `-webkit-mask-image:${IRIS_MASK}; mask-image:${IRIS_MASK};`;
+      const cursorShine = document.createElement("div");
+      cursorShine.style.cssText =
+        "position:absolute; top:12%; left:16%; width:30%; height:16%; border-radius:50%;" +
+        "background:rgba(255,255,255,0.85); filter:blur(3px); transform:rotate(-24deg);";
+      cursorBubble.appendChild(cursorIris);
+      cursorBubble.appendChild(cursorShine);
+      document.body.appendChild(cursorBubble);
+    }
 
     // Gelee-Effekt: additive Maus-Interaktion pro Blase über die unabhängigen
     // CSS-Properties translate/scale/rotate (kollidiert nicht mit den Keyframes).
@@ -85,10 +93,27 @@ export default function FlairLayer() {
     };
     window.addEventListener("mousemove", onMove, { passive: true });
 
+    // Touch: derselbe Gelee-Effekt reagiert auf den Finger — kein eigener
+    // Cursor-Ersatz nötig, nur die Blasen-Position wird nachgeführt.
+    const onTouch = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      state.seen = true;
+      state.mx = t.clientX;
+      state.my = t.clientY;
+    };
+    const onTouchEnd = () => {
+      state.seen = false;
+    };
+    window.addEventListener("touchstart", onTouch, { passive: true });
+    window.addEventListener("touchmove", onTouch, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
+
     let running = true;
     const loop = () => {
       if (!running) return;
-      if (state.seen) {
+      if (state.seen && cursorBubble) {
         const px = state.mx + window.scrollX;
         const py = state.my + window.scrollY;
         // leicht nachziehend, wie die driftenden Blasen im Feld
@@ -180,8 +205,12 @@ export default function FlairLayer() {
     return () => {
       running = false;
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("touchstart", onTouch);
+      window.removeEventListener("touchmove", onTouch);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
       document.body.style.removeProperty("cursor");
-      cursorBubble.remove();
+      cursorBubble?.remove();
       bubbles.forEach((bub) => {
         bub.style.removeProperty("translate");
         bub.style.removeProperty("scale");

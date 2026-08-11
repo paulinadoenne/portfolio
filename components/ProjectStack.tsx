@@ -36,7 +36,10 @@ function StackVideo({
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="auto"
+      // @ts-expect-error -- fetchPriority ist in den React-19-Typings für
+      // <video> noch nicht gelistet, wird aber vom DOM unterstützt.
+      fetchPriority="high"
       poster={poster}
       aria-label={alt}
       style={{
