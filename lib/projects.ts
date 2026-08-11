@@ -70,7 +70,7 @@ export const projects: Project[] = [
       "Vom Gehwegaufsteller über die Kassenzonen-Kommunikation bis zur Rezeptkarte fürs Weihnachtsgeschäft: Jedes Format verlangt ein eigenes Zusammenspiel aus Bild, Text und Markenelementen, von großformatigem Print bis zu Social-Media-Formaten für Plattformen wie YouTube und Pinterest.",
     heroPlaceholder: "Sujet hier ablegen",
     heroVideoPoster: "/projects/rewe-art-direction/gehwegaufsteller.jpg",
-    cardVideo: "/projects/rewe-art-direction/neukundenrabatt.mp4",
+    cardVideo: "/projects/rewe-art-direction/neukundenrabatt-card.mp4",
     gallery: [
       { slotId: "detail-6", ratio: "1200/675", span2: true, src: "/projects/rewe-art-direction/weisser-bohnensalat.jpg", caption: "Rezeptkommunikation: Weißer Bohnensalat", placeholder: "Foto hier ablegen" },
       { slotId: "detail-7b", ratio: "800/1200", src: "/projects/rewe-art-direction/wassermelonen-eistee.jpg", caption: "Rezeptkommunikation: Wassermelonen-Limetten-Eistee", placeholder: "Foto (Hochformat) hier ablegen" },
@@ -105,6 +105,7 @@ export const projects: Project[] = [
     heroVideo: "/projects/the-double-standard-of-aging/film.mp4",
     heroVideoWebm: "/projects/the-double-standard-of-aging/film.webm",
     heroVideoPoster: "/projects/the-double-standard-of-aging/poster.jpg",
+    cardVideo: "/projects/the-double-standard-of-aging/card-preview.mp4",
     gallery: [
       { slotId: "detail-1", ratio: "16/9", span2: true, src: "/projects/the-double-standard-of-aging/still-unsicherheit.jpg", caption: "Filmstill: „…von einerseits ’ner sehr großen Unsicherheit“", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "720/1280", src: "/projects/the-double-standard-of-aging/vorhang-poster.jpg", video: "/projects/the-double-standard-of-aging/vorhang.mp4", caption: "Filmstill (Video): „Aging is much more a social judgment than a biological eventuality“", placeholder: "Video hier ablegen" },
@@ -130,6 +131,7 @@ export const projects: Project[] = [
     heroPlaceholder: "Filmstill hier ablegen",
     heroVideo: "/projects/abgabe/film.mp4",
     heroVideoPoster: "/projects/abgabe/poster.jpg",
+    cardVideo: "/projects/abgabe/card-preview.mp4",
     gallery: [
       { slotId: "detail-1", ratio: "3931/2170", span2: true, src: "/projects/abgabe/still-scattered.jpg", caption: "Filmstill: frei im Raum schwebende Röhrenfernseher", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "3887/2150", src: "/projects/abgabe/still-tv-closeup.jpg", caption: "Filmstill: Close-up eines Röhrenfernsehers", placeholder: "Foto (Hochformat) hier ablegen" },
@@ -159,6 +161,7 @@ export const projects: Project[] = [
     heroVideoPoster: "/projects/fake-it-til-you-make-it/poster.jpg",
     heroVideoNext: "/projects/fake-it-til-you-make-it/red.mp4",
     heroVideoNextPoster: "/projects/fake-it-til-you-make-it/poster-red.jpg",
+    cardVideo: "/projects/fake-it-til-you-make-it/card-preview.mp4",
     gallery: [
       { slotId: "detail-1", ratio: "21/9", span2: true, src: "/projects/fake-it-til-you-make-it/detail-red-wide.jpg", caption: "Filmstill: „Are you wearing a red cap?“", placeholder: "Filmstill hier ablegen" },
       { slotId: "detail-2", ratio: "4/5", src: "/projects/fake-it-til-you-make-it/detail-yellow-spiral.jpg", caption: "Filmstill: „Are you wearing a yellow jacket?“", placeholder: "Filmstill (Hochformat) hier ablegen" },
@@ -183,7 +186,7 @@ export const projects: Project[] = [
     umsetzung: "Beschreibung der Umsetzung eintragen.",
     heroPlaceholder: "Hero-Bild des Projekts hier ablegen",
     heroVideoPoster: "/projects/plakatgestaltung/poster-museum.jpg",
-    cardVideo: "/projects/plakatgestaltung/museum-plakat-lang.mp4",
+    cardVideo: "/projects/plakatgestaltung/card-preview.mp4",
     gallery: [
       { slotId: "detail-1", ratio: "4/5", src: "/projects/plakatgestaltung/poster-museum.jpg", caption: "Plakat 1: Programmplakat für das Museum für Ostasiatische Kunst Köln", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "4/5", src: "/projects/plakatgestaltung/poster-hohenzollernring.jpg", caption: "Plakat 3: Farbintensive Fotocollage mit Adresse Hohenzollernring", placeholder: "Foto (Hochformat) hier ablegen" },
@@ -260,6 +263,7 @@ export const projects: Project[] = [
     heroPlaceholder: "Filmstill · Night Sun (DJane Nava)",
     heroVideo: "/projects/fraktale-welt/film.mov",
     heroVideoPoster: "/projects/fraktale-welt/poster.jpg",
+    cardVideo: "/projects/fraktale-welt/card-preview.mp4",
     gallery: [
       { slotId: "detail-2", ratio: "4/5", src: "/projects/fraktale-welt/still-neon-figur.jpg", caption: "Filmstill: Neonschild-Überlagerung", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-3", ratio: "4/5", src: "/projects/fraktale-welt/still-glitch-lauf.jpg", caption: "Filmstill: fraktale Überlagerung", placeholder: "Foto (Hochformat) hier ablegen" },
