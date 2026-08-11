@@ -57,7 +57,19 @@ function StackVideo({
 /* Karteninhalt (Vorschaubild/-video + Titel-Overlay) — identisch für die
  * Desktop-/Reduced-Motion-Karten und die mobile Swipe-Reihe, daher als
  * gemeinsame Funktion statt doppelt gepflegtem JSX. */
-function CardContent({ proj, index }: { proj: Project; index: number }) {
+function CardContent({
+  proj,
+  index,
+  showVideo = true,
+}: {
+  proj: Project;
+  index: number;
+  // Nur die gerade sichtbare/aktive Karte lädt ihr Video — alle anderen
+  // zeigen das (leichte) Poster-Bild. Ohne dieses Gate würden auf einen
+  // Schlag alle Stapel-Videos (teils >20MB) parallel geladen/abgespielt,
+  // was den ersten Seitenaufbau spürbar ausbremst.
+  showVideo?: boolean;
+}) {
   return (
     <div
       style={{
@@ -68,7 +80,7 @@ function CardContent({ proj, index }: { proj: Project; index: number }) {
         background: "var(--img-bg)",
       }}
     >
-      {proj.cardVideo || proj.heroVideo ? (
+      {(proj.cardVideo || proj.heroVideo) && showVideo ? (
         <StackVideo
           src={proj.cardVideo ?? proj.heroVideo!}
           webm={proj.cardVideo ? proj.cardVideoWebm : proj.heroVideoWebm}
@@ -609,7 +621,7 @@ export default function ProjectStack() {
                 onPointerCancel={isFront ? onCardPointerCancel : undefined}
                 onClick={isFront ? onFrontClick : (e) => e.preventDefault()}
               >
-                <CardContent proj={proj} index={projIndex} />
+                <CardContent proj={proj} index={projIndex} showVideo={isFront} />
               </Link>
             );
           })}
@@ -782,7 +794,7 @@ export default function ProjectStack() {
                 pointerEvents: clickable ? "auto" : "none",
               }}
             >
-              <CardContent proj={proj} index={i} />
+              <CardContent proj={proj} index={i} showVideo={i === displayIndex} />
             </Link>
           );
         })}

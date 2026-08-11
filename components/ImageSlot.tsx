@@ -16,6 +16,8 @@ export default function ImageSlot({ placeholder, src, alt }: Props) {
       <img
         src={src}
         alt={alt ?? placeholder ?? ""}
+        loading="lazy"
+        decoding="async"
         style={{
           position: "absolute",
           inset: 0,

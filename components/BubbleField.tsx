@@ -89,8 +89,8 @@ function BubbleView({ b }: { b: Bubble }) {
       style={{
         position: "absolute",
         ...b.pos,
-        width: b.size,
-        height: `calc(${b.size} * ${b.aspect})`,
+        width: `calc(${b.size} * var(--bubble-scale, 1))`,
+        height: `calc(${b.size} * ${b.aspect} * var(--bubble-scale, 1))`,
         borderRadius: "50%",
         overflow: "hidden",
         opacity: b.op,
