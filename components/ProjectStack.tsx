@@ -91,6 +91,7 @@ function CardContent({
         <ImageSlot
           placeholder={`Projektbild ${index + 1} hier ablegen`}
           src={proj.heroVideoPoster}
+          objectPosition={proj.cardImagePosition}
         />
       )}
       {/* Titel-Overlay statt eigener Header-Leiste — Karte ist der

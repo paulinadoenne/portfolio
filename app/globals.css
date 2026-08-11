@@ -204,15 +204,9 @@ a:hover {
   }
 }
 
-/* Auf schmalen Viewports sind die Blasen (in vw skaliert) relativ zur
-   Fingergröße/Bildschirmdichte zu klein — auf Mobile größer skalieren. */
+/* Blasen (in vw skaliert) gleichmäßig vergrößert — auf allen Viewports. */
 :root {
-  --bubble-scale: 1;
-}
-@media (max-width: 820px) {
-  :root {
-    --bubble-scale: 1.7;
-  }
+  --bubble-scale: 1.7;
 }
 
 /* Nav auf schmalen Viewports: Die dekorative Mittelspalte ("Kommunikations-

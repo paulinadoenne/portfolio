@@ -8,9 +8,10 @@ type Props = {
   placeholder?: string;
   src?: string;
   alt?: string;
+  objectPosition?: string;
 };
 
-export default function ImageSlot({ placeholder, src, alt }: Props) {
+export default function ImageSlot({ placeholder, src, alt, objectPosition }: Props) {
   if (src) {
     return (
       <img
@@ -24,6 +25,7 @@ export default function ImageSlot({ placeholder, src, alt }: Props) {
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          objectPosition: objectPosition ?? "50% 50%",
           display: "block",
         }}
       />
