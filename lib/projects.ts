@@ -234,7 +234,7 @@ export const projects: Project[] = [
       "Entstanden ist eine kleine Publikationsreihe, die den Entstehungsprozess der Sitzmöbel begleitet. Statt einer klassischen Bindung halten original Spanngurte in Signalfarben die Hefte zusammen: dasselbe Material, aus dem auch die dokumentierten Objekte gebaut sind, wird so selbst zum gestalterischen und inhaltlichen Element.",
     heroPlaceholder: "Sujet hier ablegen",
     heroVideoPoster: "/projects/bricoleur/publikationen-haengend.jpg",
-    cardImagePosition: "50% 35%",
+    cardImagePosition: "50% 100%",
     gallery: [
       { slotId: "detail-1", ratio: "1600/2400", src: "/projects/bricoleur/publikationen-haengend.jpg", caption: "Die fertigen Publikationen, zusammengehalten von Spanngurten", placeholder: "Foto (Hochformat) hier ablegen" },
       { slotId: "detail-2", ratio: "1282/1924", src: "/projects/bricoleur/publikationen-uebersicht.jpg", caption: "Titelseiten der Publikationsreihe", placeholder: "Foto (Hochformat) hier ablegen" },
