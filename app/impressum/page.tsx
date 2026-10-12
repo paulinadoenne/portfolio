@@ -140,7 +140,7 @@ export default function ImpressumPage() {
       >
         <span style={{ opacity: 0.5 }}>© 2026 Paulina Dönne</span>
         <Link href="/" style={{ color: "#ffffff" }}>
-          paulinadoenne.de
+          bisdoenne.de
         </Link>
       </footer>
     </div>
