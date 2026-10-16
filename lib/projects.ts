@@ -104,7 +104,7 @@ export const projects: Project[] = [
     heroVideoPoster: "/projects/koelneats/card-poster.jpg",
     cardVideo: "/projects/koelneats/card-preview.mp4",
     gallery: [
-      { slotId: "detail-1", ratio: "9/16", src: "/projects/koelneats/reel-1-poster.jpg", video: "/projects/koelneats/reel-1.mp4", caption: "Reel: NY Slices und Sauerteig am Büdchen", placeholder: "Video hier ablegen" },
+      { slotId: "detail-1", ratio: "9/16", src: "/projects/koelneats/reel-1-poster.jpg", video: "/projects/koelneats/reel-1.mp4", caption: "Reel: Alusefreth, NY Slices und Sauerteig", placeholder: "Video hier ablegen" },
       { slotId: "detail-2", ratio: "9/16", src: "/projects/koelneats/reel-2-poster.jpg", video: "/projects/koelneats/reel-2.mp4", caption: "Reel: bash café, Bagels, Coffee und Matcha", placeholder: "Video hier ablegen" },
     ],
     closingSlotId: "detail-3",
