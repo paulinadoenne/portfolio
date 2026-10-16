@@ -91,13 +91,13 @@ export const projects: Project[] = [
     index: "02",
     slug: "koelneats",
     title: "KoelnEats",
-    tag: "Social Media · Reels",
+    tag: "Social Media · Food-Reels",
     kunde: "KoelnEats",
     rolle: "Dreh & Schnitt",
     jahr: "2026",
     leistungen: "Dreh, Schnitt, Social-Media-Reels",
     aufgabe:
-      "Für KoelnEats entstehen kurze Reels, die Kölner Food-Spots so zeigen, dass man am liebsten sofort hingehen möchte: nah dran am Essen, an den Menschen und an der Atmosphäre vor Ort.",
+      "KoelnEats testet Restaurants und Cafés in Köln und stellt sie auf Social Media vor. Dafür entstehen kurze Reels, die jeden Ort so zeigen, dass man am liebsten sofort hingehen möchte: nah dran am Essen, an den Menschen und an der Atmosphäre vor Ort.",
     umsetzung:
       "Gedreht wird direkt vor Ort im Hochformat, vom ersten Blick auf den Laden über die Zubereitung bis zum fertigen Teller. Im Schnitt entsteht daraus ein schneller, appetitlicher Rhythmus. Die Typografie ergänzt im Anschluss das Team von KoelnEats, so steht hier ganz die Bildsprache im Mittelpunkt.",
     heroPlaceholder: "Reel · KoelnEats",
@@ -105,6 +105,7 @@ export const projects: Project[] = [
     cardVideo: "/projects/koelneats/card-preview.mp4",
     gallery: [
       { slotId: "detail-1", ratio: "9/16", src: "/projects/koelneats/reel-1-poster.jpg", video: "/projects/koelneats/reel-1.mp4", caption: "Reel: NY Slices und Sauerteig am Büdchen", placeholder: "Video hier ablegen" },
+      { slotId: "detail-2", ratio: "9/16", src: "/projects/koelneats/reel-2-poster.jpg", video: "/projects/koelneats/reel-2.mp4", caption: "Reel: bash café, Bagels, Coffee und Matcha", placeholder: "Video hier ablegen" },
     ],
     closingSlotId: "detail-3",
     closingCaption: "",
