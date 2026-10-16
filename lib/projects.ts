@@ -89,6 +89,29 @@ export const projects: Project[] = [
   },
   {
     index: "02",
+    slug: "koelneats",
+    title: "KoelnEats",
+    tag: "Social Media · Reels",
+    kunde: "KoelnEats",
+    rolle: "Dreh & Schnitt",
+    jahr: "2026",
+    leistungen: "Dreh, Schnitt, Social-Media-Reels",
+    aufgabe:
+      "Für KoelnEats entstehen kurze Reels, die Kölner Food-Spots so zeigen, dass man am liebsten sofort hingehen möchte: nah dran am Essen, an den Menschen und an der Atmosphäre vor Ort.",
+    umsetzung:
+      "Gedreht wird direkt vor Ort im Hochformat, vom ersten Blick auf den Laden über die Zubereitung bis zum fertigen Teller. Im Schnitt entsteht daraus ein schneller, appetitlicher Rhythmus. Die Typografie ergänzt im Anschluss das Team von KoelnEats, so steht hier ganz die Bildsprache im Mittelpunkt.",
+    heroPlaceholder: "Reel · KoelnEats",
+    heroVideoPoster: "/projects/koelneats/card-poster.jpg",
+    cardVideo: "/projects/koelneats/card-preview.mp4",
+    gallery: [
+      { slotId: "detail-1", ratio: "9/16", src: "/projects/koelneats/reel-1-poster.jpg", video: "/projects/koelneats/reel-1.mp4", caption: "Reel: NY Slices und Sauerteig am Büdchen", placeholder: "Video hier ablegen" },
+    ],
+    closingSlotId: "detail-3",
+    closingCaption: "",
+    closingPlaceholder: "",
+  },
+  {
+    index: "03",
     slug: "the-double-standard-of-aging",
     title: "The Double Standard of Aging",
     tag: "Bachelorarbeit · Kinetic Typography",
@@ -116,7 +139,7 @@ export const projects: Project[] = [
     closingSrc: "/projects/the-double-standard-of-aging/still-juenger.jpg",
   },
   {
-    index: "03",
+    index: "04",
     slug: "abgabe",
     title: "Röhren-Bühne",
     tag: "Audiovisuelle Animation · Uni-Projekt",
@@ -143,7 +166,7 @@ export const projects: Project[] = [
     closingSrc: "/projects/abgabe/still-underwater.jpg",
   },
   {
-    index: "04",
+    index: "05",
     slug: "fake-it-til-you-make-it",
     title: "Fake It Til You Make It",
     tag: "Motion · Kinetic Typography",
@@ -173,7 +196,7 @@ export const projects: Project[] = [
     closingSrc: "/projects/fake-it-til-you-make-it/mediawall-installation.jpg",
   },
   {
-    index: "05",
+    index: "06",
     slug: "4-wochen-4-poster",
     title: "4 Wochen 4 Poster",
     tag: "Plakatgestaltung · Eigenprojekt",
@@ -198,7 +221,7 @@ export const projects: Project[] = [
     closingPlaceholder: "Situationsfoto hier ablegen",
   },
   {
-    index: "06",
+    index: "07",
     slug: "stand-der-dinge",
     title: "Stand der Dinge",
     tag: "Editorial & Plakatdesign · Werkauftrag",
@@ -223,7 +246,7 @@ export const projects: Project[] = [
     closingPlaceholder: "Situationsfoto hier ablegen",
   },
   {
-    index: "07",
+    index: "08",
     slug: "bricoleur",
     title: "Bricoleur",
     tag: "Editorial Design · Dokumentation",
@@ -248,7 +271,7 @@ export const projects: Project[] = [
     closingSrc: "/projects/bricoleur/bindung-detail.jpg",
   },
   {
-    index: "08",
+    index: "09",
     slug: "fraktale-welt",
     title: "Fraktale Welt",
     tag: "Musikvideo · Uni-Projekt",

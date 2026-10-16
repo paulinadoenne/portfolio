@@ -352,7 +352,8 @@ export default async function ProjektPage({
       {/* ===== ABSCHLUSS-BILD ===== */}
       {p.slug !== "4-wochen-4-poster" &&
         p.slug !== "rewe-art-direction" &&
-        p.slug !== "stand-der-dinge" && (
+        p.slug !== "stand-der-dinge" &&
+        p.slug !== "koelneats" && (
       <section
         className="pd-gallery-grid"
         style={{
