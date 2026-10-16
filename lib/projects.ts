@@ -93,13 +93,13 @@ export const projects: Project[] = [
     title: "KoelnEats",
     tag: "Social Media · Food-Reels",
     kunde: "KoelnEats",
-    rolle: "Dreh & Schnitt",
+    rolle: "Planung, Dreh, Schnitt & Vertonung",
     jahr: "2026",
-    leistungen: "Dreh, Schnitt, Social-Media-Reels",
+    leistungen: "Planung, Dreh, Schnitt, Vertonung",
     aufgabe:
       "KoelnEats testet Restaurants und Cafés in Köln und stellt sie auf Social Media vor. Dafür entstehen kurze Reels, die jeden Ort so zeigen, dass man am liebsten sofort hingehen möchte: nah dran am Essen, an den Menschen und an der Atmosphäre vor Ort.",
     umsetzung:
-      "Gedreht wird direkt vor Ort im Hochformat, vom ersten Blick auf den Laden über die Zubereitung bis zum fertigen Teller. Im Schnitt entsteht daraus ein schneller, appetitlicher Rhythmus. Die Typografie ergänzt im Anschluss das Team von KoelnEats, so steht hier ganz die Bildsprache im Mittelpunkt.",
+      "Jedes Reel beginnt mit der Planung der Szenen und Abläufe vor Ort. Gedreht wird im Hochformat, vom ersten Blick auf den Laden über die Zubereitung bis zum fertigen Teller. Im Schnitt und in der Vertonung entsteht daraus ein schneller, appetitlicher Rhythmus. Die Typografie ergänzt im Anschluss das Team von KoelnEats, so steht hier ganz die Bildsprache im Mittelpunkt.",
     heroPlaceholder: "Reel · KoelnEats",
     heroVideoPoster: "/projects/koelneats/card-poster.jpg",
     cardVideo: "/projects/koelneats/card-preview.mp4",
