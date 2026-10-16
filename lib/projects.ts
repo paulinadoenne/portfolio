@@ -95,7 +95,7 @@ export const projects: Project[] = [
     kunde: "KoelnEats",
     rolle: "Planung, Dreh, Schnitt & Vertonung",
     jahr: "2026",
-    leistungen: "Planung, Dreh, Schnitt, Vertonung",
+    leistungen: "Food-Content, Instagram-Reels, Sounddesign",
     aufgabe:
       "KoelnEats testet Restaurants und Cafés in Köln und stellt sie auf Social Media vor. Dafür entstehen kurze Reels, die jeden Ort so zeigen, dass man am liebsten sofort hingehen möchte: nah dran am Essen, an den Menschen und an der Atmosphäre vor Ort.",
     umsetzung:
